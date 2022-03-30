@@ -5,8 +5,8 @@ using UnityEngine;
 public class BoardManager : Manager<BoardManager>
 {
     [SerializeField] private GameObject LetterSquarePrefab;
-    [SerializeField, Range(3,7)] private int WordLength;
-    [SerializeField, Range(1,10)] private int GuessLimit;
+    [SerializeField, Range(3, 7)] private int WordLength;
+    [SerializeField, Range(1, 10)] private int GuessLimit;
     [SerializeField, Range(0, 1)] private float WordSpacing;
     [SerializeField, Range(0, 1)] private float GuessSpacing;
 
@@ -44,7 +44,7 @@ public class BoardManager : Manager<BoardManager>
         ResetBoard();
     }
 
-    private Vector3 Spacing =>new Vector3(1 + WordSpacing, 1 + GuessSpacing);
+    private Vector3 Spacing => new Vector3(1 + WordSpacing, 1 + GuessSpacing);
     private Vector3 Offset => new Vector3((1f - WordLength) / 2, (GuessLimit - 1f) / 2);
 
     private Vector3 Position(int letterIndex, int guessIndex)
@@ -67,10 +67,26 @@ public class BoardManager : Manager<BoardManager>
         }
     }
 
+    private string CurrentWord {
+         get
+        {
+            var word = "";
+            for (var i = ((CurrentIndex-1) / WordLength)* WordLength; i < ((CurrentIndex - 1) / WordLength + 1) * WordLength; i++)
+            {
+                word += _letterSquares[i].Letter.ToString();
+            }
+            return word;
+        }
+        }
+
     public static void SubmitWord()
     {
         if (Instance._currentLetter < Instance.WordLength)
             return;
+        if (!WordManager.IsWord(Instance.CurrentWord))
+        {
+            return;
+        }
         Instance._currentLetter = 0;
         Instance._currentWord++;
     }
@@ -79,7 +95,7 @@ public class BoardManager : Manager<BoardManager>
     {
         if (Instance._currentLetter == Instance.WordLength)
             return;
-        Instance._letterSquares[CurrentIndex].SetLetter(c);
+        Instance._letterSquares[CurrentIndex].Letter = c;
         Instance._currentLetter++;
     }
 

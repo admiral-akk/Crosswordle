@@ -7,9 +7,22 @@ public class LetterSquare : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI letter;
 
-    public void SetLetter(char l)
+    public char Letter
     {
-        letter.text = l.ToString().ToUpper();
+        get
+        {
+            if (letter.text == string.Empty)
+            {
+                return ' ';
+            } else
+            {
+                return letter.text[0];
+            }
+        }
+            set
+        {
+            letter.text = value.ToString().ToUpper();
+        }
     }
 
     public void ClearLetter()
