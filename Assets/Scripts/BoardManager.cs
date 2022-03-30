@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BoardManager : Manager<BoardManager>
@@ -18,7 +19,6 @@ public class BoardManager : Manager<BoardManager>
     protected override void ManagerAwake()
     {
         _letterSquares = new List<LetterSquare>();
-        ResetBoard();
     }
 
     private void OnValidate()
@@ -52,43 +52,76 @@ public class BoardManager : Manager<BoardManager>
         return Vector3.Scale(Spacing, new Vector3(letterIndex, -guessIndex) + Offset);
     }
 
+    private string _targetWord;
+
     private void InitializeBoard()
     {
         _currentWord = 0;
         _currentLetter = 0;
+        _targetWord = WordManager.GetRandomWord(WordLength).ToUpper();
+        Debug.Log("Target word is: '" + _targetWord + "'");
         for (var guess = 0; guess < GuessLimit; guess++)
         {
             for (var word = 0; word < WordLength; word++)
             {
-                var letterSquare = Instantiate(LetterSquarePrefab, transform);
+                var letterSquare = Instantiate(LetterSquarePrefab, transform).GetComponent<LetterSquare>();
                 letterSquare.transform.localPosition = Position(word, guess);
-                _letterSquares.Add(letterSquare.GetComponent<LetterSquare>());
+                letterSquare.SetState(LetterSquare.State.None);
+                _letterSquares.Add(letterSquare);
             }
         }
     }
 
-    private string CurrentWord {
-         get
+    private List<LetterSquare> CurrentSquares
+    {
+        get
         {
-            var word = "";
-            for (var i = ((CurrentIndex-1) / WordLength)* WordLength; i < ((CurrentIndex - 1) / WordLength + 1) * WordLength; i++)
+            return _letterSquares.GetRange(((CurrentIndex - 1) / WordLength) * WordLength, WordLength);
+        }
+
+    }
+
+    private string CurrentGuess {
+        get
+        {
+           return CurrentSquares.Select(l => l.Letter).Aggregate("", (c, s) =>  c+s);
+        }
+     }
+
+    private void SubmitWordInternal()
+    {
+        if (_currentLetter < WordLength)
+            return;
+        if (!WordManager.IsWord(CurrentGuess))
+        {
+            return;
+        }
+        Debug.Log("Current guess: '" + CurrentGuess + "'");
+        Debug.Log("Target word: '" + _targetWord + "'");
+
+        for (var i = 0; i < CurrentSquares.Count; i++)
+        {
+            var square = CurrentSquares[i];
+            var c = square.Letter;
+            if (_targetWord[i] == c)
             {
-                word += _letterSquares[i].Letter.ToString();
+                square.SetState(LetterSquare.State.RightPosition);
+            } else if (_targetWord.Any(l => l == c))
+            {
+                square.SetState(LetterSquare.State.WrongPosition);
+            } else
+            {
+                square.SetState(LetterSquare.State.Wrong);
             }
-            return word;
         }
-        }
+
+        _currentLetter = 0;
+        _currentWord++;
+    }
 
     public static void SubmitWord()
     {
-        if (Instance._currentLetter < Instance.WordLength)
-            return;
-        if (!WordManager.IsWord(Instance.CurrentWord))
-        {
-            return;
-        }
-        Instance._currentLetter = 0;
-        Instance._currentWord++;
+        Instance.SubmitWordInternal();
     }
 
     public static void SubmitLetter(char c)
