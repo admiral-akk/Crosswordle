@@ -99,12 +99,24 @@ public class BoardManager : MonoBehaviour
     {
         ResetBoard();
     }
+
+    private void ShakeRow()
+    {
+        foreach (var square in CurrentSquares)
+        {
+            if (square.GetComponent<Shake>() != null)
+                continue;
+            square.gameObject.AddComponent(typeof(Shake));
+        }
+    }
+
     public void SubmitWord()
     {
-        if (_currentLetter < WordLength)
+        if (_currentLetter < WordLength || !words.IsWord(CurrentGuess))
+        {
+            ShakeRow();
             return;
-        if (!words.IsWord(CurrentGuess))
-            return;
+        }
 
         var result = new GuessResult(CurrentGuess, _targetWord);
         for (var i = 0; i < result.Results.Length; i++)
