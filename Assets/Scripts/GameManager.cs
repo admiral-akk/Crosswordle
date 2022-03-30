@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
                 board.DeleteLetter();
                 break;
             case InputType.SubmitWord:
-                Debug.Log("hit enter");
                 board.SubmitWord();
                 break;
         }

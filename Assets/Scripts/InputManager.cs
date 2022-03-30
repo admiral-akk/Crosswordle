@@ -16,20 +16,21 @@ public class InputManager : MonoBehaviour
         Event e = Event.current;
         if (e.type != EventType.KeyDown)
             return;
-            var c = (char)e.keyCode;
-            if (char.IsLetter(c)) {
-                _input = PlayerInput.AddLetter(c);
-                return;
-            }
-            if (e.keyCode == KeyCode.Return)
+        var c = (char)e.keyCode;
+        if (char.IsLetter(c))
+        {
+            _input = PlayerInput.AddLetter(c);
+            return;
+        }
+        if (e.keyCode == KeyCode.Return)
         {
             _input = PlayerInput.Enter();
             return;
-            }
-            if (e.keyCode == KeyCode.Backspace)
+        }
+        if (e.keyCode == KeyCode.Backspace)
         {
             _input = PlayerInput.Delete();
             return;
-            }
+        }
     }
 }
