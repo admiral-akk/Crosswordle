@@ -306,6 +306,7 @@ MonoBehaviour:
   GuessLimit: 4
   WordSpacing: 0.036
   GuessSpacing: 0.058
+  words: {fileID: 1880042301}
 --- !u!4 &959235160
 Transform:
   m_ObjectHideFlags: 0
@@ -392,6 +393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d80c5e1c03741f4baf5bbba473e3e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  board: {fileID: 959235159}
+  input: {fileID: 1599432561}
 --- !u!4 &1707329200
 Transform:
   m_ObjectHideFlags: 0

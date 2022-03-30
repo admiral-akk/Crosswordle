@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BoardManager : Manager<BoardManager>
+public class BoardManager : MonoBehaviour
 {
     [SerializeField] private GameObject LetterSquarePrefab;
     [SerializeField, Range(3, 7)] private int WordLength;
@@ -11,12 +11,14 @@ public class BoardManager : Manager<BoardManager>
     [SerializeField, Range(0, 1)] private float WordSpacing;
     [SerializeField, Range(0, 1)] private float GuessSpacing;
 
+    [SerializeField] private WordManager words;
+
     private List<LetterSquare> _letterSquares;
     private bool _resetBoard;
     private int _currentWord;
     private int _currentLetter;
 
-    protected override void ManagerAwake()
+ private void Awake()
     {
         _letterSquares = new List<LetterSquare>();
     }
@@ -58,7 +60,7 @@ public class BoardManager : Manager<BoardManager>
     {
         _currentWord = 0;
         _currentLetter = 0;
-        _targetWord = WordManager.GetRandomWord(WordLength).ToUpper();
+        _targetWord = words.GetRandomWord(WordLength).ToUpper();
         Debug.Log("Target word is: '" + _targetWord + "'");
         for (var guess = 0; guess < GuessLimit; guess++)
         {
@@ -86,16 +88,17 @@ public class BoardManager : Manager<BoardManager>
         {
            return CurrentSquares.Select(l => l.Letter).Aggregate("", (c, s) =>  c+s);
         }
-     }
+    }
 
-    private void SubmitWordInternal()
+    private int CurrentIndex => _currentLetter + _currentWord * WordLength;
+    public  void SubmitWord()
     {
+        Debug.Log("Current guess: '" + CurrentGuess + "'");
+        Debug.Log("Target word: '" + _targetWord + "'");
         if (_currentLetter < WordLength)
             return;
-        if (!WordManager.IsWord(CurrentGuess))
-        {
+        if (!words.IsWord(CurrentGuess))
             return;
-        }
         Debug.Log("Current guess: '" + CurrentGuess + "'");
         Debug.Log("Target word: '" + _targetWord + "'");
 
@@ -106,10 +109,12 @@ public class BoardManager : Manager<BoardManager>
             if (_targetWord[i] == c)
             {
                 square.SetState(LetterSquare.State.RightPosition);
-            } else if (_targetWord.Any(l => l == c))
+            }
+            else if (_targetWord.Any(l => l == c))
             {
                 square.SetState(LetterSquare.State.WrongPosition);
-            } else
+            }
+            else
             {
                 square.SetState(LetterSquare.State.Wrong);
             }
@@ -119,26 +124,19 @@ public class BoardManager : Manager<BoardManager>
         _currentWord++;
     }
 
-    public static void SubmitWord()
+    public  void SubmitLetter(char c)
     {
-        Instance.SubmitWordInternal();
+        if (_currentLetter == WordLength)
+            return;
+        _letterSquares[CurrentIndex].Letter = c;
+        _currentLetter++;
     }
 
-    public static void SubmitLetter(char c)
+    public  void DeleteLetter()
     {
-        if (Instance._currentLetter == Instance.WordLength)
+        if (_currentLetter == 0)
             return;
-        Instance._letterSquares[CurrentIndex].Letter = c;
-        Instance._currentLetter++;
-    }
-
-    public static int CurrentIndex => Instance._currentLetter + Instance._currentWord * Instance.WordLength;
-
-    public static void DeleteLetter()
-    {
-        if (Instance._currentLetter == 0)
-            return;
-        Instance._letterSquares[CurrentIndex-1].ClearLetter();
-        Instance._currentLetter--;
+        _letterSquares[CurrentIndex-1].ClearLetter();
+        _currentLetter--;
     }
 }

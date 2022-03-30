@@ -1,14 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class WordManager : Manager<WordManager>
+public class WordManager : MonoBehaviour
 {
     private HashSet<string> _dictionary;
     private List<List<string>> _dictionaries;
 
-    protected override void ManagerAwake()
+    private void Awake()
     {
         InitializeDictionary();
     }
@@ -20,7 +19,7 @@ public class WordManager : Manager<WordManager>
         var words = File.ReadLines("Assets/Data/words.txt");
         foreach (var word in words)
         {
-            _dictionary.Add(word.ToLower());
+            _dictionary.Add(word.ToUpper());
             while (_dictionaries.Count < word.Length)
             {
                 _dictionaries.Add(new List<string>());
@@ -29,23 +28,14 @@ public class WordManager : Manager<WordManager>
         }
     }
 
-    private bool IsWordInternal(string word)
+    public bool IsWord(string word)
     {
         return _dictionary.Contains(word);
     }
 
-    public static bool IsWord(string word)
-    {
-        return Instance.IsWordInternal(word.ToLower());
-    }
 
-    private string GetRandomWordInternal(int length)
+    public string GetRandomWord(int length)
     {
         return _dictionaries[length-1][Random.Range(0, _dictionaries[length-1].Count)];
-    }
-
-    public static string GetRandomWord(int length)
-    {
-        return Instance.GetRandomWordInternal(length);
     }
 }
