@@ -117,7 +117,6 @@ public class BoardManager : MonoBehaviour
 
     public void SubmitLetter(char c)
     {
-        Debug.Log("TRIGGER GUI: " + c);
         if (_currentLetter == WordLength)
             return;
         _letterSquares[CurrentIndex].Letter = c;
