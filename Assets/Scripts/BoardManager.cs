@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardManager : MonoBehaviour
+public class BoardManager : Manager<BoardManager>
 {
     [SerializeField] private GameObject LetterSquarePrefab;
     [SerializeField, Range(3,7)] private int WordLength;
@@ -12,11 +12,13 @@ public class BoardManager : MonoBehaviour
 
     private List<LetterSquare> _letterSquares;
     private bool _resetBoard;
+    private int _currentWord;
+    private int _currentLetter;
 
-    private void Awake()
+    protected override void ManagerAwake()
     {
         _letterSquares = new List<LetterSquare>();
-        InitializeBoard();
+        ResetBoard();
     }
 
     private void OnValidate()
@@ -52,6 +54,8 @@ public class BoardManager : MonoBehaviour
 
     private void InitializeBoard()
     {
+        _currentWord = 0;
+        _currentLetter = 0;
         for (var guess = 0; guess < GuessLimit; guess++)
         {
             for (var word = 0; word < WordLength; word++)
@@ -61,5 +65,31 @@ public class BoardManager : MonoBehaviour
                 _letterSquares.Add(letterSquare.GetComponent<LetterSquare>());
             }
         }
+    }
+
+    public static void SubmitWord()
+    {
+        if (Instance._currentLetter < Instance.WordLength)
+            return;
+        Instance._currentLetter = 0;
+        Instance._currentWord++;
+    }
+
+    public static void SubmitLetter(char c)
+    {
+        if (Instance._currentLetter == Instance.WordLength)
+            return;
+        Instance._letterSquares[CurrentIndex].SetLetter(c);
+        Instance._currentLetter++;
+    }
+
+    public static int CurrentIndex => Instance._currentLetter + Instance._currentWord * Instance.WordLength;
+
+    public static void DeleteLetter()
+    {
+        if (Instance._currentLetter == 0)
+            return;
+        Instance._letterSquares[CurrentIndex-1].ClearLetter();
+        Instance._currentLetter--;
     }
 }

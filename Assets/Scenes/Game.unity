@@ -304,8 +304,8 @@ MonoBehaviour:
   LetterSquarePrefab: {fileID: 7127276805959695394, guid: fc4715bda930bf34ab36436d1bb238f4, type: 3}
   WordLength: 4
   GuessLimit: 4
-  WordSpacing: 0
-  GuessSpacing: 0
+  WordSpacing: 0.036
+  GuessSpacing: 0.058
 --- !u!4 &959235160
 Transform:
   m_ObjectHideFlags: 0

@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Manager<GameManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    public static void WordSubmitted()
     {
-        
+        BoardManager.SubmitWord();
     }
 
-    // Update is called once per frame
-    void Update()
+    public static void LetterEntered(char letter)
     {
-        
+        BoardManager.SubmitLetter(letter);
+    }
+    public static void DeleteLetter()
+    {
+        BoardManager.DeleteLetter();
     }
 }
