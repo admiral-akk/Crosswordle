@@ -1,9 +1,10 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Structs
 {
-    public readonly struct PlayerInput
+    public readonly struct PlayerInput 
     {
         public enum InputType
         {
@@ -34,5 +35,6 @@ namespace Assets.Scripts.Structs
             {
                 return new PlayerInput(InputType.SubmitWord);
             }
+
     }
 }

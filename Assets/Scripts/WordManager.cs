@@ -1,11 +1,12 @@
+using Assets.Scripts.Structs;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class WordManager : MonoBehaviour
 {
-    private HashSet<string> _dictionary;
-    private List<List<string>> _dictionaries;
+    private HashSet<Guess> _dictionary;
+    private List<List<Guess>> _dictionaries;
 
     private void Awake()
     {
@@ -14,27 +15,28 @@ public class WordManager : MonoBehaviour
 
     private void InitializeDictionary()
     {
-        _dictionary = new HashSet<string>();
-        _dictionaries = new List<List<string>>();
+        _dictionary = new HashSet<Guess>();
+        _dictionaries = new List<List<Guess>>();
         var words = File.ReadLines("Assets/Data/words.txt");
         foreach (var word in words)
         {
-            _dictionary.Add(word.ToUpper());
+            var guess = new Guess(word);
+            _dictionary.Add(guess);
             while (_dictionaries.Count < word.Length)
             {
-                _dictionaries.Add(new List<string>());
+                _dictionaries.Add(new List<Guess>());
             }
-            _dictionaries[word.Length-1].Add(word);
+            _dictionaries[word.Length-1].Add(guess);
         }
     }
 
-    public bool IsWord(string word)
+    public bool IsWord(Guess guess)
     {
-        return _dictionary.Contains(word);
+        return _dictionary.Contains(guess);
     }
 
 
-    public string GetRandomWord(int length)
+    public Guess GetRandomWord(int length)
     {
         return _dictionaries[length-1][Random.Range(0, _dictionaries[length-1].Count)];
     }

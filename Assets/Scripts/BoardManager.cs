@@ -1,3 +1,4 @@
+using Assets.Scripts.Structs;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,13 +55,13 @@ public class BoardManager : MonoBehaviour
         return Vector3.Scale(Spacing, new Vector3(letterIndex, -guessIndex) + Offset);
     }
 
-    private string _targetWord;
+    private Guess _targetWord;
 
     private void InitializeBoard()
     {
         _currentWord = 0;
         _currentLetter = 0;
-        _targetWord = words.GetRandomWord(WordLength).ToUpper();
+        _targetWord = words.GetRandomWord(WordLength);
         Debug.Log("Target word is: '" + _targetWord + "'");
         for (var guess = 0; guess < GuessLimit; guess++)
         {
@@ -83,10 +84,10 @@ public class BoardManager : MonoBehaviour
 
     }
 
-    private string CurrentGuess {
+    private Guess CurrentGuess {
         get
         {
-           return CurrentSquares.Select(l => l.Letter).Aggregate("", (c, s) =>  c+s);
+           return (Guess)CurrentSquares.Select(l => l.Letter).Aggregate("", (c, s) =>  c+s);
         }
     }
 
@@ -105,12 +106,11 @@ public class BoardManager : MonoBehaviour
         for (var i = 0; i < CurrentSquares.Count; i++)
         {
             var square = CurrentSquares[i];
-            var c = square.Letter;
-            if (_targetWord[i] == c)
+            if (_targetWord[i] == CurrentGuess[i])
             {
                 square.SetState(LetterSquare.State.RightPosition);
             }
-            else if (_targetWord.Any(l => l == c))
+            else if (_targetWord.Any(l => l == CurrentGuess[i]))
             {
                 square.SetState(LetterSquare.State.WrongPosition);
             }
