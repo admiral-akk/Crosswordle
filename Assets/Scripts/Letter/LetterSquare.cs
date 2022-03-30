@@ -29,6 +29,8 @@ public class LetterSquare : MonoBehaviour
             set
         {
             letter.text = value.ToString().ToUpper();
+            if (GetComponent<Pop>() == null)
+                gameObject.AddComponent(typeof(Pop));
         }
     }
 

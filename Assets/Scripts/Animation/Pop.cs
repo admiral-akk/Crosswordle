@@ -7,7 +7,7 @@ public class Pop : MonoBehaviour
     private Vector3 _initialScale;
     private float _timeLeft;
     private static float _animationTime = 0.3f;
-    private static float _magnitude = 0.3f;
+    private static float _magnitude = 0.2f;
 
     private void Awake()
     {
