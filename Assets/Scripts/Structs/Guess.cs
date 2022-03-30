@@ -31,6 +31,7 @@ namespace Assets.Scripts.Structs
             return (string)this;
         }
 
+        public int Length => _guess.Length;
         public char this[int i] => _guess[i];
         public static explicit operator Guess(string word) => new Guess(word);
         public static explicit operator string(Guess g) => g._guess;

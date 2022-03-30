@@ -1,18 +1,16 @@
+using Assets.Scripts.Structs;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class KeyboardManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Dictionary<char, int> _keys;
+    public void SubmitGuess(Guess guess)
     {
-        
-    }
+        foreach (var c in guess)
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
     }
 }

@@ -104,20 +104,21 @@ public class BoardManager : MonoBehaviour
         Debug.Log("Current guess: '" + CurrentGuess + "'");
         Debug.Log("Target word: '" + _targetWord + "'");
 
-        for (var i = 0; i < CurrentSquares.Count; i++)
+        var result = new GuessResult(CurrentGuess, _targetWord);
+        for (var i = 0; i < result.Results.Length; i++)
         {
             var square = CurrentSquares[i];
-            if (_targetWord[i] == CurrentGuess[i])
+            switch (result.Results[i])
             {
-                square.SetState(LetterSquare.State.RightPosition);
-            }
-            else if (_targetWord.Any(l => l == CurrentGuess[i]))
-            {
-                square.SetState(LetterSquare.State.WrongPosition);
-            }
-            else
-            {
-                square.SetState(LetterSquare.State.Wrong);
+                case GuessResult.ResultType.NotInAnswer:
+                    square.SetState(LetterSquare.State.Wrong);
+                    break;
+                case GuessResult.ResultType.WrongPosition:
+                    square.SetState(LetterSquare.State.WrongPosition);
+                    break;
+                case GuessResult.ResultType.Correct:
+                    square.SetState(LetterSquare.State.RightPosition);
+                    break;
             }
         }
 
