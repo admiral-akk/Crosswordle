@@ -121,7 +121,7 @@ public class BoardManager : MonoBehaviour
         var result = new GuessResult(CurrentGuess, _targetWord);
         for (var i = 0; i < result.Results.Length; i++)
         { 
-            CurrentSquares[i].HandleResult(result.Results[i]);
+            CurrentSquares[i].HandleResult(result.Results[i], i * 0.2f);
         }
 
         _currentLetter = 0;

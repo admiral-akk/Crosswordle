@@ -74,19 +74,33 @@ public class LetterSquare : MonoBehaviour
         S = State.None;
     }
 
-    public void HandleResult(ResultType resultType)
+
+    private IEnumerator UpdateState(State state, float delay)
     {
+        yield return new WaitForSeconds(delay);
+        gameObject.AddComponent(typeof(Pop));
+        yield return new WaitForSeconds(0.1f);
+        S = state;
+    }
+
+    public void HandleResult(ResultType resultType, float delay)
+    {
+        State newState;
         switch (resultType)
         {
+            default:
+                newState = State.None;
+                break;
             case ResultType.NotInAnswer:
-                S = State.Wrong;
+                newState = State.Wrong;
                 break;
             case ResultType.WrongPosition:
-                S = State.WrongPosition;
+                newState = State.WrongPosition;
                 break;
             case ResultType.Correct:
-                S = State.RightPosition;
+                newState = State.RightPosition;
                 break;
         }
+        StartCoroutine(UpdateState(newState, delay));
     }
 }
