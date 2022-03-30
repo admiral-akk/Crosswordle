@@ -19,7 +19,7 @@ public class BoardManager : MonoBehaviour
     private int _currentWord;
     private int _currentLetter;
 
- private void Awake()
+    private void Awake()
     {
         _letterSquares = new List<LetterSquare>();
     }
@@ -84,15 +84,16 @@ public class BoardManager : MonoBehaviour
 
     }
 
-    private Guess CurrentGuess {
+    private Guess CurrentGuess
+    {
         get
         {
-           return (Guess)CurrentSquares.Select(l => l.Letter).Aggregate("", (c, s) =>  c+s);
+            return (Guess)CurrentSquares.Select(l => l.Letter).Aggregate("", (c, s) => c + s);
         }
     }
 
     private int CurrentIndex => _currentLetter + _currentWord * WordLength;
-    public  void SubmitWord()
+    public void SubmitWord()
     {
         Debug.Log("Current guess: '" + CurrentGuess + "'");
         Debug.Log("Target word: '" + _targetWord + "'");
@@ -124,7 +125,7 @@ public class BoardManager : MonoBehaviour
         _currentWord++;
     }
 
-    public  void SubmitLetter(char c)
+    public void SubmitLetter(char c)
     {
         if (_currentLetter == WordLength)
             return;
@@ -132,11 +133,11 @@ public class BoardManager : MonoBehaviour
         _currentLetter++;
     }
 
-    public  void DeleteLetter()
+    public void DeleteLetter()
     {
         if (_currentLetter == 0)
             return;
-        _letterSquares[CurrentIndex-1].ClearLetter();
+        _letterSquares[CurrentIndex - 1].ClearLetter();
         _currentLetter--;
     }
 }
