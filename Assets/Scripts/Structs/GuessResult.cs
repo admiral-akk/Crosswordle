@@ -38,5 +38,10 @@ namespace Assets.Scripts.Structs
             }
             Results = results;
         }
+
+        public bool CorrectAnswer()
+        {
+            return Results.All(t => t == ResultType.Correct);
+        }
     }
 }

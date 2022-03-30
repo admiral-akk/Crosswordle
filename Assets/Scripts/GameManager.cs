@@ -5,6 +5,26 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private BoardManager board;
     [SerializeField] private InputManager input;
+    [SerializeField] private AnswerManager answer;
+    [SerializeField] private KeyboardManager keyboard;
+
+    private void Start()
+    {
+        NewGame();
+    }
+
+    private void NewGame()
+    {
+        answer.NewGame();
+        board.NewGame();
+        input.NewGame();
+        keyboard.NewGame();
+    }
+
+    public void GameOver()
+    {
+        input.GameOver();
+    }
 
     private void Update()
     {
@@ -23,6 +43,9 @@ public class GameManager : MonoBehaviour
                 break;
             case InputType.SubmitWord:
                 board.SubmitWord();
+                break;
+            case InputType.NewGame:
+                NewGame();
                 break;
         }
     }

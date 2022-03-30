@@ -15,6 +15,8 @@ public class BoardManager : MonoBehaviour
 
     [SerializeField] private WordManager words;
     [SerializeField] private KeyboardManager keyboard;
+    [SerializeField] private AnswerManager answer;
+    [SerializeField] private GameManager game;
 
     private List<LetterSquare> _letterSquares;
     private bool _resetBoard;
@@ -63,7 +65,6 @@ public class BoardManager : MonoBehaviour
         _currentWord = 0;
         _currentLetter = 0;
         _targetWord = words.GetRandomWord(WordLength);
-        Debug.Log("Target word is: '" + _targetWord + "'");
         for (var guess = 0; guess < GuessLimit; guess++)
         {
             for (var word = 0; word < WordLength; word++)
@@ -93,16 +94,17 @@ public class BoardManager : MonoBehaviour
     }
 
     private int CurrentIndex => _currentLetter + _currentWord * WordLength;
+
+    public void NewGame()
+    {
+        ResetBoard();
+    }
     public void SubmitWord()
     {
-        Debug.Log("Current guess: '" + CurrentGuess + "'");
-        Debug.Log("Target word: '" + _targetWord + "'");
         if (_currentLetter < WordLength)
             return;
         if (!words.IsWord(CurrentGuess))
             return;
-        Debug.Log("Current guess: '" + CurrentGuess + "'");
-        Debug.Log("Target word: '" + _targetWord + "'");
 
         var result = new GuessResult(CurrentGuess, _targetWord);
         for (var i = 0; i < result.Results.Length; i++)
@@ -113,11 +115,23 @@ public class BoardManager : MonoBehaviour
         _currentLetter = 0;
         _currentWord++;
         keyboard.HandleResult(result);
+        if (result.CorrectAnswer())
+        {
+            answer.Success(_targetWord);
+            game.GameOver();
+        }
+        else if (_currentWord == GuessLimit)
+        {
+            answer.GameOver(_targetWord);
+            game.GameOver();
+        }
     }
 
     public void SubmitLetter(char c)
     {
         if (_currentLetter == WordLength)
+            return;
+        if (_currentWord == GuessLimit)
             return;
         _letterSquares[CurrentIndex].Letter = c;
         _currentLetter++;

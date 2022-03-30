@@ -34,7 +34,14 @@ public class KeyboardManager : MonoBehaviour
             var c = result.Guess[i];
             var resultVal = result.Results[i];
             _keys[c].HandleResult(resultVal);
-            Debug.Log("Char '" + c + "' is now '" + resultVal.ToString() + "'");
+        }
+    }
+
+    public void NewGame()
+    {
+        foreach (var key in  _keys.Values)
+        {
+            key.NewGame();
         }
     }
 }

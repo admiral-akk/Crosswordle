@@ -1,8 +1,11 @@
 using Assets.Scripts.Structs;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
+
+    [SerializeField] private Button newGame;
     private PlayerInput? _input;
     public bool HasInput => _input.HasValue;
     public PlayerInput GetInput()
@@ -33,4 +36,26 @@ public class InputManager : MonoBehaviour
             return;
         }
     }
+
+    private void Awake()
+    {
+        newGame.onClick.AddListener(TriggerNewGame);
+        newGame.gameObject.SetActive(false);
+    }
+
+    private void TriggerNewGame()
+    {
+        _input = PlayerInput.NewGame();
+    }
+
+    public void NewGame()
+    {
+        newGame.gameObject.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        newGame.gameObject.SetActive(true);
+    }
+
 }

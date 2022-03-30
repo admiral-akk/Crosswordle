@@ -7,7 +7,8 @@
             None,
             AddLetter,
             Delete,
-            SubmitWord
+            SubmitWord, 
+            NewGame
         }
 
         public readonly InputType Type;
@@ -31,6 +32,11 @@
         public static PlayerInput Enter()
         {
             return new PlayerInput(InputType.SubmitWord);
+        }
+
+        public static PlayerInput NewGame()
+        {
+            return new PlayerInput(InputType.NewGame);
         }
 
     }

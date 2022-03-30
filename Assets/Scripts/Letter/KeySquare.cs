@@ -49,6 +49,7 @@ public class KeySquare : MonoBehaviour
     private State _s;
     private State S
     {
+        get => _s;
         set
         {
             switch (value)
@@ -72,6 +73,11 @@ public class KeySquare : MonoBehaviour
 
     private void Awake()
     {
+        NewGame();
+    }
+
+    public void NewGame()
+    {
         S = State.None;
     }
 
@@ -83,6 +89,8 @@ public class KeySquare : MonoBehaviour
                 S = State.Wrong;
                 break;
             case ResultType.WrongPosition:
+                if (S == State.RightPosition)
+                    break;
                 S = State.WrongPosition;
                 break;
             case ResultType.Correct:
