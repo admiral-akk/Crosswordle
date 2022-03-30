@@ -27,6 +27,10 @@ namespace Assets.Scripts.Structs
             }
             for (var i = 0; i < guess.Length; i++)
             {
+                if (results[i] == ResultType.Correct)
+                {
+                    continue;
+                }
                 if (Enumerable.Range(0, guess.Length).Any(index => results[index] != ResultType.Correct && guess[i] == answer[index]))
                 {
                     results[i] = ResultType.WrongPosition;

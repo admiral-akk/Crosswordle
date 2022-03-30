@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static Assets.Scripts.Structs.GuessResult;
 
 public class LetterSquare : MonoBehaviour
 {
@@ -44,21 +45,47 @@ public class LetterSquare : MonoBehaviour
         RightPosition,
     }
 
-    public void SetState(State state)
+    private State _s;
+    private State S
     {
-        switch (state)
+        set
         {
-            case State.None:
-                background.color = Default;
+            switch (value)
+            {
+                case State.None:
+                    background.color = Default;
+                    break;
+                case State.Wrong:
+                    background.color = Wrong;
+                    break;
+                case State.WrongPosition:
+                    background.color = WrongPosition;
+                    break;
+                case State.RightPosition:
+                    background.color = RightPosition;
+                    break;
+            }
+            _s = value;
+        }
+    }
+
+    private void Awake()
+    {
+        S = State.None;
+    }
+
+    public void HandleResult(ResultType resultType)
+    {
+        switch (resultType)
+        {
+            case ResultType.NotInAnswer:
+                S = State.Wrong;
                 break;
-            case State.Wrong:
-                background.color = Wrong;
+            case ResultType.WrongPosition:
+                S = State.WrongPosition;
                 break;
-            case State.WrongPosition:
-                background.color = WrongPosition;
-                break;
-            case State.RightPosition:
-                background.color = RightPosition;
+            case ResultType.Correct:
+                S = State.RightPosition;
                 break;
         }
     }

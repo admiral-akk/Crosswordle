@@ -11,6 +11,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField, Range(1, 10)] private int GuessLimit;
     [SerializeField, Range(0, 1)] private float WordSpacing;
     [SerializeField, Range(0, 1)] private float GuessSpacing;
+    [SerializeField] private float YOffset;
 
     [SerializeField] private WordManager words;
     [SerializeField] private KeyboardManager keyboard;
@@ -48,7 +49,7 @@ public class BoardManager : MonoBehaviour
     }
 
     private Vector3 Spacing => new Vector3(1 + WordSpacing, 1 + GuessSpacing);
-    private Vector3 Offset => new Vector3((1f - WordLength) / 2, (GuessLimit - 1f) / 2);
+    private Vector3 Offset => new Vector3((1f - WordLength) / 2, (GuessLimit - 1f) / 2 + YOffset);
 
     private Vector3 Position(int letterIndex, int guessIndex)
     {
@@ -69,7 +70,6 @@ public class BoardManager : MonoBehaviour
             {
                 var letterSquare = Instantiate(LetterSquarePrefab, transform).GetComponent<LetterSquare>();
                 letterSquare.transform.localPosition = Position(word, guess);
-                letterSquare.SetState(LetterSquare.State.None);
                 _letterSquares.Add(letterSquare);
             }
         }
@@ -106,20 +106,8 @@ public class BoardManager : MonoBehaviour
 
         var result = new GuessResult(CurrentGuess, _targetWord);
         for (var i = 0; i < result.Results.Length; i++)
-        {
-            var square = CurrentSquares[i];
-            switch (result.Results[i])
-            {
-                case GuessResult.ResultType.NotInAnswer:
-                    square.SetState(LetterSquare.State.Wrong);
-                    break;
-                case GuessResult.ResultType.WrongPosition:
-                    square.SetState(LetterSquare.State.WrongPosition);
-                    break;
-                case GuessResult.ResultType.Correct:
-                    square.SetState(LetterSquare.State.RightPosition);
-                    break;
-            }
+        { 
+            CurrentSquares[i].HandleResult(result.Results[i]);
         }
 
         _currentLetter = 0;
@@ -129,6 +117,7 @@ public class BoardManager : MonoBehaviour
 
     public void SubmitLetter(char c)
     {
+        Debug.Log("TRIGGER GUI: " + c);
         if (_currentLetter == WordLength)
             return;
         _letterSquares[CurrentIndex].Letter = c;

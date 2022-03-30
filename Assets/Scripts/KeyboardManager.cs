@@ -1,16 +1,31 @@
 using Assets.Scripts.Structs;
 using System.Collections.Generic;
 using UnityEngine;
-using static Assets.Scripts.Structs.GuessResult;
 
 public class KeyboardManager : MonoBehaviour
 {
-    private Dictionary<char, ResultType> _keys;
+    private Dictionary<char, KeySquare> _keys;
+    [SerializeField] private GameObject KeyPrefab;
+    [SerializeField] private Canvas[] KeyRows;
 
     private void Awake()
     {
-        _keys = new Dictionary<char, ResultType>();
+        _keys = new Dictionary<char, KeySquare>();
+        for (var i = 0; i < KeyboardLayout.Length; i++)
+        {
+            foreach (var c in KeyboardLayout[i])
+            {
+                var key = Instantiate(KeyPrefab, KeyRows[i].transform).GetComponent<KeySquare>();
+                key.Letter = c;
+                _keys[c] = key;
+            }
+        }
     }
+
+    private static readonly string[] KeyboardLayout =
+    {
+        "qwertyuiop", "asdfghjkl", "zxcvbnm"
+    };
 
     public void HandleResult(GuessResult result)
     {
@@ -18,7 +33,7 @@ public class KeyboardManager : MonoBehaviour
         {
             var c = result.Guess[i];
             var resultVal = result.Results[i];
-            _keys[c] = resultVal;
+            _keys[c].HandleResult(resultVal);
             Debug.Log("Char '" + c + "' is now '" + resultVal.ToString() + "'");
         }
     }
