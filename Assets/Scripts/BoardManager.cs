@@ -48,7 +48,8 @@ public class BoardManager : MonoBehaviour
         ResetBoard();
     }
 
-    private Vector3 Spacing => new Vector3(1 + WordSpacing, 1 + GuessSpacing);
+
+    private Vector3 Spacing => new Vector3(0.8f + WordSpacing, 0.8f + GuessSpacing);
     private Vector3 Offset => new Vector3((1f - WordLength) / 2, (GuessLimit - 1f) / 2 + YOffset);
 
     private Vector3 Position(int letterIndex, int guessIndex)

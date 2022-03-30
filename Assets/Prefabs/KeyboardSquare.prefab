@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 251966257420319103}
   - component: {fileID: 5103381292538914358}
   - component: {fileID: 3004393699166729722}
+  - component: {fileID: 5532342601099076727}
   m_Layer: 0
   m_Name: KeyboardSquare
   m_TagString: Untagged
@@ -246,7 +247,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 80, y: 80}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0, y: 0}
 --- !u!223 &5103381292538914358
 Canvas:
@@ -287,3 +288,11 @@ MonoBehaviour:
   Wrong: {r: 0.38823533, g: 0.38823533, b: 0.38823533, a: 1}
   WrongPosition: {r: 0.87843144, g: 0.7490196, b: 0.13725491, a: 1}
   RightPosition: {r: 0.015686275, g: 0.46274513, b: 0.03529412, a: 1}
+--- !u!222 &5532342601099076727
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7127276805959695394}
+  m_CullTransparentMesh: 1

@@ -414,8 +414,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -362.5}
-  m_SizeDelta: {x: 0, y: -725}
+  m_AnchoredPosition: {x: 0, y: -375}
+  m_SizeDelta: {x: 0, y: -750}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &136277279
 MonoBehaviour:
@@ -776,9 +776,9 @@ MonoBehaviour:
   LetterSquarePrefab: {fileID: 7127276805959695394, guid: fc4715bda930bf34ab36436d1bb238f4, type: 3}
   WordLength: 5
   GuessLimit: 6
-  WordSpacing: 0.04
-  GuessSpacing: 0.06
-  YOffset: 1.33
+  WordSpacing: 0.08
+  GuessSpacing: 0.12
+  YOffset: 1.75
   words: {fileID: 1880042301}
   keyboard: {fileID: 136277279}
 --- !u!4 &959235160
