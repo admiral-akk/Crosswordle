@@ -13,6 +13,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField, Range(0, 1)] private float GuessSpacing;
 
     [SerializeField] private WordManager words;
+    [SerializeField] private KeyboardManager keyboard;
 
     private List<LetterSquare> _letterSquares;
     private bool _resetBoard;
@@ -35,7 +36,6 @@ public class BoardManager : MonoBehaviour
             Destroy(letterSquare.gameObject);
 
         _letterSquares.Clear();
-
         InitializeBoard();
     }
 
@@ -124,6 +124,7 @@ public class BoardManager : MonoBehaviour
 
         _currentLetter = 0;
         _currentWord++;
+        keyboard.HandleResult(result);
     }
 
     public void SubmitLetter(char c)

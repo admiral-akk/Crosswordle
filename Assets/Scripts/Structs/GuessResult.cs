@@ -20,14 +20,14 @@ namespace Assets.Scripts.Structs
             var results = new ResultType[guess.Length];
             for (var i = 0; i < guess.Length; i++)
             {
-                if (guess[i] != answer[i])
+                if (guess[i] == answer[i])
                 {
                     results[i] = ResultType.Correct;
                 }
             }
             for (var i = 0; i < guess.Length; i++)
             {
-                if (Enumerable.Range(0, guess.Length).Any(index => results[index] == ResultType.NotInAnswer && guess[index] == answer[index]))
+                if (Enumerable.Range(0, guess.Length).Any(index => results[index] != ResultType.Correct && guess[i] == answer[index]))
                 {
                     results[i] = ResultType.WrongPosition;
                 }
