@@ -50,6 +50,30 @@ public readonly struct WordData
         return matches;
     }
 
+    public bool IsLegal(WordData other)
+    {
+        var adjacent = Adjacent(other);
+
+        // If they aren't adjacent, they don't interact.
+        if (!adjacent)
+            return true;
+
+        // If they are adjacent and parallel, it's illegal.
+        if (IsHorizontal == other.IsHorizontal)
+            return false;
+
+        var intersects = Intersect(other);
+
+        // If they are adjacent, orthogonal, and don't intersect, it's illegal.
+        if (!intersects)
+            return false;
+
+        var intersection = Intersection(other);
+
+        // If they are adjacent, orthogonal, and intersect, then the letters should match.
+        return Word[intersection.x] == other.Word[intersection.y];
+    }
+
     private bool Adjacent(Vector2Int point)
     {
         var xDelta = point.x - StartPosition.x;
@@ -104,29 +128,5 @@ public readonly struct WordData
         if (!IsHorizontal)
             return other.Intersection(this);
         return new Vector2Int(other.StartPosition.x, StartPosition.y);
-    }
-
-    public bool IsLegal(WordData other)
-    {
-        var adjacent = Adjacent(other);
-
-        // If they aren't adjacent, they don't interact.
-        if (!adjacent)
-            return true;
-
-        // If they are adjacent and parallel, it's illegal.
-        if (IsHorizontal == other.IsHorizontal)
-            return false;
-
-        var intersects = Intersect(other);
-
-        // If they are adjacent, orthogonal, and don't intersect, it's illegal.
-        if (!intersects)
-            return false;
-
-        var intersection = Intersection(other);
-
-        // If they are adjacent, orthogonal, and intersect, then the letters should match.
-        return Word[intersection.x] == other.Word[intersection.y];
     }
 }
