@@ -68,7 +68,7 @@ public readonly struct WordData
         if (!IsHorizontal)
             return other.Adjacent(this);
         var intersectionPoint = Intersection(other);
-        return false;
+        return Adjacent(intersectionPoint) && other.Adjacent(intersectionPoint);
     }
     private bool Intersect(WordData other)
     {
