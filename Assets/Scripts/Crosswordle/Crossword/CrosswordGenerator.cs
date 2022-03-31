@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class CrosswordGenerator : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private string[] Words;
 
-    // Update is called once per frame
-    void Update()
+    private void OnValidate()
     {
-        
+        var data = CrosswordData.GenerateCrossword(Words);
+        Debug.Log(data.ToString());
     }
 }
