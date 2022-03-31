@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class CrosswordSquareManager : MonoBehaviour
+public class CrosswordSquareRenderer : MonoBehaviour
 {
     [Header("Parameters")]
     [SerializeField] private Color None;
@@ -15,5 +15,10 @@ public class CrosswordSquareManager : MonoBehaviour
     public void UpdatePosition(Vector2Int position, Vector2Int dimensions)
     {
         transform.position = new Vector3(position.x, position.y);
+    }
+
+    public void UpdateLetter(string c)
+    {
+        Letter.text = c;
     }
 }
