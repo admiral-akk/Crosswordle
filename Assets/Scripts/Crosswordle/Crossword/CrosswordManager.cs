@@ -57,6 +57,7 @@ public class CrosswordManager : MonoBehaviour
 
         GenerateCrossword();
         Debug.Log(_crossword.ToString());
+        Renderer.Render(_crossword);
     }
 
 

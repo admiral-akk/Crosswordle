@@ -218,9 +218,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f86067d1e143da448ad04431e561370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WordCount: 13
-  SampleLimit: 53
+  WordCount: 20
+  SampleLimit: 46
   SquarePrefab: {fileID: 4612142088829400515, guid: 369252e86568c224c93923c7824e9177, type: 3}
+  Renderer: {fileID: 1846895356}
 --- !u!4 &1422522445
 Transform:
   m_ObjectHideFlags: 0
@@ -327,6 +328,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1846895355}
+  - component: {fileID: 1846895356}
   m_Layer: 0
   m_Name: CrosswordRenderer
   m_TagString: Untagged
@@ -348,3 +350,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1846895356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846895354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e26983c9334fa43b8d3789e35045bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Square: {fileID: 4612142088829400515, guid: 369252e86568c224c93923c7824e9177, type: 3}
