@@ -76,7 +76,10 @@ public readonly struct WordData
         var intersection = Intersection(other);
 
         // If they are adjacent, orthogonal, and intersect, then the letters should match.
-        return Word[intersection.x] == other.Word[intersection.y];
+        if (IsHorizontal)
+            return Word[intersection.x - StartPosition.x] == other.Word[intersection.y - other.StartPosition.y];
+        else
+            return Word[intersection.y - StartPosition.y] == other.Word[intersection.x - other.StartPosition.x];
     }
 
     private bool Adjacent(Vector2Int point)

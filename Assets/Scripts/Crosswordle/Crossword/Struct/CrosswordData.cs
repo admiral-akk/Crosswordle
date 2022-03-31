@@ -71,9 +71,9 @@ public readonly struct CrosswordData
             maxX = Mathf.Max(crosswords[i].StartPosition.x+1, maxX);
             maxY = Mathf.Max(crosswords[i].StartPosition.y+1, maxY);
             if (crosswords[i].IsHorizontal)
-                maxX = Mathf.Max(crosswords[i].StartPosition.x + 1 + crosswords[i].Word.Length, maxX);
+                maxX = Mathf.Max(crosswords[i].StartPosition.x + crosswords[i].Word.Length, maxX);
             else
-                maxY = Mathf.Max(crosswords[i].StartPosition.y + 1 + crosswords[i].Word.Length, maxY);
+                maxY = Mathf.Max(crosswords[i].StartPosition.y + crosswords[i].Word.Length, maxY);
 
         }
         return (maxX, maxY);

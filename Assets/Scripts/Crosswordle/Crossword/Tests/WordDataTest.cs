@@ -75,10 +75,10 @@ public class WordDataTest
     }
 
     [Test]
-    public void WordDataTestIsLegalParallelNone()
+    public void WordDataTestIsLegalCase1()
     {
         var word = new WordData("hello", Vector2Int.zero, true);
-        var other = new WordData("olleh", 4 * Vector2Int.right + 2*Vector2Int.down, true);
+        var other = new WordData("loser",  Vector2Int.right + 3*Vector2Int.down, false);
 
         Assert.IsTrue(word.IsLegal(other));
         Assert.IsTrue(other.IsLegal(word));
