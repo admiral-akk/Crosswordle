@@ -6,7 +6,7 @@ public class CrosswordGenerator : MonoBehaviour
 
     private void OnValidate()
     {
-        var data = CrosswordData.GenerateCrossword(Words);
-        Debug.Log(data.ToString());
+       // var data = CrosswordData.GenerateCrossword(Words);
+       // Debug.Log(data.ToString());
     }
 }
