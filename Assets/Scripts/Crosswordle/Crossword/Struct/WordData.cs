@@ -69,11 +69,18 @@ public readonly struct WordData
 
     private bool Adjacent(WordData other)
     {
-        if (!IsHorizontal)
+        if (IsHorizontal == other.IsHorizontal)
+        {
+            return Adjacent(other.StartPosition) || other.Adjacent(StartPosition);
+        } else if (!IsHorizontal)
+        {
             return other.Adjacent(this);
+        }
         var intersectionPoint = Intersection(other);
         return Adjacent(intersectionPoint) && other.Adjacent(intersectionPoint);
     }
+
+    // We assume that the two words are orthogonal.
     private bool Intersect(WordData other)
     {
         if (!IsHorizontal)
@@ -99,27 +106,27 @@ public readonly struct WordData
         return new Vector2Int(other.StartPosition.x, StartPosition.y);
     }
 
-    // Placement is illegal if:
-    // 1. The two words are adjacent and don't intersect.
-    // 2. The two words are parallel and intersect.
-    // 3. The two words are orthogonal, intersect, and have different characters where they intersect.
     public bool IsLegal(WordData other)
     {
-        var intersects = Intersect(other);
         var adjacent = Adjacent(other);
-        if (!intersects)
-        {
-            return adjacent;
-        }
-        if (IsHorizontal == other.IsHorizontal && intersects)
-        {
+
+        // If they aren't adjacent, they don't interact.
+        if (!adjacent)
+            return true;
+
+        // If they are adjacent and parallel, it's illegal.
+        if (IsHorizontal == other.IsHorizontal)
             return false;
-        }
-        if (IsHorizontal != other.IsHorizontal && intersects)
-        {
-            var intersection = Intersection(other);
-            return Word[intersection.x] == other.Word[intersection.y];
-        }
-        return true;
+
+        var intersects = Intersect(other);
+
+        // If they are adjacent, orthogonal, and don't intersect, it's illegal.
+        if (!intersects)
+            return false;
+
+        var intersection = Intersection(other);
+
+        // If they are adjacent, orthogonal, and intersect, then the letters should match.
+        return Word[intersection.x] == other.Word[intersection.y];
     }
 }
