@@ -189,7 +189,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1178624682
+--- !u!1 &1422522443
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -197,37 +197,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1178624684}
-  - component: {fileID: 1178624683}
+  - component: {fileID: 1422522445}
+  - component: {fileID: 1422522444}
   m_Layer: 0
-  m_Name: CrosswordGenerator
+  m_Name: CrosswordManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1178624683
+--- !u!114 &1422522444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178624682}
+  m_GameObject: {fileID: 1422522443}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa32a348d113127409c28b755246680c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f86067d1e143da448ad04431e561370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Words:
-  - ba
-  - ab
---- !u!4 &1178624684
+  WordCount: 10
+  RetryLimit: 50
+  SquarePrefab: {fileID: 4612142088829400515, guid: 369252e86568c224c93923c7824e9177, type: 3}
+--- !u!4 &1422522445
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178624682}
+  m_GameObject: {fileID: 1422522443}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.7766376, y: 1.272829, z: -0.6806568}
   m_LocalScale: {x: 1, y: 1, z: 1}

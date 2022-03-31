@@ -14,7 +14,7 @@ public class CrosswordTest
             "aaa","aaa"
         };
 
-        var crossword = CrosswordData.GenerateCrossword(words);
+        var crossword = CrosswordData.GenerateCrossword(words).Value;
 
         Assert.AreEqual(2, crossword.Words.Length);
         Debug.Log(crossword.ToString());
@@ -28,7 +28,7 @@ public class CrosswordTest
             "ab","ba"
         };
 
-        var crossword = CrosswordData.GenerateCrossword(words);
+        var crossword = CrosswordData.GenerateCrossword(words).Value;
 
         Assert.AreEqual(2, crossword.Words.Length);
         Debug.Log(crossword.ToString());
@@ -42,7 +42,7 @@ public class CrosswordTest
             "hello","loser"
         };
 
-        var crossword = CrosswordData.GenerateCrossword(words);
+        var crossword = CrosswordData.GenerateCrossword(words).Value;
 
         Assert.AreEqual(2, crossword.Words.Length);
         Debug.Log(crossword.ToString());
@@ -56,7 +56,7 @@ public class CrosswordTest
             "math","different"
         };
 
-        var crossword = CrosswordData.GenerateCrossword(words);
+        var crossword = CrosswordData.GenerateCrossword(words).Value;
 
         Assert.AreEqual(2, crossword.Words.Length);
         Debug.Log(crossword.ToString());
@@ -70,17 +70,9 @@ public class CrosswordTest
             "yolo","different"
         };
 
-        var exceptionTriggered = false;
+        var crossword = CrosswordData.GenerateCrossword(words);
 
-        try
-        {
-            var crossword = CrosswordData.GenerateCrossword(words);
-        } catch (Exception e)
-        {
-            exceptionTriggered = true;
-        }
-
-        Assert.True(exceptionTriggered);
+        Assert.IsNull(crossword);
     }
 
     [Test]
@@ -92,18 +84,9 @@ public class CrosswordTest
             "bob", "dog", "fro"
         };
 
-        var exceptionTriggered = false;
+        var crossword = CrosswordData.GenerateCrossword(words);
 
-        try
-        {
-            var crossword = CrosswordData.GenerateCrossword(words);
-        }
-        catch (Exception e)
-        {
-            exceptionTriggered = true;
-        }
-
-        Assert.True(exceptionTriggered);
+        Assert.IsNull(crossword);
     }
 
     [Test]
@@ -115,18 +98,9 @@ public class CrosswordTest
             "bod", "orange", "dyu"
         };
 
-        var exceptionTriggered = false;
+        var crossword = CrosswordData.GenerateCrossword(words);
 
-        try
-        {
-            var crossword = CrosswordData.GenerateCrossword(words);
-        }
-        catch (Exception e)
-        {
-            exceptionTriggered = true;
-        }
-
-        Assert.True(exceptionTriggered);
+        Assert.IsNull(crossword);
     }
 
     [Test]
@@ -138,7 +112,7 @@ public class CrosswordTest
             "bod", "orange", "dyug"
         };
 
-        var crossword = CrosswordData.GenerateCrossword(words);
+        var crossword = CrosswordData.GenerateCrossword(words).Value;
 
         Assert.AreEqual(3, crossword.Words.Length);
         Debug.Log(crossword.ToString());

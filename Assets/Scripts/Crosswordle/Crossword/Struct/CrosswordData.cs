@@ -42,7 +42,7 @@ public readonly struct CrosswordData
         return false;
     }
 
-    public static CrosswordData GenerateCrossword(string[] words)
+    public static CrosswordData? GenerateCrossword(string[] words)
     {
         if (words.Length == 0)
             return new CrosswordData();
@@ -51,7 +51,7 @@ public readonly struct CrosswordData
         crosswords[0] = new WordData(words[0]);
         var success = GenerateCrossword(crosswords, words, 1);
         if (!success)
-            throw new System.Exception("Couldn't find valid crossword!");
+            return null;
         return new CrosswordData(crosswords);
     }
 
@@ -61,7 +61,7 @@ public readonly struct CrosswordData
         foreach (var word in crosswords)
         {
             minX = Mathf.Min(word.StartPosition.x, minX);
-            minY = Mathf.Min(word.StartPosition.y, minX);
+            minY = Mathf.Min(word.StartPosition.y, minY);
         }
         var offset = new Vector2Int(-minX, -minY);
         var (maxX, maxY) = (int.MinValue, int.MinValue);
@@ -100,6 +100,10 @@ public readonly struct CrosswordData
             for (var i = 0; i < word.Word.Length; i++)
             {
                 var pos = word.StartPosition + i * offset;
+                if (pos.x < 0 || pos.x > xDim-1 || pos.y < 0 || pos.y > yDim - 1 || i > word.Word.Length)
+                {
+                    Debug.Log("break;");
+                }
                 chars[pos.x, pos.y] = word.Word[i];
             }
         }

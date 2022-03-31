@@ -1,12 +1,19 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CrosswordGenerator : MonoBehaviour
 {
     [SerializeField] private string[] Words;
 
+    private WordDictionary _dictionary;
+
     private void OnValidate()
     {
-       // var data = CrosswordData.GenerateCrossword(Words);
-       // Debug.Log(data.ToString());
+        if (_dictionary == null)
+        {
+            _dictionary = WordDictionary.GenerateDictionary();
+        }
+
+        var words = new HashSet<Word>();
     }
 }
