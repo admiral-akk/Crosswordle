@@ -13,6 +13,23 @@ public readonly struct WordData
         StartPosition = pos;
         IsHorizontal = horizontal;
     }
+    public WordData(string word)
+    {
+        Word = word;
+        StartPosition = Vector2Int.zero;
+        IsHorizontal = true;
+    }
+
+    public Vector2Int GetOffset(Vector2Int match)
+    {
+        if (IsHorizontal)
+        {
+            return new Vector2Int(match.y + StartPosition.x, match.x + StartPosition.y);
+        } else
+        {
+            return new Vector2Int(match.x + StartPosition.x, match.y + StartPosition.y);
+        }
+    }
 
     public List<Vector2Int> MatchingLetters(WordData other)
     {
@@ -30,19 +47,56 @@ public readonly struct WordData
         return matches;
     }
 
+    private bool Adjacent(Vector2Int point)
+    {
+        var xDelta = point.x - StartPosition.x;
+        var yDelta = point.y - StartPosition.y;
+        var isAdjacent = yDelta > -2 && xDelta > -2;
+
+        if (IsHorizontal)
+        {
+            isAdjacent &= yDelta < 2 && xDelta < Word.Length + 1;
+        } else
+        {
+            isAdjacent &= xDelta < 2 && yDelta < Word.Length + 1;
+        }
+        return isAdjacent;
+    }
 
     private bool Adjacent(WordData other)
     {
-
+        if (!IsHorizontal)
+            return other.Adjacent(this);
+        var intersectionPoint = Intersection(other);
+        return false;
     }
     private bool Intersect(WordData other)
     {
-
+        if (!IsHorizontal)
+            return other.Intersect(this);
+        var intersectionPoint = Intersection(other);
+        var xDelta = intersectionPoint.x - StartPosition.x;
+        var yDelta = intersectionPoint.y - other.StartPosition.y;
+        if (xDelta < 0)
+            return false;
+        if (yDelta < 0)
+            return false;
+        if (xDelta >= Word.Length)
+            return false;
+        if (yDelta >= other.Word.Length)
+            return false;
+        return true;
     }
 
     private Vector2Int Intersection(WordData other)
     {
+        if (!IsHorizontal)
+        {
+            var reversedIntersection = other.Intersection(this);
+            return new Vector2Int(reversedIntersection.y, reversedIntersection.x);
+        }
 
+        return new Vector2Int(other.StartPosition.x, other.StartPosition.y);
     }
 
     // Placement is illegal if:
@@ -52,12 +106,21 @@ public readonly struct WordData
     private bool IsLegal(WordData other)
     {
         var intersects = Intersect(other);
-        if (!intersects || IsHorizontal == other.IsHorizontal)
+        var adjacent = Adjacent(other);
+        if (!intersects)
         {
-            return Adjacent(other);
+            return adjacent;
         }
-        var intersection = Intersection(other);
-        return Word[intersection.x] == other.Word[intersection.y];
+        if (IsHorizontal == other.IsHorizontal && intersects)
+        {
+            return false;
+        }
+        if (IsHorizontal != other.IsHorizontal && intersects)
+        {
+            var intersection = Intersection(other);
+            return Word[intersection.x] == other.Word[intersection.y];
+        }
+        return true;
     }
 
     public bool IsLegal(WordData[] words, int currentIndex)
@@ -95,33 +158,8 @@ public readonly struct CrosswordData
 
 public static class CrosswordUtils
 {
-    private static List<Vector2Int> MatchingLetters(string word1, string word2)
-    {
-        var matches = new List<Vector2Int>();
-        for (var i = 0; i < word1.Length; i++)
-        {
-            for (var j = 0; j < word2.Length; j++)
-            {
-                if (word1[i] == word2[j])
-                {
-                    matches.Add(new Vector2Int(i, j));
-                }
-            }
-        }
-        return matches;
-    }
 
-    private static bool IsLegal(string word1, Vector2Int pos1, isHorz)
-
-    private static bool IsLegalPlacement(string[] words, Vector2Int[] startPositions, bool[] isHorizonal, int currentIndex)
-    {
-        for (var i = 0; i < words.Length; i++)
-        {
-
-        }
-    } 
-
-    private static bool GenerateCrossword(WordData[] words, int currentIndex)
+    private static bool GenerateCrossword(WordData[] output, string[] words, int currentIndex)
     {
         // Base case: we're out of words to add
         if (currentIndex == words.Length)
@@ -131,12 +169,23 @@ public static class CrosswordUtils
         // Inductive case: try every position and see if it's a valid placement. If so, increment the index and go one level deeper.
         for (var i = 0; i < currentIndex;i++)
         {
+            output[currentIndex] = new WordData(words[currentIndex]);
             // Find all of the matching letters.
-            var matches = words[currentIndex].MatchingLetters(words[i]);
+            var matches = output[currentIndex].MatchingLetters(output[i]);
 
             for (var j = 0; j < matches.Count; j++)
             {
                 var match = matches[j];
+                var startPos = output[i].GetOffset(match);
+                output[currentIndex] = new WordData(words[currentIndex], startPos, !output[i].IsHorizontal);
+                if (output[currentIndex].IsLegal(output, currentIndex))
+                {
+                    var success = GenerateCrossword(output, words, currentIndex + 1);
+                    if (success)
+                    {
+                        return true;
+                    }
+                }
             }
 
         }
@@ -149,8 +198,8 @@ public static class CrosswordUtils
     {
         // Words will be placed relevative to the first one, so the position and orientation can be set arbitrarily.
         var crosswords = new WordData[words.Length];
-        crosswords[0] = new WordData(words[0], Vector2Int.zero, true);
-        var success = GenerateCrossword(crosswords, 1);
+        crosswords[0] = new WordData(words[0]);
+        var success = GenerateCrossword(crosswords, words, 1);
         if (!success)
             return null;
         return crosswords;
