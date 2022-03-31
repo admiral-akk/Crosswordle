@@ -16,15 +16,11 @@ public readonly struct CrosswordData
         // Inductive case: try every position and see if it's a valid placement. If so, increment the index and go one level deeper.
         for (var i = 0; i < currentIndex; i++)
         {
-            output[currentIndex] = new WordData(words[currentIndex]);
             // Find all of the matching letters.
-            var matches = output[currentIndex].MatchingLetters(output[i]);
-
-            for (var j = 0; j < matches.Count; j++)
+            var startPositions = output[i].GetStartPositions(words[currentIndex]);
+            for (var j = 0; j < startPositions.Count; j++)
             {
-                var match = matches[j];
-                var startPos = output[i].GetOffset(match);
-                output[currentIndex] = new WordData(words[currentIndex], startPos, !output[i].IsHorizontal);
+                output[currentIndex] = new WordData(words[currentIndex], startPositions[j], !output[i].IsHorizontal);
                 var legal = true;
                 for (var k = 0; k < currentIndex; k++)
                 {

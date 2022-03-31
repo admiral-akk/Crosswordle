@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public readonly struct WordData
@@ -20,28 +21,32 @@ public readonly struct WordData
         IsHorizontal = true;
     }
 
-    public Vector2Int GetOffset(Vector2Int match)
+    // Gets legal start positions for this word.
+    public List<Vector2Int> GetStartPositions(string word)
     {
-        if (IsHorizontal)
+        var matches = MatchingLetters(word);
+        var isHorizontal = IsHorizontal;
+        var startPos = StartPosition;
+        return matches.Select(match =>
         {
-            match = new Vector2Int(match.y, -match.x);
-            return StartPosition + match;
-        }
-        else
-        {
-            match = new Vector2Int(-match.x, match.y);
-            return StartPosition + match;
-        }
+            if (isHorizontal)
+            {
+                return startPos + new Vector2Int(match.x, -match.y);
+            } else
+            {
+                return startPos + new Vector2Int( -match.y, match.x);
+            }
+        }).ToList();
     }
 
-    public List<Vector2Int> MatchingLetters(WordData other)
+    public List<Vector2Int> MatchingLetters(string word)
     {
         var matches = new List<Vector2Int>();
         for (var i = 0; i < Word.Length; i++)
         {
-            for (var j = 0; j < other.Word.Length; j++)
+            for (var j = 0; j < word.Length; j++)
             {
-                if (Word[i] == other.Word[j])
+                if (Word[i] == word[j])
                 {
                     matches.Add(new Vector2Int(i, j));
                 }
