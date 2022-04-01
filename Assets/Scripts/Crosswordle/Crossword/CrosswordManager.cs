@@ -48,7 +48,7 @@ public class CrosswordManager : MonoBehaviour
         _crossword = bestCrossword.Value;
     }
 
-    private void OnValidate()
+    private void Awake()
     {
         if (_dictionary == null)
         {
@@ -56,9 +56,6 @@ public class CrosswordManager : MonoBehaviour
         }
 
         GenerateCrossword();
-        Debug.Log(_crossword.ToString());
         Renderer.Render(_crossword);
     }
-
-
 }
