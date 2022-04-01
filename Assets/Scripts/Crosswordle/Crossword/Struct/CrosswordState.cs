@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LetterKnowledge
 {
-    public  string PossibleLetters;
-    public  KnowledgeState State;
+    public string PossibleLetters;
+    public KnowledgeState State;
     public enum KnowledgeState
     {
         None,

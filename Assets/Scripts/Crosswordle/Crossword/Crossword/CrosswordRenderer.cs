@@ -37,7 +37,7 @@ public class CrosswordRenderer : MonoBehaviour
                 filledSquares.Add(pos);
                 var square = Instantiate(Square, transform).GetComponent<CrosswordSquareRenderer>();
                 square.UpdatePosition(answer.StartPosition + i * offset, dimension, Bounds);
-                square.UpdateLetter(answer.Knowledge[i].PossibleLetters);
+                square.UpdateState(answer.Knowledge[i]);
                 _squares.Add(square);
             }
         }

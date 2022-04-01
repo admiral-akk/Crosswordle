@@ -23,9 +23,20 @@ public class CrosswordSquareRenderer : MonoBehaviour
         transform.localScale = size * Vector3.one;
         transform.localPosition = new Vector3(position.x - dimensions.x / 2f, -position.y + dimensions.y / 2f) * size;
     }
-
-    public void UpdateLetter(string c)
+    public void UpdateState(LetterKnowledge knowledge)
     {
-        Letter.text = c;
+        Letter.text = knowledge.PossibleLetters;
+        switch (knowledge.State)
+        {
+            case LetterKnowledge.KnowledgeState.None:
+                Background.color = None;
+                break;
+            case LetterKnowledge.KnowledgeState.WrongPosition:
+                Background.color = WrongPosition;
+                break;
+            case LetterKnowledge.KnowledgeState.Correct:
+                Background.color = Correct;
+                break;
+        }
     }
 }

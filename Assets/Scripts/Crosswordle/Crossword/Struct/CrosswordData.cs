@@ -42,7 +42,7 @@ public class CrosswordData
         return false;
     }
 
-    public static CrosswordData? GenerateCrossword(string[] words)
+    public static CrosswordData GenerateCrossword(string[] words)
     {
         if (words.Length == 0)
             return null;
