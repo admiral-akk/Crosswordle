@@ -2,7 +2,7 @@
 using System.Text;
 using UnityEngine;
 
-public readonly struct CrosswordData 
+public class CrosswordData 
 {
     public readonly WordData[] Words;
     public readonly int xDim, yDim;
