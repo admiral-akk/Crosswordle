@@ -57,5 +57,4 @@ public class InputManager : MonoBehaviour
     {
         newGame.gameObject.SetActive(true);
     }
-
 }
