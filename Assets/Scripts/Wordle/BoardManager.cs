@@ -13,12 +13,12 @@ public class BoardManager : MonoBehaviour
     [SerializeField, Range(0, 1)] private float GuessSpacing;
     [SerializeField] private float YOffset;
 
-    [SerializeField] private WordManager words;
     [SerializeField] private KeyboardManager keyboard;
     [SerializeField] private AnswerManager answer;
     [SerializeField] private GameManager game;
 
     private List<LetterSquare> _letterSquares;
+    private WordDictionary _words;
     private bool _resetBoard;
     private int _currentWord;
     private int _currentLetter;
@@ -26,6 +26,7 @@ public class BoardManager : MonoBehaviour
     private void Awake()
     {
         _letterSquares = new List<LetterSquare>();
+        _words =  WordDictionary.GenerateDictionary();
     }
 
     private void OnValidate()
@@ -64,7 +65,7 @@ public class BoardManager : MonoBehaviour
     {
         _currentWord = 0;
         _currentLetter = 0;
-        _targetWord = words.GetRandomWord(WordLength);
+        _targetWord = new Guess((string)_words.GetRandomWord());
         for (var guess = 0; guess < GuessLimit; guess++)
         {
             for (var word = 0; word < WordLength; word++)
@@ -112,7 +113,7 @@ public class BoardManager : MonoBehaviour
 
     public void SubmitWord()
     {
-        if (_currentLetter < WordLength || !words.IsWord(CurrentGuess))
+        if (_currentLetter < WordLength || !_words.IsValidWord(new Word((string)CurrentGuess)))
         {
             ShakeRow();
             return;

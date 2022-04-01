@@ -25,7 +25,7 @@ public class CrosswordManager : MonoBehaviour
             words.Clear();
             while (words.Count < WordCount)
             {
-                words.Add(_dictionary.GetRandomWord(5));
+                words.Add(_dictionary.GetRandomWord());
             }
             
             var crossword = CrosswordData.GenerateCrossword(words.Select(w => (string)w).ToArray());

@@ -2,32 +2,32 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class WordDictionary 
-{
+public class WordDictionary { 
+
+    private List<Word> _answers;
     private HashSet<Word> _dictionary;
-    private List<List<Word>> _dictionaries;
 
     public static WordDictionary GenerateDictionary()
     {
         var dict =  new WordDictionary();
-        dict.InitializeDictionary();
+        FillWordCollection("Assets/Data/LegalWords.txt", dict._dictionary);
+        FillWordCollection("Assets/Data/LegalAnswers.txt", dict._answers);
         return dict;
     }
 
-    private void InitializeDictionary()
+
+    private WordDictionary()
     {
         _dictionary = new HashSet<Word>();
-        _dictionaries = new List<List<Word>>();
-        var words = File.ReadLines("Assets/Data/words.txt");
+        _answers = new List<Word>();
+    }
+
+    private static void FillWordCollection(string filePath, ICollection<Word> collection)
+    {
+        var words = File.ReadLines(filePath);
         foreach (var word in words)
         {
-            var guess = new Word(word);
-            _dictionary.Add(guess);
-            while (_dictionaries.Count < word.Length)
-            {
-                _dictionaries.Add(new List<Word>());
-            }
-            _dictionaries[word.Length - 1].Add(guess);
+            collection.Add(new Word(word));
         }
     }
 
@@ -37,8 +37,8 @@ public class WordDictionary
     }
 
 
-    public Word GetRandomWord(int length)
+    public Word GetRandomWord()
     {
-        return _dictionaries[length - 1][Random.Range(0, _dictionaries[length - 1].Count)];
+        return _answers[Random.Range(0, _answers.Count)];
     }
 }
