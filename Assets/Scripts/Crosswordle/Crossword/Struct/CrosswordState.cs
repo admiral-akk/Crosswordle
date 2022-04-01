@@ -21,5 +21,16 @@ public class CrosswordState
         {
             answer.Update(guess);
         }
+
+        for (var i = 0; i < Answers.Count; i++)
+        {
+            for (var j = i+1; j < Answers.Count; j++)
+            {
+                if (Answers[i].Intersects(Answers[j]))
+                {
+                    //Answers[i].UpdateIntersection(Answers[j]);
+                }
+            }
+        }
     }
 }
