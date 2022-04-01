@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InputManager Input;
     [SerializeField] private GuessManager Guess;
     [SerializeField] private CrosswordManager Crossword;
-
+    [SerializeField] private WordTrackerManager WordTracker;
+    [SerializeField] private KeyboardManager Keyboard;
     private void Update()
     {
         if (!Input.HasInput)
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
                 if (!word.HasValue)
                     return;
                 Crossword.HandleGuess(word.Value);
+                WordTracker.AddWord(word.Value);
+
                 break;
         }
 

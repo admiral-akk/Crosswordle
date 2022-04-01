@@ -220,8 +220,8 @@ GameObject:
   m_Component:
   - component: {fileID: 251966257420319103}
   - component: {fileID: 5103381292538914358}
-  - component: {fileID: 3004393699166729722}
   - component: {fileID: 5532342601099076727}
+  - component: {fileID: 3898265187346275565}
   m_Layer: 0
   m_Name: KeyboardSquare
   m_TagString: Untagged
@@ -270,24 +270,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &3004393699166729722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7127276805959695394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abb85a9e65aeace4fabb7d3c2e11d650, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  letter: {fileID: 1331051260736056403}
-  background: {fileID: 4240869817086968269}
-  Default: {r: 0, g: 0, b: 0, a: 1}
-  Wrong: {r: 0.38823533, g: 0.38823533, b: 0.38823533, a: 1}
-  WrongPosition: {r: 0.87843144, g: 0.7490196, b: 0.13725491, a: 1}
-  RightPosition: {r: 0.015686275, g: 0.46274513, b: 0.03529412, a: 1}
 --- !u!222 &5532342601099076727
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -296,3 +278,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7127276805959695394}
   m_CullTransparentMesh: 1
+--- !u!114 &3898265187346275565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7127276805959695394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be872130f286bd4785046d2942e7fd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  letter: {fileID: 1331051260736056403}
+  background: {fileID: 4240869817086968269}
+  Default: {r: 0, g: 0, b: 0, a: 1}
+  Wrong: {r: 0.38823533, g: 0.38823533, b: 0.38823533, a: 1}
+  WrongPosition: {r: 0.87843144, g: 0.7490196, b: 0.13725491, a: 1}
+  RightPosition: {r: 0.015686275, g: 0.46274513, b: 0.03529412, a: 1}
