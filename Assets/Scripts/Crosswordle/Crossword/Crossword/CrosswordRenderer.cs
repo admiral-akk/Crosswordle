@@ -8,9 +8,9 @@ public class CrosswordRenderer : MonoBehaviour
     [SerializeField] private Bounds Bounds;
 
     private List<CrosswordSquareRenderer> _squares;
-    private CrosswordData? _toRender;
+    private CrosswordState? _toRender;
 
-    public void Render(CrosswordData crossword)
+    public void Render(CrosswordState crossword)
     {
         _toRender = crossword;
     }
@@ -24,20 +24,20 @@ public class CrosswordRenderer : MonoBehaviour
         foreach (var square in _squares)
             Destroy(square.gameObject);
         _squares.Clear();
-        var dimension = new Vector2Int(_toRender.xDim, _toRender.yDim);
+        var dimension = new Vector2Int(_toRender.Dimensions.Item1, _toRender.Dimensions.Item2);
         var filledSquares = new HashSet<Vector2Int>();
-        foreach (var word in _toRender.Words)
+        foreach (var answer in _toRender.Answers)
         {
-            var offset = word.IsHorizontal ? Vector2Int.right : Vector2Int.up;
-            for (var i = 0; i < word.Word.Length; i++)
+            var offset = answer.IsHorizontal ? Vector2Int.right : Vector2Int.up;
+            for (var i = 0; i < answer.Length; i++)
             {
-                var pos = word.StartPosition + i * offset;
+                var pos = answer.StartPosition + i * offset;
                 if (filledSquares.Contains(pos))
                     continue;
                 filledSquares.Add(pos);
                 var square = Instantiate(Square, transform).GetComponent<CrosswordSquareRenderer>();
-                square.UpdatePosition(word.StartPosition + i * offset, dimension, Bounds);
-                square.UpdateLetter(word.Word[i].ToString());
+                square.UpdatePosition(answer.StartPosition + i * offset, dimension, Bounds);
+                square.UpdateLetter(answer.Knowledge[i].PossibleLetters);
                 _squares.Add(square);
             }
         }
