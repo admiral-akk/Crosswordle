@@ -13,7 +13,7 @@ public class KeyboardManager : MonoBehaviour
         _keys = new Dictionary<char, KeyboardSquare>();
         for (var i = 0; i < KeyboardLayout.Length; i++)
         {
-            foreach (var c in KeyboardLayout[i])
+            foreach (var c in KeyboardLayout[i].ToUpper())
             {
                 var key = Instantiate(KeyPrefab, KeyRows[i].transform).GetComponent<KeyboardSquare>();
                 key.Letter = c;
@@ -26,6 +26,14 @@ public class KeyboardManager : MonoBehaviour
     {
         "qwertyuiop", "asdfghjkl", "zxcvbnm"
     };
+
+    public void UpdateUsage(Word guess)
+    {
+        for (var i = 0; i < guess.Length; i++)
+        {
+            _keys[guess[i]].S = KeyboardSquare.State.Wrong;
+        }
+    }
 
     public void NewGame()
     {

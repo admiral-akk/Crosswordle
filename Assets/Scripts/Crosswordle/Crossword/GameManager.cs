@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
                     return;
                 Crossword.HandleGuess(word.Value);
                 WordTracker.AddWord(word.Value);
-
+                Keyboard.UpdateUsage(word.Value);
                 break;
         }
 

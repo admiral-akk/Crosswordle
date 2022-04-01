@@ -67,6 +67,8 @@ public class LetterKnowledge
         {
             if (answer.Contains(guess[i]))
                 SetPossible(guess[i]);
+            else
+                SetImpossible(guess[i]);
         }
         return;
     }

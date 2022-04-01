@@ -44,8 +44,8 @@ public class KeyboardSquare : MonoBehaviour
         RightPosition,
     }
 
-    private State _s;
-    private State S
+    public State _s;
+    public State S
     {
         get => _s;
         set
