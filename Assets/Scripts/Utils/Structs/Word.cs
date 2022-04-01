@@ -29,7 +29,7 @@
 
     public int Length => _word.Length;
     public static explicit operator string(Word w) => w._word.ToUpper();
-    public static explicit operator Word(string s) => new Word(s.ToUpper());
+    public static implicit operator Word(string s) => new Word(s.ToUpper());
     public static Word operator +(Word word, char c) => new Word(word._word + c);
     public static Word operator +(char c, Word word) => new Word(c + word._word);
 

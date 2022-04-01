@@ -8,7 +8,7 @@ public class CrosswordRenderer : MonoBehaviour
     [SerializeField] private Bounds Bounds;
 
     private List<CrosswordSquareRenderer> _squares;
-    private CrosswordState? _toRender;
+    private CrosswordState _toRender;
 
     public void Render(CrosswordState crossword)
     {

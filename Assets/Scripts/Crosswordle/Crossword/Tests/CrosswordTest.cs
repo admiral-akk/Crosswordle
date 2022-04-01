@@ -1,121 +1,84 @@
 
 using NUnit.Framework;
-using System;
 using UnityEngine;
+using static LetterKnowledge;
 
-public class CrosswordTest
+public class AnswerTest
 {
-    // Test cases:
     [Test]
-    public void CrosswordTestSimple1()
+    public void AnswerTestStartState()
     {
-        var words = new string[2]
+        var word = new WordData("Hello");
+        var answer = new Answer(word);
+
+        Assert.AreEqual(5, answer.Length);
+        for (var  i = 0; i < 5; i++)
         {
-            "aaa","aaa"
-        };
+            Assert.AreEqual("", answer.Knowledge[i].PossibleLetters);
+            Assert.AreEqual(KnowledgeState.None, answer.Knowledge[i].State);
+        }
+    }
 
-        var crossword = CrosswordData.GenerateCrossword(words);
 
-        Assert.AreEqual(2, crossword.Words.Length);
-        Debug.Log(crossword.ToString());
+    [Test]
+    public void AnswerTestBadGuess()
+    {
+        var word = new WordData("Hello");
+        var answer = new Answer(word);
+
+        answer.Update(new Word("fatty"));
+
+        Assert.AreEqual(5, answer.Length);
+        for (var i = 0; i < 5; i++)
+        {
+            Assert.AreEqual("", answer.Knowledge[i].PossibleLetters);
+            Assert.AreEqual(KnowledgeState.None, answer.Knowledge[i].State);
+        }
+    }
+
+
+    [Test]
+    public void AnswerTestCorrectGuess()
+    {
+        var word = new WordData("hello");
+        var answer = new Answer(word);
+
+        answer.Update(new Word("hello"));
+
+        Assert.AreEqual(5, answer.Length);
+        for (var i = 0; i < 5; i++)
+        {
+            Assert.AreEqual(word[i].ToString(), answer.Knowledge[i].PossibleLetters);
+            Assert.AreEqual(KnowledgeState.Correct, answer.Knowledge[i].State);
+        }
     }
 
     [Test]
-    public void CrosswordTestSimple2()
+    public void AnswerTestWrongPositionGuess()
     {
-        var words = new string[2]
+        var word = new WordData("Hello");
+        var answer = new Answer(word);
+        answer.Update(new Word("ghent"));
+        Assert.AreEqual(5, answer.Length);
+        for (var i = 0; i < 5; i++)
         {
-            "ab","ba"
-        };
-
-        var crossword = CrosswordData.GenerateCrossword(words);
-
-        Assert.AreEqual(2, crossword.Words.Length);
-        Debug.Log(crossword.ToString());
+            Assert.AreEqual("HE", answer.Knowledge[i].PossibleLetters);
+            Assert.AreEqual(KnowledgeState.WrongPosition, answer.Knowledge[i].State);
+        }
     }
 
     [Test]
-    public void CrosswordTestSimple3()
+    public void AnswerTestMultipleWrongPositionGuess()
     {
-        var words = new string[2]
+        var word = new WordData("Hello");
+        var answer = new Answer(word);
+        answer.Update(new Word("ghent"));
+        answer.Update(new Word("clock"));
+        Assert.AreEqual(5, answer.Length);
+        for (var i = 0; i < 5; i++)
         {
-            "hello","loser"
-        };
-
-        var crossword = CrosswordData.GenerateCrossword(words);
-
-        Assert.AreEqual(2, crossword.Words.Length);
-        Debug.Log(crossword.ToString());
+            Assert.AreEqual("HECL", answer.Knowledge[i].PossibleLetters);
+            Assert.AreEqual(KnowledgeState.WrongPosition, answer.Knowledge[i].State);
+        }
     }
-
-    [Test]
-    public void CrosswordTestSimpleDifferentLengths()
-    {
-        var words = new string[2]
-        {
-            "math","different"
-        };
-
-        var crossword = CrosswordData.GenerateCrossword(words);
-
-        Assert.AreEqual(2, crossword.Words.Length);
-        Debug.Log(crossword.ToString());
-    }
-
-    [Test]
-    public void CrosswordTestSimpleNoCrossword()
-    {
-        var words = new string[2]
-        {
-            "yolo","different"
-        };
-
-        var crossword = CrosswordData.GenerateCrossword(words);
-
-        Assert.IsNull(crossword);
-    }
-
-    [Test]
-    public void CrosswordTestComplexNoCrossword1()
-    {
-        // Three words only share a single letter, impossible to construct a crossword
-        var words = new string[3]
-        {
-            "bob", "dog", "fro"
-        };
-
-        var crossword = CrosswordData.GenerateCrossword(words);
-
-        Assert.IsNull(crossword);
-    }
-
-    [Test]
-    public void CrosswordTestComplexNoCrossword2()
-    {
-        // Two words need to connect to bod, but will be adjacent to each other.
-        var words = new string[3]
-        {
-            "bod", "orange", "dyu"
-        };
-
-        var crossword = CrosswordData.GenerateCrossword(words);
-
-        Assert.IsNull(crossword);
-    }
-
-    [Test]
-    public void CrosswordTestComplex1()
-    {
-        // Two words need to connect to bod, but will be adjacent to each other.
-        var words = new string[3]
-        {
-            "bod", "orange", "dyug"
-        };
-
-        var crossword = CrosswordData.GenerateCrossword(words);
-
-        Assert.AreEqual(3, crossword.Words.Length);
-        Debug.Log(crossword.ToString());
-    }
-
 }

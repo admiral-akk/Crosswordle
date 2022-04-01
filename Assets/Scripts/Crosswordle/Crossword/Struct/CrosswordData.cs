@@ -7,7 +7,7 @@ public class CrosswordData
     public readonly WordData[] Words;
     public readonly int xDim, yDim;
 
-    private static bool GenerateCrossword(WordData[] output, string[] words, int currentIndex)
+    private static bool GenerateCrossword(WordData[] output, Word[] words, int currentIndex)
     {
         // Base case: we're out of words to add
         if (currentIndex == words.Length)
@@ -42,7 +42,7 @@ public class CrosswordData
         return false;
     }
 
-    public static CrosswordData GenerateCrossword(string[] words)
+    public static CrosswordData GenerateCrossword(Word[] words)
     {
         if (words.Length == 0)
             return null;

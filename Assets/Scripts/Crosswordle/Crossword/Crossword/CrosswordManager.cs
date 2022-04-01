@@ -27,7 +27,7 @@ public class CrosswordManager : MonoBehaviour
                 words.Add(_dictionary.GetRandomWord());
             }
             
-            var crossword = CrosswordData.GenerateCrossword(words.Select(w => (string)w).ToArray());
+            var crossword = CrosswordData.GenerateCrossword(words.ToArray());
 
             if (crossword == null)
                 continue;

@@ -4,25 +4,27 @@ using UnityEngine;
 
 public readonly struct WordData
 {
-    public readonly string Word;
+    public readonly Word Word;
     public readonly Vector2Int StartPosition;
     public readonly bool IsHorizontal;
 
-    public WordData(string word, Vector2Int pos, bool horizontal)
+    public WordData(Word word, Vector2Int pos, bool horizontal)
     {
         Word = word;
         StartPosition = pos;
         IsHorizontal = horizontal;
     }
-    public WordData(string word)
+    public WordData(Word word)
     {
         Word = word;
         StartPosition = Vector2Int.zero;
         IsHorizontal = true;
     }
 
+    public char this[int i] => Word[i];
+
     // Gets legal start positions for this word.
-    public List<Vector2Int> GetStartPositions(string word)
+    public List<Vector2Int> GetStartPositions(Word word)
     {
         var matches = MatchingLetters(word);
         var isHorizontal = IsHorizontal;
@@ -39,7 +41,7 @@ public readonly struct WordData
         }).ToList();
     }
 
-    public List<Vector2Int> MatchingLetters(string word)
+    public List<Vector2Int> MatchingLetters(Word word)
     {
         var matches = new List<Vector2Int>();
         for (var i = 0; i < Word.Length; i++)
