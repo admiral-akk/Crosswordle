@@ -354,9 +354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f86067d1e143da448ad04431e561370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WordCount: 20
+  WordCount: 6
   SampleLimit: 46
-  SquarePrefab: {fileID: 4612142088829400515, guid: 369252e86568c224c93923c7824e9177, type: 3}
   Renderer: {fileID: 1846895356}
 --- !u!4 &1422522445
 Transform:
@@ -547,4 +546,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WordLength: 5
   Renderer: {fileID: 1330489420}
-  TestGuess: 
