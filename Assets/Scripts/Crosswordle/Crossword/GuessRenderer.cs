@@ -7,10 +7,12 @@ public class GuessRenderer : MonoBehaviour
     [SerializeField] private Bounds Bounds;
 
     private List<GuessSquareRenderer> _squares;
+    private Word? _toRender;
 
     private void Awake()
     {
         _squares = new List<GuessSquareRenderer>();
+        _toRender = new Word("");
         for (var i = 0; i < 5; i++)
         {
             var square = Instantiate(Square, transform).GetComponent<GuessSquareRenderer>();
@@ -20,8 +22,12 @@ public class GuessRenderer : MonoBehaviour
         }
     }
 
-    public void Render(Word word)
+    private void Update()
     {
+        if (_toRender == null)
+            return;
+        var word = _toRender.Value;
+        _toRender = null;
         foreach (var square in _squares)
         {
             square.UpdateLetter("");
@@ -30,5 +36,10 @@ public class GuessRenderer : MonoBehaviour
         {
             _squares[i].UpdateLetter(word[i].ToString());
         }
+    }
+
+    public void Render(Word word)
+    {
+        _toRender = word;
     }
 }

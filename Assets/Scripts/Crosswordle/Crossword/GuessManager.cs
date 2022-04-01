@@ -4,10 +4,9 @@ public class GuessManager : MonoBehaviour
 {
     [SerializeField, Range(1,10)] private int WordLength;
     [SerializeField] private GuessRenderer Renderer;
-    [SerializeField] private string TestGuess;
 
     private Word _guess;
-
+    private WordDictionary _dictionary;
     private Word Guess
     {
         get
@@ -20,14 +19,21 @@ public class GuessManager : MonoBehaviour
             Renderer.Render(_guess);
         }
     }
-    public void SubmitWord()
-    {
-        _guess = new Word();
-    }
 
-    public void OnValidate()
+    private void Awake()
     {
-        Guess = new Word(TestGuess);
+        _dictionary = WordDictionary.GenerateDictionary();
+        Guess = new Word("");
+    }
+    public Word? SubmitWord()
+    {
+        if (_guess.Length < WordLength)
+            return null;
+        if (!_dictionary.IsValidWord(_guess))
+            return null;
+        var ret = _guess;
+        Guess = new Word("");
+        return ret;
     }
 
     public void SubmitLetter(char c)

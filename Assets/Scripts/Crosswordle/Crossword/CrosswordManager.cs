@@ -48,6 +48,11 @@ public class CrosswordManager : MonoBehaviour
         _crossword = bestCrossword.Value;
     }
 
+    public void HandleGuess(Word word)
+    {
+
+    }
+
     private void Awake()
     {
         if (_dictionary == null)
