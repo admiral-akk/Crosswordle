@@ -14,7 +14,7 @@ public class CrosswordTest
             "aaa","aaa"
         };
 
-        var crossword = CrosswordData.GenerateCrossword(words).Value;
+        var crossword = CrosswordData.GenerateCrossword(words);
 
         Assert.AreEqual(2, crossword.Words.Length);
         Debug.Log(crossword.ToString());
@@ -28,7 +28,7 @@ public class CrosswordTest
             "ab","ba"
         };
 
-        var crossword = CrosswordData.GenerateCrossword(words).Value;
+        var crossword = CrosswordData.GenerateCrossword(words);
 
         Assert.AreEqual(2, crossword.Words.Length);
         Debug.Log(crossword.ToString());
@@ -42,7 +42,7 @@ public class CrosswordTest
             "hello","loser"
         };
 
-        var crossword = CrosswordData.GenerateCrossword(words).Value;
+        var crossword = CrosswordData.GenerateCrossword(words);
 
         Assert.AreEqual(2, crossword.Words.Length);
         Debug.Log(crossword.ToString());
@@ -56,7 +56,7 @@ public class CrosswordTest
             "math","different"
         };
 
-        var crossword = CrosswordData.GenerateCrossword(words).Value;
+        var crossword = CrosswordData.GenerateCrossword(words);
 
         Assert.AreEqual(2, crossword.Words.Length);
         Debug.Log(crossword.ToString());
@@ -112,7 +112,7 @@ public class CrosswordTest
             "bod", "orange", "dyug"
         };
 
-        var crossword = CrosswordData.GenerateCrossword(words).Value;
+        var crossword = CrosswordData.GenerateCrossword(words);
 
         Assert.AreEqual(3, crossword.Words.Length);
         Debug.Log(crossword.ToString());

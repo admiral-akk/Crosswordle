@@ -45,7 +45,7 @@ public class CrosswordData
     public static CrosswordData? GenerateCrossword(string[] words)
     {
         if (words.Length == 0)
-            return new CrosswordData();
+            return null;
         // Words will be placed relevative to the first one, so the position and orientation can be set arbitrarily.
         var crosswords = new WordData[words.Length];
         crosswords[0] = new WordData(words[0]);
@@ -83,7 +83,6 @@ public class CrosswordData
         (xDim, yDim) = Normalize(crosswords);
         Words = crosswords;
     }
-
     public override string ToString()
     {
         var chars = new char[xDim, yDim];

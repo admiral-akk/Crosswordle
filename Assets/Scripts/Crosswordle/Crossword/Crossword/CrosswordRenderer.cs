@@ -24,9 +24,9 @@ public class CrosswordRenderer : MonoBehaviour
         foreach (var square in _squares)
             Destroy(square.gameObject);
         _squares.Clear();
-        var dimension = new Vector2Int(_toRender.Value.xDim, _toRender.Value.yDim);
+        var dimension = new Vector2Int(_toRender.xDim, _toRender.yDim);
         var filledSquares = new HashSet<Vector2Int>();
-        foreach (var word in _toRender.Value.Words)
+        foreach (var word in _toRender.Words)
         {
             var offset = word.IsHorizontal ? Vector2Int.right : Vector2Int.up;
             for (var i = 0; i < word.Word.Length; i++)

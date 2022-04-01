@@ -15,7 +15,7 @@ public class CrosswordManager : MonoBehaviour
 
     private void GenerateCrossword()
     {
-        CrosswordData? bestCrossword = null;
+        CrosswordData bestCrossword = null;
         var words = new HashSet<Word>();
         var limit = SampleLimit;
         var compare = new CrosswordComparer();
@@ -36,7 +36,7 @@ public class CrosswordManager : MonoBehaviour
                 bestCrossword = crossword;
                 continue;
             }
-            if (compare.Compare(bestCrossword.Value, crossword.Value) > 0)
+            if (compare.Compare(bestCrossword, crossword) > 0)
             {
                 bestCrossword = crossword;
                 continue;
@@ -44,7 +44,7 @@ public class CrosswordManager : MonoBehaviour
         }
         if (bestCrossword == null)
             throw new System.Exception("No crossword generated");
-        _crossword = bestCrossword.Value;
+        _crossword = bestCrossword;
     }
 
     public void HandleGuess(Word word)
