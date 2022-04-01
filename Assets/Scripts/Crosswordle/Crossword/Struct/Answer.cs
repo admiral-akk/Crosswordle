@@ -1,9 +1,23 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class LetterKnowledge
 {
-    public string PossibleLetters;
+    private HashSet<char> Possible;
+    public string PossibleLetters
+    {
+        get
+        {
+            var s = "";
+            foreach (var c in Possible)
+            {
+                s += c.ToString();
+            }
+            return s;
+
+        }
+    }
     public KnowledgeState State;
     public enum KnowledgeState
     {
@@ -12,16 +26,10 @@ public class LetterKnowledge
         Correct
     }
 
-    public LetterKnowledge(string possibleLetters, KnowledgeState state)
-    {
-        PossibleLetters = possibleLetters;
-        State = state;
-    }
-
     public LetterKnowledge()
     {
         State = KnowledgeState.None;
-        PossibleLetters = "";
+        Possible = new HashSet<char>();
     }
 
     public void Update(char c, bool isCorrect)
@@ -30,14 +38,14 @@ public class LetterKnowledge
             return;
         if (isCorrect)
         {
-            PossibleLetters = c.ToString();
+            Possible.Clear();
+            Possible.Add(c);
             State = KnowledgeState.Correct;
             return;
         }
-        PossibleLetters += c.ToString();
+        Possible.Add(c);
         State = KnowledgeState.WrongPosition;
         return;
-
     }
 }
 
@@ -79,7 +87,12 @@ public class Answer
             }
             else if (Enumerable.Range(0, _answer.Length).Any(index => _answer[index] == guess[i] && _answer[index] != guess[index]))
             {
-                newKnowledge[i].Update(guess[i], false);
+                for (var j = 0; j < _answer.Length; j ++)
+                {
+                    if (j == i)
+                        continue;
+                    newKnowledge[j].Update(guess[i], false);
+                }
             }
         }
         return new Answer(newKnowledge, StartPosition, IsHorizontal, _answer);

@@ -58,11 +58,24 @@ public class AnswerTest
     {
         var word = new WordData("Hello");
         var answer = new Answer(word);
+
         answer.Update(new Word("ghent"));
+
         Assert.AreEqual(5, answer.Length);
         for (var i = 0; i < 5; i++)
         {
-            Assert.AreEqual("HE", answer.Knowledge[i].PossibleLetters);
+            switch (i)
+            {
+                case 1:
+                    Assert.AreEqual("E", answer.Knowledge[i].PossibleLetters);
+                    break;
+                case 2:
+                    Assert.AreEqual("H", answer.Knowledge[i].PossibleLetters);
+                    break;
+                default:
+                    Assert.AreEqual("HE", answer.Knowledge[i].PossibleLetters);
+                    break;
+            }
             Assert.AreEqual(KnowledgeState.WrongPosition, answer.Knowledge[i].State);
         }
     }
@@ -72,12 +85,25 @@ public class AnswerTest
     {
         var word = new WordData("Hello");
         var answer = new Answer(word);
+
         answer.Update(new Word("ghent"));
         answer.Update(new Word("clock"));
+
         Assert.AreEqual(5, answer.Length);
         for (var i = 0; i < 5; i++)
         {
-            Assert.AreEqual("HECL", answer.Knowledge[i].PossibleLetters);
+            switch (i)
+            {
+                case 1:
+                    Assert.AreEqual("EO", answer.Knowledge[i].PossibleLetters);
+                    break;
+                case 2:
+                    Assert.AreEqual("HL", answer.Knowledge[i].PossibleLetters);
+                    break;
+                default:
+                    Assert.AreEqual("HELO", answer.Knowledge[i].PossibleLetters);
+                    break;
+            }
             Assert.AreEqual(KnowledgeState.WrongPosition, answer.Knowledge[i].State);
         }
     }
