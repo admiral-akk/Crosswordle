@@ -8,7 +8,6 @@ public class CrosswordManager : MonoBehaviour
     [SerializeField, Range(1, 20)] private int WordCount;
     [SerializeField, Range(1, 100)] private int SampleLimit;
     [Header("Components")]
-    [SerializeField] private GameObject SquarePrefab;
     [SerializeField] private CrosswordRenderer Renderer;
 
     private WordDictionary _dictionary;
