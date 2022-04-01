@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LetterKnowledge
 {
+    private HashSet<char> Impossible;
     private HashSet<char> Possible;
     public string PossibleLetters
     {
@@ -30,21 +31,43 @@ public class LetterKnowledge
     {
         State = KnowledgeState.None;
         Possible = new HashSet<char>();
+        Impossible = new HashSet<char>();
     }
 
-    public void Update(char c, bool isCorrect)
+    private void SetPossible(char c)
+    {
+        if (Impossible.Contains(c))
+            return;
+        Possible.Add(c);
+        State = KnowledgeState.WrongPosition;
+    }
+
+    private void SetImpossible(char c)
+    {
+        Impossible.Add(c);
+        Possible.Remove(c);
+        if (Possible.Count == 0)
+            State = KnowledgeState.None;
+    }
+
+    public void Update(int index, Word guess, Word answer)
     {
         if (State == KnowledgeState.Correct)
             return;
-        if (isCorrect)
+        var c = guess[index];
+        if (c == answer[index])
         {
             Possible.Clear();
             Possible.Add(c);
             State = KnowledgeState.Correct;
             return;
         }
-        Possible.Add(c);
-        State = KnowledgeState.WrongPosition;
+        SetImpossible(c);
+        for (var i = 0; i < guess.Length; i++)
+        {
+            if (answer.Contains(guess[i]))
+                SetPossible(guess[i]);
+        }
         return;
     }
 }
@@ -81,19 +104,7 @@ public class Answer
         var newKnowledge = Knowledge;
         for (var i = 0; i < guess.Length; i++)
         {
-            if (guess[i] == _answer[i])
-            {
-                newKnowledge[i].Update(guess[i], true);
-            }
-            else if (Enumerable.Range(0, _answer.Length).Any(index => _answer[index] == guess[i] && _answer[index] != guess[index]))
-            {
-                for (var j = 0; j < _answer.Length; j ++)
-                {
-                    if (j == i)
-                        continue;
-                    newKnowledge[j].Update(guess[i], false);
-                }
-            }
+            newKnowledge[i].Update(i, guess, _answer);
         }
         return new Answer(newKnowledge, StartPosition, IsHorizontal, _answer);
     }

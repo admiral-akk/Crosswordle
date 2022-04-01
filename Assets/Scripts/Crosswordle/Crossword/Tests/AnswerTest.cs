@@ -37,6 +37,27 @@ public class AnswerTest
     }
 
 
+
+    [Test]
+    public void AnswerTestNoHintForLetterRevertsState()
+    {
+        var word = new WordData("Hello");
+        var answer = new Answer(word);
+
+        // Trying 'L' at the beginning should update the knowledge of the final letter to indicate it could be 'L'.
+        answer.Update(new Word("lssss"));
+        Assert.AreEqual(5, answer.Length);
+        Assert.AreEqual("L", answer.Knowledge[4].PossibleLetters);
+        Assert.AreEqual(KnowledgeState.WrongPosition, answer.Knowledge[4].State);
+        
+        // Trying 'L' at the end should update the knowledge of the final letter to indicate we know nothing.
+        answer.Update(new Word("ssssl"));
+        Assert.AreEqual(5, answer.Length);
+        Assert.AreEqual("", answer.Knowledge[4].PossibleLetters);
+        Assert.AreEqual(KnowledgeState.None, answer.Knowledge[4].State);
+    }
+
+
     [Test]
     public void AnswerTestCorrectGuess()
     {
