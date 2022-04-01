@@ -4,7 +4,7 @@
 
     public Word(string word)
     {
-        _word = word;
+        _word = word.ToUpper();
     }
 
     public override int GetHashCode()
@@ -32,4 +32,6 @@
     public static explicit operator Word(string s) => new Word(s.ToUpper());
     public static Word operator +(Word word, char c) => new Word(word._word + c);
     public static Word operator +(char c, Word word) => new Word(c + word._word);
+
+    public char this[int i] => _word[i];
 }
