@@ -5,6 +5,7 @@ using UnityEngine;
 public class CrosswordRenderer : MonoBehaviour
 {
     [SerializeField] private GameObject Square;
+    [SerializeField] private Bounds Bounds;
 
     private List<CrosswordSquareRenderer> _squares;
     private CrosswordData? _toRender;
@@ -30,7 +31,7 @@ public class CrosswordRenderer : MonoBehaviour
             for (var i = 0; i < word.Word.Length; i++)
             {
                 var square = Instantiate(Square, transform).GetComponent<CrosswordSquareRenderer>();
-                square.UpdatePosition(word.StartPosition + i * offset, dimension);
+                square.UpdatePosition(word.StartPosition + i * offset, dimension, Bounds);
                 square.UpdateLetter(word.Word[i].ToString());
                 _squares.Add(square);
             }

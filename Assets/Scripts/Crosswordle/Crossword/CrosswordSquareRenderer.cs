@@ -12,9 +12,16 @@ public class CrosswordSquareRenderer : MonoBehaviour
     [SerializeField] private SpriteRenderer Background;
     [SerializeField] private TextMeshProUGUI Letter;
 
-    public void UpdatePosition(Vector2Int position, Vector2Int dimensions)
+    private static float Size(Vector2Int dimensions, Bounds bounds)
     {
-        transform.position = new Vector3(position.x, position.y);
+        var size = Mathf.Min(bounds.size.x / dimensions.x, bounds.size.y / dimensions.y);
+        return Mathf.Min(1f, size);
+    }
+    public void UpdatePosition(Vector2Int position, Vector2Int dimensions, Bounds bounds)
+    {
+        var size = Size(dimensions, bounds);
+        transform.localScale = size * Vector3.one;
+        transform.localPosition = new Vector3(position.x - dimensions.x / 2f, -position.y + dimensions.y / 2f) * size;
     }
 
     public void UpdateLetter(string c)
