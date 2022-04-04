@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,10 @@ public class CrosswordSquareRenderer : MonoBehaviour
     [Header("Components")]
     [SerializeField] private SpriteRenderer Background;
     [SerializeField] private TextMeshProUGUI Letter;
+    [Header("Prefabs")]
+    [SerializeField] private GameObject HintPrefab;
+
+    private List<HintSquareRenderer> _hints;
 
     private static float Size(Vector2Int dimensions, Bounds bounds)
     {
@@ -64,10 +69,14 @@ public class CrosswordSquareRenderer : MonoBehaviour
     private void Awake()
     {
         State = GuessState.None;
+        _hints = new List<HintSquareRenderer>();
     }
 
     public void UpdateState(LetterKnowledgeState knowledge)
     {
+        foreach (var hint in _hints)
+            Destroy(hint.gameObject);
+        _hints.Clear();
         if (knowledge.IsSolved)
         {
             Letter.text = knowledge.Answer.ToString();
@@ -78,12 +87,15 @@ public class CrosswordSquareRenderer : MonoBehaviour
         } 
         if (knowledge.Hints.Count > 0)
         {
-            Letter.text = knowledge.Hints.Aggregate("", (s, c) => s + c.ToString());
-            State = GuessState.WrongPosition;
-        } else
-        {
-            Letter.text = "";
-            State = GuessState.None;
+            foreach(var hint in knowledge.Hints)
+            {
+                var hintObject = Instantiate(HintPrefab, transform).GetComponent<HintSquareRenderer>();
+                hintObject.UpdateLetter(hint);
+                hintObject.UpdatePosition(_hints.Count);
+                _hints.Add(hintObject);
+            }
         }
+        Letter.text = "";
+        State = GuessState.None;
     }
 }

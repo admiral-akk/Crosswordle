@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 4612142088548118199}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4612142090129047134}
   m_Father: {fileID: 4612142088824665122}
@@ -71,9 +71,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 4
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
+  m_Color: {r: 0.7529412, g: 0.6901961, b: 0.21568628, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -108,8 +108,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4612142088824665121}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
+  m_LocalPosition: {x: 0.5, y: -0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1.05}
   m_Children:
   - {fileID: 4612142088548118192}
   m_Father: {fileID: 4612142088829400524}
@@ -154,7 +154,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -175,9 +175,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4612142088829400524}
-  - component: {fileID: 4612142088829400525}
+  - component: {fileID: 3067750665834111624}
   m_Layer: 0
-  m_Name: CrosswordSquare
+  m_Name: HintSquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,7 +198,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4612142088829400525
+--- !u!114 &3067750665834111624
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,16 +207,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4612142088829400515}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67729021e7dbe984b9b20d3a5a1da194, type: 3}
+  m_Script: {fileID: 11500000, guid: b48fdd89d5f707b4eadfe46393804c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  None: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
-  Wrong: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
-  WrongPosition: {r: 0.754717, g: 0.6889814, b: 0.2171591, a: 1}
-  Correct: {r: 0.054914013, g: 0.509434, b: 0, a: 1}
-  Background: {fileID: 4612142088548118193}
   Letter: {fileID: 4612142089247520632}
-  HintPrefab: {fileID: 4612142088829400515, guid: 8e2c363ea9d544b4c8900c5f240f3668, type: 3}
 --- !u!1 &4612142089247520638
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,7 +403,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!114 &4612142090129047128
 MonoBehaviour:
