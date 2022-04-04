@@ -20,9 +20,10 @@ public class ProblemKnowledge
     public ProblemKnowledge[] Intersections;
     public ProblemLetterKnowledge[] LetterKnowledge;
 
-    public bool IsHorizonal => Position.IsHorizontal;
+    public bool IsHorizontal => Position.IsHorizontal;
     public int X => Position.x;
     public int Y => Position.y;
+    public Vector2Int StartPosition => new Vector2Int(X, Y);
     public int Length => Answer.Length;
 
     public ProblemKnowledge(WordData data)
@@ -35,9 +36,9 @@ public class ProblemKnowledge
 
     public void UpdateIntersection(ProblemKnowledge other)
     {
-        if (IsHorizonal == other.IsHorizonal)
+        if (IsHorizontal == other.IsHorizontal)
             return;
-        if (!IsHorizonal)
+        if (!IsHorizontal)
         {
             other.UpdateIntersection(this);
             return;

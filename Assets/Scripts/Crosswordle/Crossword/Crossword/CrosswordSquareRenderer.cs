@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -30,12 +31,18 @@ public class CrosswordSquareRenderer : MonoBehaviour
         WrongPosition,
         Correct
     }
+    private GuessState _state;
 
     private GuessState State
     {
+        get
+        {
+            return _state;
+        }
         set
         {
-            switch (value)
+            _state = value;
+            switch (_state)
             {
                 case GuessState.None:
                     Background.color = None;
@@ -53,6 +60,27 @@ public class CrosswordSquareRenderer : MonoBehaviour
     private void Awake()
     {
         State = GuessState.None;
+    }
+
+    public void UpdateState(LetterKnowledgeState knowledge)
+    {
+        if (knowledge.IsSolved)
+        {
+            Letter.text = knowledge.Answer.ToString();
+            State = GuessState.Correct;
+        }
+        if (State == GuessState.Correct) { 
+            return;
+        } 
+        if (knowledge.Hints.Count > 0)
+        {
+            Letter.text = knowledge.Hints.Aggregate("", (s, c) => s + c.ToString());
+            State = GuessState.WrongPosition;
+        } else
+        {
+            Letter.text = "";
+            State = GuessState.None;
+        }
     }
     public void UpdateState(LetterKnowledge knowledge)
     {

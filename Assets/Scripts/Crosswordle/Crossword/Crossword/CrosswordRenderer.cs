@@ -8,9 +8,9 @@ public class CrosswordRenderer : MonoBehaviour
     [SerializeField] private Bounds Bounds;
 
     private List<CrosswordSquareRenderer> _squares;
-    private CrosswordState _toRender;
+    private CrosswordKnowledge _toRender;
 
-    public void Render(CrosswordState crossword)
+    public void Render(CrosswordKnowledge crossword)
     {
         _toRender = crossword;
     }
@@ -26,18 +26,18 @@ public class CrosswordRenderer : MonoBehaviour
         _squares.Clear();
         var dimension = new Vector2Int(_toRender.Dimensions.Item1, _toRender.Dimensions.Item2);
         var filledSquares = new HashSet<Vector2Int>();
-        foreach (var answer in _toRender.Answers)
+        foreach (var problem in _toRender.Problems)
         {
-            var offset = answer.IsHorizontal ? Vector2Int.right : Vector2Int.up;
-            for (var i = 0; i < answer.Length; i++)
+            var offset = problem.IsHorizontal ? Vector2Int.right : Vector2Int.up;
+            for (var i = 0; i < problem.Length; i++)
             {
-                var pos = answer.StartPosition + i * offset;
+                var pos = problem.StartPosition + i * offset;
                 if (filledSquares.Contains(pos))
                     continue;
                 filledSquares.Add(pos);
                 var square = Instantiate(Square, transform).GetComponent<CrosswordSquareRenderer>();
-                square.UpdatePosition(answer.StartPosition + i * offset, dimension, Bounds);
-                square.UpdateState(answer.Knowledge[i]);
+                square.UpdatePosition(problem.StartPosition + i * offset, dimension, Bounds);
+                square.UpdateState(problem.GetKnowledge(i));
                 _squares.Add(square);
             }
         }

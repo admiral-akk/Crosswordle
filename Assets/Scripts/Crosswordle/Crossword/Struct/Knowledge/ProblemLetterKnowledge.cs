@@ -17,7 +17,7 @@ public class ProblemLetterKnowledge
         _impossible = new HashSet<char>();
         _answer = answer;
     }
-    public IEnumerable<char> Hints
+    public HashSet<char> Hints
     {
         get
         {
@@ -59,8 +59,8 @@ public readonly struct LetterKnowledgeState
 {
     public bool IsSolved => Answer.HasValue;
     public readonly char? Answer;
-    public readonly IEnumerable<char> Hints;
-    public LetterKnowledgeState(IEnumerable<char> hints, char? answer = null)
+    public readonly HashSet<char> Hints;
+    public LetterKnowledgeState(HashSet<char> hints, char? answer = null)
     {
         Hints = hints;
         Answer = answer;
