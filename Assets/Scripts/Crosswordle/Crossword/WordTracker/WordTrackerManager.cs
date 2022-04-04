@@ -18,10 +18,10 @@ public class WordTrackerManager : MonoBehaviour
     private void UpdateText()
     {
         var sb = new StringBuilder();
-        foreach (var w in _words)
+        for (var i = 0; i < _words.Count; i++)
         {
             sb.AppendLine();
-            sb.Append(w.ToString());
+            sb.Append(string.Format("{0}: {1}", i+1, _words[i]));
         }
         text.text = sb.ToString();
     }
