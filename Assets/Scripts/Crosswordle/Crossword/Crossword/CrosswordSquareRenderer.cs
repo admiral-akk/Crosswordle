@@ -16,13 +16,17 @@ public class CrosswordSquareRenderer : MonoBehaviour
     private static float Size(Vector2Int dimensions, Bounds bounds)
     {
         var size = Mathf.Min(bounds.size.x / dimensions.x, bounds.size.y / dimensions.y);
-        return Mathf.Min(1f, size);
+        return Mathf.Min(0.75f, size);
     }
     public void UpdatePosition(Vector2Int position, Vector2Int dimensions, Bounds bounds)
     {
         var size = Size(dimensions, bounds);
         transform.localScale = size * Vector3.one;
-        transform.localPosition = new Vector3(position.x - dimensions.x / 2f, -position.y + dimensions.y / 2f) * size;
+        transform.localPosition = new Vector3(position.x - dimensions.x / 2f, dimensions.y / 2f - position.y) * size;
+        if (dimensions.x / 2f < Mathf.Abs(transform.localPosition.x )|| dimensions.y / 2f < Mathf.Abs(transform.localPosition.y))
+        {
+            Debug.Log("ERROR");
+        }
     }
 
     private enum GuessState

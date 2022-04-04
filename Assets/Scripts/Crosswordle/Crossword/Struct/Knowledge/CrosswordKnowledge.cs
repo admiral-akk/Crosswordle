@@ -26,8 +26,8 @@ public class CrosswordKnowledge
         {
             problem.InitializeKnowledgeGraph();
         }
-        xDim = Problems.Select(p => p.X).Max();
-        yDim = Problems.Select(p => p.Y).Max();
+        xDim = Problems.Select(p => p.X + (p.IsHorizontal ? p.Length : 1)).Max();
+        yDim = Problems.Select(p => p.Y  + (!p.IsHorizontal ? p.Length : 1)).Max();
     }
 
     public void Guess(Word guess)

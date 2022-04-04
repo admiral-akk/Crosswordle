@@ -26,7 +26,6 @@ public class WordTrackerManager : MonoBehaviour
         text.text = sb.ToString();
     }
 
-
     public void AddWord(Word word)
     {
         _words.Add(word);

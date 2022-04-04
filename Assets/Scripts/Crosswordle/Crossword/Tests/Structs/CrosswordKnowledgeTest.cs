@@ -82,4 +82,27 @@ public class CrosswordKnowledgeTest
             }
         }
     }
+
+    [Test]
+    public void CrosswordKnowledgeTestDimensionsSingleWord()
+    {
+        var word = new Word("HELLO");
+        var data = CrosswordData.GenerateCrossword(new Word[] { word});
+        var crossword = new CrosswordKnowledge(data);
+
+        Assert.AreEqual(5, crossword.Dimensions.Item1);
+        Assert.AreEqual(1, crossword.Dimensions.Item2);
+    }
+
+    [Test]
+    public void CrosswordKnowledgeTestDimensionsTwoWord()
+    {
+        var word = new Word("HELLO");
+        var word2 = new Word("HPPPP");
+        var data = CrosswordData.GenerateCrossword(new Word[] { word, word2 });
+        var crossword = new CrosswordKnowledge(data);
+
+        Assert.AreEqual(5, crossword.Dimensions.Item1);
+        Assert.AreEqual(5, crossword.Dimensions.Item2);
+    }
 }
