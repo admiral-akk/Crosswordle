@@ -10,6 +10,8 @@ public class KeyboardManager : MonoBehaviour
 
     private void Awake()
     {
+        _usedLetters = new HashSet<char>();
+        _guess = new List<Word>();
         _keys = new Dictionary<char, KeyboardSquare>();
         for (var i = 0; i < KeyboardLayout.Length; i++)
         {
@@ -27,11 +29,33 @@ public class KeyboardManager : MonoBehaviour
         "qwertyuiop", "asdfghjkl", "zxcvbnm"
     };
 
-    public void UpdateUsage(Word guess)
+    private HashSet<char> _usedLetters;
+    private List<Word> _guess;
+
+    public void UpdateUsage(KeyboardHints hints, Word guess)
     {
         for (var i = 0; i < guess.Length; i++)
         {
-            _keys[guess[i]].S = KeyboardSquare.State.Wrong;
+            var c = guess[i];
+            _usedLetters.Add(c);
+            if (hints.Hints.ContainsKey(c))
+            {
+                switch (hints.Hints[c])
+                {
+                    default:
+                        _keys[guess[i]].S = KeyboardSquare.State.Wrong;
+                        break;
+                    case KeyboardHints.State.OnBoard:
+                        _keys[guess[i]].S = KeyboardSquare.State.WrongPosition;
+                        break;
+                    case KeyboardHints.State.Complete:
+                        _keys[guess[i]].S = KeyboardSquare.State.RightPosition;
+                        break;
+                }
+            } else
+            {
+                _keys[guess[i]].S = KeyboardSquare.State.Wrong;
+            }
         }
     }
 

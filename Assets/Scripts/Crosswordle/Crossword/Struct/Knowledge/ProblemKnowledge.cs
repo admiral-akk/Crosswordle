@@ -18,7 +18,7 @@ public class ProblemKnowledge
     private Word Answer;
 
     public ProblemKnowledge[] Intersections;
-    public ProblemLetterKnowledge[] LetterKnowledge;
+    private ProblemLetterKnowledge[] _letterKnowledge;
 
     public bool IsHorizontal => Position.IsHorizontal;
     public int X => Position.x;
@@ -31,7 +31,7 @@ public class ProblemKnowledge
         Position = new PositionStruct(data.StartPosition, data.IsHorizontal);
         Answer = data.Word;
         Intersections = new ProblemKnowledge[Length];
-        LetterKnowledge = new ProblemLetterKnowledge[Answer.Length];
+        _letterKnowledge = new ProblemLetterKnowledge[Answer.Length];
     }
 
     public void UpdateIntersection(ProblemKnowledge other)
@@ -59,12 +59,12 @@ public class ProblemKnowledge
     {
         for (var i = 0; i < Answer.Length; i++)
         {
-            if (LetterKnowledge[i] != null)
+            if (_letterKnowledge[i] != null)
                 continue;
-            LetterKnowledge[i] = new ProblemLetterKnowledge(Answer[i]);
+            _letterKnowledge[i] = new ProblemLetterKnowledge(Answer[i]);
             if (Intersections[i] == null)
                 continue;
-            Intersections[i].ShareKnowledge(this, LetterKnowledge[i]);
+            Intersections[i].ShareKnowledge(this, _letterKnowledge[i]);
         }
     }
 
@@ -74,7 +74,7 @@ public class ProblemKnowledge
         {
             if (Intersections[i] != other)
                 continue;
-            LetterKnowledge[i] = knowledge;
+            _letterKnowledge[i] = knowledge;
             return;
         }
         throw new System.Exception("Intersecting problem not found!");
@@ -84,9 +84,9 @@ public class ProblemKnowledge
     {
         for (var i = 0; i < Answer.Length; i++) {
             var c = Answer[i];
-            if (!Enumerable.Range(0, Answer.Length).Any(index => Answer[index] == c && !LetterKnowledge[index].Solved))
+            if (!Enumerable.Range(0, Answer.Length).Any(index => Answer[index] == c && !_letterKnowledge[index].Solved))
             {
-                foreach (var knowledge in LetterKnowledge)
+                foreach (var knowledge in _letterKnowledge)
                 {
                     knowledge.Eliminate(c);
                 }
@@ -100,7 +100,7 @@ public class ProblemKnowledge
         // First update each letter to indicate we guessed it
         for (var i = 0; i < Answer.Length; i++)
         {
-            LetterKnowledge[i].Guess(guess[i]);
+            _letterKnowledge[i].Guess(guess[i]);
         }
 
         // For each letter, if the guess is wrong, but there are still characters to guess, update the hints
@@ -110,13 +110,13 @@ public class ProblemKnowledge
             // For each letter, if the guess isn't in the word, mark it impossible.
             if (!Answer.Contains(c))
             {
-                foreach (var knowledge in LetterKnowledge)
+                foreach (var knowledge in _letterKnowledge)
                 {
                     knowledge.Eliminate(c);
                 }
             } else
             {
-                foreach (var knowledge in LetterKnowledge)
+                foreach (var knowledge in _letterKnowledge)
                 {
                     knowledge.AddHint(c);
                 }
@@ -134,6 +134,6 @@ public class ProblemKnowledge
 
     public LetterKnowledgeState GetKnowledge(int index)
     {
-        return LetterKnowledge[index].State;
+        return _letterKnowledge[index].State;
     }
 }

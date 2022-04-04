@@ -50,7 +50,10 @@ public class KeyboardSquare : MonoBehaviour
         get => _s;
         set
         {
-            switch (value)
+
+            if (_s == State.RightPosition)
+                return;
+                switch (value)
             {
                 case State.None:
                     background.color = Default;

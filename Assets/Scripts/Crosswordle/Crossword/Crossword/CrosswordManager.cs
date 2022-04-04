@@ -53,6 +53,20 @@ public class CrosswordManager : MonoBehaviour
         Renderer.Render(_knowledge);
     }
 
+    public KeyboardHints GetLetterUsage()
+    {
+        var hints = new KeyboardHints();
+        foreach (var problem in _knowledge.Problems)
+        {
+            for (var i = 0; i < problem.Length; i++)
+            {
+                var k = problem.GetKnowledge(i);
+                hints.Update(k);
+            }
+        }
+        return hints;
+    }
+
     private void Awake()
     {
         if (_dictionary == null)
