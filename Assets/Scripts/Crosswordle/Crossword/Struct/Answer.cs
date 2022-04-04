@@ -61,14 +61,10 @@ public class LetterKnowledge
             Possible.Add(c);
             State = KnowledgeState.Correct;
             return;
-        }
-        SetImpossible(c);
-        for (var i = 0; i < guess.Length; i++)
+        } else if (answer.ToString().Any(ch => ch == c))
         {
-            if (answer.Contains(guess[i]))
-                SetPossible(guess[i]);
-            else
-                SetImpossible(guess[i]);
+            Possible.Add(c);
+            State = KnowledgeState.WrongPosition;
         }
         return;
     }
