@@ -11,7 +11,6 @@ public class CrosswordManager : MonoBehaviour
     [SerializeField] private CrosswordRenderer Renderer;
 
     private WordDictionary _dictionary;
-    private CrosswordState _state;
     private CrosswordKnowledge _knowledge;
 
     private void GenerateCrossword()
@@ -45,13 +44,11 @@ public class CrosswordManager : MonoBehaviour
         }
         if (bestCrossword == null)
             throw new System.Exception("No crossword generated");
-        _state = new CrosswordState(bestCrossword);
         _knowledge = new CrosswordKnowledge(bestCrossword);
     }
 
     public void HandleGuess(Word word)
     {
-        _state.HandleGuess(word);
         _knowledge.Guess(word);
         Renderer.Render(_knowledge);
     }
