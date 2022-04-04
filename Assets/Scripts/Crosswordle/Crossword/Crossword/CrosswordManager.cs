@@ -12,7 +12,7 @@ public class CrosswordManager : MonoBehaviour
 
     private WordDictionary _dictionary;
     private CrosswordKnowledge _knowledge;
-
+    private CharacterKnowledge _globalKnowledge;
     private void GenerateCrossword()
     {
         CrosswordData bestCrossword = null;
@@ -45,26 +45,31 @@ public class CrosswordManager : MonoBehaviour
         if (bestCrossword == null)
             throw new System.Exception("No crossword generated");
         _knowledge = new CrosswordKnowledge(bestCrossword);
+        _globalKnowledge = new CharacterKnowledge();
     }
 
     public void HandleGuess(Word word)
     {
         _knowledge.Guess(word);
+        UpdateGlobalKnowledge(word);
         Renderer.Render(_knowledge);
     }
 
-    public KeyboardHints GetLetterUsage()
+    private void UpdateGlobalKnowledge(Word word)
     {
-        var hints = new KeyboardHints();
+        _globalKnowledge.Guess(word);
         foreach (var problem in _knowledge.Problems)
         {
             for (var i = 0; i < problem.Length; i++)
             {
-                var k = problem.GetKnowledge(i);
-                hints.Update(k);
+                _globalKnowledge.Update(problem.GetKnowledge(i));
             }
         }
-        return hints;
+    } 
+
+    public CharacterKnowledge GetGlobalLetterKnowledge()
+    {
+        return _globalKnowledge;
     }
 
     private void Awake()

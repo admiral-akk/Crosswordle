@@ -1,12 +1,32 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GuessManager : MonoBehaviour
 {
-    [SerializeField, Range(1,10)] private int WordLength;
+    [SerializeField, Range(1, 10)] private int WordLength;
     [SerializeField] private GuessRenderer Renderer;
 
     private Word _guess;
     private WordDictionary _dictionary;
+    private CharacterKnowledge _knowledge;
+    private List<Word> _guesses;
+
+    private CharacterKnowledge[] PerLetterKnowledge {
+
+        get {
+            var arr = new CharacterKnowledge[WordLength];
+            for (var i = 0; i < WordLength; i++)
+            {
+                arr[i] = new CharacterKnowledge(_knowledge);
+                foreach (var word in _guesses)
+                {
+                    arr[i].SetWrong(word[i]);
+                }
+            }
+            return arr;
+            }
+        }
+
     private Word Guess
     {
         get
@@ -16,14 +36,20 @@ public class GuessManager : MonoBehaviour
         set
         {
             _guess = value;
-            Renderer.Render(_guess);
+            Renderer.Render(_guess, PerLetterKnowledge);
         }
     }
 
     private void Awake()
     {
         _dictionary = WordDictionary.GenerateDictionary();
-        Guess = new Word("");
+        _guess = new Word("");
+        _guesses = new List<Word>();
+    }
+
+    public void Register(CharacterKnowledge knowledge)
+    {
+        _knowledge = knowledge;
     }
     public Word? SubmitWord()
     {
@@ -32,6 +58,7 @@ public class GuessManager : MonoBehaviour
         if (!_dictionary.IsValidWord(_guess))
             return null;
         var ret = _guess;
+        _guesses.Add(_guess);
         Guess = new Word("");
         return ret;
     }

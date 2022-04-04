@@ -24,8 +24,23 @@ public class GuessSquareRenderer : MonoBehaviour
         transform.localPosition = new Vector3(position.x - dimensions.x / 2f, -position.y + dimensions.y / 2f) * size;
     }
 
-    public void UpdateLetter(string c)
+    public void UpdateLetter(string c, CharacterKnowledge.Knowledge knowledge = CharacterKnowledge.Knowledge.None)
     {
         Letter.text = c;
+        switch (knowledge)
+        {
+            case CharacterKnowledge.Knowledge.None:
+                Background.color = None;
+                break;
+            case CharacterKnowledge.Knowledge.NotInCrossword:
+                Background.color = Wrong;
+                break;
+            case CharacterKnowledge.Knowledge.Incomplete:
+                Background.color = WrongPosition;
+                break;
+            case CharacterKnowledge.Knowledge.Complete:
+                Background.color = Correct;
+                break;
+        }
     }
 }

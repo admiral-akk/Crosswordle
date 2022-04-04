@@ -29,10 +29,15 @@ public class GameManager : MonoBehaviour
                     return;
                 Crossword.HandleGuess(word.Value);
                 WordTracker.AddWord(word.Value);
-                var hints = Crossword.GetLetterUsage();
+                var hints = Crossword.GetGlobalLetterKnowledge();
                 Keyboard.UpdateUsage(hints, word.Value);
                 break;
         }
 
+    }
+
+    private void Start()
+    {
+        Guess.Register(Crossword.GetGlobalLetterKnowledge());
     }
 }

@@ -4,10 +4,11 @@ public class KeyboardHints
 { public enum State
     {
        None,
+       Wrong,
        OnBoard,
        Complete
-        
     }
+
     public Dictionary<char, State> Hints;
     public KeyboardHints()
     {
