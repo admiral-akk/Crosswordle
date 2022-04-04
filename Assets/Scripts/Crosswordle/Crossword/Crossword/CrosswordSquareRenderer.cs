@@ -82,20 +82,4 @@ public class CrosswordSquareRenderer : MonoBehaviour
             State = GuessState.None;
         }
     }
-    public void UpdateState(LetterKnowledge knowledge)
-    {
-        Letter.text = knowledge.PossibleLetters;
-        switch (knowledge.State)
-        {
-            case LetterKnowledge.KnowledgeState.None:
-                State = GuessState.None;
-                break;
-            case LetterKnowledge.KnowledgeState.WrongPosition:
-                State = GuessState.WrongPosition;
-                break;
-            case LetterKnowledge.KnowledgeState.Correct:
-                State = GuessState.Correct;
-                break;
-        }
-    }
 }
