@@ -963,6 +963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1498205481}
+  MaxCount: 10
 --- !u!1 &936790286
 GameObject:
   m_ObjectHideFlags: 0
