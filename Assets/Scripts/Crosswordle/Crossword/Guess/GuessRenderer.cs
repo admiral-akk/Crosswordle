@@ -17,7 +17,7 @@ public class GuessRenderer : MonoBehaviour
         {
             var square = Instantiate(Square, transform).GetComponent<GuessSquareRenderer>();
             square.UpdatePosition(new Vector2Int(i, 0), new Vector2Int(5, 1), Bounds);
-            square.UpdateLetter("");
+            square.UpdateLetter(' ');
             _squares.Add(square);
         }
     }
@@ -30,11 +30,11 @@ public class GuessRenderer : MonoBehaviour
         _toRender = null;
         foreach (var square in _squares)
         {
-            square.UpdateLetter("");
+            square.UpdateLetter(' ');
         }
         for (var i = 0; i < word.Length; i++)
         {
-            _squares[i].UpdateLetter(word[i].ToString(), _knowledge[i].Get(word[i]));
+            _squares[i].UpdateLetter(word[i], _knowledge[i].Get(word[i]));
         }
         _knowledge = null;
     }

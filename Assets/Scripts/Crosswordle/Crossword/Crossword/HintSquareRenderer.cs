@@ -1,25 +1,11 @@
-using System.Linq;
-using TMPro;
 using UnityEngine;
 
-public class HintSquareRenderer : CrosswordleRenderer
+public class HintSquareRenderer : MonoBehaviour
 {
-    [Header("Components")]
-    [SerializeField] private TextMeshProUGUI Letter;
-    [SerializeField] private SpriteRenderer Background;
-    [SerializeField] private SpriteRenderer Border;
-
-
+    [SerializeField] private LetterSquareRenderer LetterSquare;
     public void UpdateLetter(char c)
     {
-        Letter.text = c.ToString();
-    }
-
-    public override void UpdatePalette(ColorPalette palette)
-    {
-        Letter.color = palette.BadPosition.Text;
-        Background.color = palette.BadPosition.Background;
-        Border.color = palette.Border;
+        LetterSquare.Render(c, LetterSquareRenderer.State.BadPosition);
     }
 
     public void UpdatePosition(int index)

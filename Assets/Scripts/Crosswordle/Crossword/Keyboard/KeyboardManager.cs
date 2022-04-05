@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,9 +14,8 @@ public class KeyboardManager : MonoBehaviour
         {
             foreach (var c in KeyboardLayout[i].ToUpper())
             {
-                var key = Instantiate(KeyPrefab, KeyRows[i].transform).GetComponent<KeyboardSquareRenderer>();
-                key.Initialize(c);
-                _keys[c] = key;
+                _keys[c] = Instantiate(KeyPrefab, KeyRows[i].transform).GetComponent<KeyboardSquareRenderer>();
+                _keys[c].Initialize(c);
             }
         }
     }
