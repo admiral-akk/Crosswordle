@@ -7,7 +7,6 @@ public class HintSquareRenderer : MonoBehaviour
     {
         LetterSquare.Render(c, LetterSquareRenderer.State.BadPosition);
     }
-
     public void UpdatePosition(int index)
     {
         transform.localScale =  Vector3.one * 0.525f;

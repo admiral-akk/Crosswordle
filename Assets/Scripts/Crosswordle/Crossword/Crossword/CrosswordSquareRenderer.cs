@@ -33,26 +33,33 @@ public class CrosswordSquareRenderer : MonoBehaviour
         _hints = new List<HintSquareRenderer>();
     }
 
-    public void UpdateState(LetterKnowledgeState knowledge)
+    private void ClearHints()
     {
         foreach (var hint in _hints)
             Destroy(hint.gameObject);
         _hints.Clear();
+    }
+
+    private void AddHints(HashSet<char> hints)
+    {
+        foreach (var hint in hints)
+        {
+            var hintObject = Instantiate(HintPrefab, transform).GetComponent<HintSquareRenderer>();
+            hintObject.UpdateLetter(hint);
+            hintObject.UpdatePosition(_hints.Count);
+            _hints.Add(hintObject);
+        }
+    }
+
+    public void UpdateState(LetterKnowledgeState knowledge)
+    {
+        ClearHints();
         if (knowledge.IsSolved)
         {
             LetterSquare.Render(knowledge.Answer.Value, LetterSquareRenderer.State.Correct);
             return;
         }
-        if (knowledge.Hints.Count > 0)
-        {
-            foreach(var hint in knowledge.Hints)
-            {
-                var hintObject = Instantiate(HintPrefab, transform).GetComponent<HintSquareRenderer>();
-                hintObject.UpdateLetter(hint);
-                hintObject.UpdatePosition(_hints.Count);
-                _hints.Add(hintObject);
-            }
-        }
         LetterSquare.Render(' ', LetterSquareRenderer.State.None);
+        AddHints(knowledge.Hints);
     }
 }

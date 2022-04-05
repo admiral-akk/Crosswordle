@@ -10,11 +10,13 @@ public class LetterSquareRenderer : CrosswordleRenderer
     [SerializeField] private TextMeshProUGUI Text;
 
     private ColorPalette _palette;
+   
     private ColorPalette Palette {
         get => _palette;
         set
         {
             _palette = value;
+            UpdateColor();
         }
     }
 
@@ -58,20 +60,21 @@ public class LetterSquareRenderer : CrosswordleRenderer
 
     private State _s;
 
+    public void Render()
+    {
+        UpdateColor();
+    }
     public void Render(State s)
     {
         S = s;
     }
+
     public void Render(char c, State s)
     {
         Text.text = c.ToString();
         S = s;
     }
 
-    protected override void StartRenderer()
-    {
-        S = State.None;
-    }
     private State S
     {
         get => _s;
@@ -84,7 +87,6 @@ public class LetterSquareRenderer : CrosswordleRenderer
 
     public override void UpdatePalette(ColorPalette palette)
     {
-        _palette = palette;
-        UpdateColor();
+        Palette = palette;
     }
 }
