@@ -15,20 +15,23 @@ public class GuessSquareRenderer : MonoBehaviour
         transform.localScale = size * Vector3.one;
         transform.localPosition = new Vector3(position.x - dimensions.x / 2f, -position.y + dimensions.y / 2f) * size;
     }
-    public void UpdateLetter(char c, CharacterKnowledge.Knowledge knowledge = CharacterKnowledge.Knowledge.None)
+    public void UpdateLetter(char c, GuessKnowledge.Knowledge knowledge = GuessKnowledge.Knowledge.Unused)
     {
         switch (knowledge)
         {
-            case CharacterKnowledge.Knowledge.None:
+            case GuessKnowledge.Knowledge.Unused:
                 LetterSquare.Render(c, LetterSquareRenderer.State.None);
                 break;
-            case CharacterKnowledge.Knowledge.NotInCrossword:
+            case GuessKnowledge.Knowledge.NotInCrossword:
                 LetterSquare.Render(c, LetterSquareRenderer.State.NotInCrossword);
                 break;
-            case CharacterKnowledge.Knowledge.Incomplete:
+            case GuessKnowledge.Knowledge.CouldBeHere:
                 LetterSquare.Render(c, LetterSquareRenderer.State.BadPosition);
                 break;
-            case CharacterKnowledge.Knowledge.Complete:
+            case GuessKnowledge.Knowledge.NotHere:
+                LetterSquare.Render(c, LetterSquareRenderer.State.Wrong);
+                break;
+            case GuessKnowledge.Knowledge.Complete:
                 LetterSquare.Render(c, LetterSquareRenderer.State.Correct);
                 break;
         }

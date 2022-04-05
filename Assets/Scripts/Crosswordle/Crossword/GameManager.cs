@@ -31,13 +31,13 @@ public class GameManager : MonoBehaviour
                 WordTracker.AddWord(word.Value);
                 var hints = Crossword.GetGlobalLetterKnowledge();
                 Keyboard.UpdateUsage(hints, word.Value);
+                Guess.UpdateGuessKnowledge(Crossword.GenerateGuessKnowledge());
                 break;
         }
-
     }
 
     private void Start()
     {
-        Guess.Register(Crossword.GetGlobalLetterKnowledge());
+        Guess.UpdateGuessKnowledge(Crossword.GenerateGuessKnowledge());
     }
 }

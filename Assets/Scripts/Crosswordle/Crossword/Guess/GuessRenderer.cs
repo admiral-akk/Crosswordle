@@ -8,7 +8,7 @@ public class GuessRenderer : MonoBehaviour
 
     private List<GuessSquareRenderer> _squares;
     private Word? _toRender;
-    private CharacterKnowledge[] _knowledge;
+    private GuessKnowledge _knowledge;
 
     private void Awake()
     {
@@ -34,12 +34,12 @@ public class GuessRenderer : MonoBehaviour
         }
         for (var i = 0; i < word.Length; i++)
         {
-            _squares[i].UpdateLetter(word[i], _knowledge[i].Get(word[i]));
+            _squares[i].UpdateLetter(word[i], _knowledge.Get(word[i], i));
         }
         _knowledge = null;
     }
 
-    public void Render(Word word, CharacterKnowledge[] knowledge)
+    public void Render(Word word, GuessKnowledge knowledge)
     {
         _toRender = word;
         _knowledge = knowledge;

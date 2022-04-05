@@ -72,6 +72,27 @@ public class CrosswordManager : MonoBehaviour
         return _globalKnowledge;
     }
 
+    public GuessKnowledge GenerateGuessKnowledge()
+    {
+        var guessKnowledge = new GuessKnowledge(5);
+        foreach (var problem in _knowledge.Problems)
+        {
+            for (var i = 0; i < problem.Length; i++)
+            {
+                var k = problem.GetKnowledge(i);
+                if (!k.IsSolved)
+                {
+                    guessKnowledge.AddHints(k.Hints, i);
+                } else
+                {
+                    var c = k.Answer.Value;
+                    guessKnowledge.AddCorrect(c, i);
+                }
+            }
+        }
+        return guessKnowledge;
+    }
+
     private void Awake()
     {
         if (_dictionary == null)

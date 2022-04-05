@@ -8,24 +8,9 @@ public class GuessManager : MonoBehaviour
 
     private Word _guess;
     private WordDictionary _dictionary;
-    private CharacterKnowledge _knowledge;
+    private GuessKnowledge _knowledge;
     private List<Word> _guesses;
 
-    private CharacterKnowledge[] PerLetterKnowledge {
-
-        get {
-            var arr = new CharacterKnowledge[WordLength];
-            for (var i = 0; i < WordLength; i++)
-            {
-                arr[i] = new CharacterKnowledge(_knowledge);
-                foreach (var word in _guesses)
-                {
-                    arr[i].SetWrong(word[i]);
-                }
-            }
-            return arr;
-            }
-        }
 
     private Word Guess
     {
@@ -36,7 +21,7 @@ public class GuessManager : MonoBehaviour
         set
         {
             _guess = value;
-            Renderer.Render(_guess, PerLetterKnowledge);
+            Renderer.Render(_guess, _knowledge);
         }
     }
 
@@ -47,10 +32,12 @@ public class GuessManager : MonoBehaviour
         _guesses = new List<Word>();
     }
 
-    public void Register(CharacterKnowledge knowledge)
+    public void UpdateGuessKnowledge(GuessKnowledge knowledge)
     {
         _knowledge = knowledge;
+        _knowledge.AddGuesses(_guesses);
     }
+
     public Word? SubmitWord()
     {
         if (_guess.Length < WordLength)
