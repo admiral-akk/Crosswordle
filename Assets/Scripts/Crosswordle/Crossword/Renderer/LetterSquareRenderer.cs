@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class SquareRenderer : CrosswordleRenderer
+public class LetterSquareRenderer : CrosswordleRenderer
 {
     [Header("Square Renderer")]
     [SerializeField] private Image Border;
@@ -47,7 +47,7 @@ public abstract class SquareRenderer : CrosswordleRenderer
         Text.color = boxColor.Text;
     }
 
-    protected enum State
+    public enum State
     {
         None,
         Wrong,
@@ -58,12 +58,16 @@ public abstract class SquareRenderer : CrosswordleRenderer
 
     private State _s;
 
-    protected void Render(string text, State s)
+    public void Render(State s)
     {
-        Text.text = text;
         S = s;
     }
-    
+    public void Render(char c, State s)
+    {
+        Text.text = c.ToString();
+        S = s;
+    }
+
     protected override void StartRenderer()
     {
         S = State.None;

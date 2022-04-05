@@ -3,8 +3,10 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class CrosswordSquareRenderer : SquareRenderer
+public class CrosswordSquareRenderer : MonoBehaviour
 {
+    [Header("Letter Square")]
+    [SerializeField] private LetterSquareRenderer LetterSquare;
     [Header("Prefabs")]
     [SerializeField] private GameObject HintPrefab;
 
@@ -38,7 +40,7 @@ public class CrosswordSquareRenderer : SquareRenderer
         _hints.Clear();
         if (knowledge.IsSolved)
         {
-            Render(knowledge.Answer.ToString(), State.Correct);
+            LetterSquare.Render(knowledge.Answer.Value, LetterSquareRenderer.State.Correct);
             return;
         }
         if (knowledge.Hints.Count > 0)
@@ -51,6 +53,6 @@ public class CrosswordSquareRenderer : SquareRenderer
                 _hints.Add(hintObject);
             }
         }
-        Render("",State.None);
+        LetterSquare.Render(' ', LetterSquareRenderer.State.None);
     }
 }

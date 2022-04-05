@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class KeyboardManager : MonoBehaviour
 {
-    private Dictionary<char, KeyboardSquare> _keys;
+    private Dictionary<char, KeyboardSquareRenderer> _keys;
     [SerializeField] private GameObject KeyPrefab;
     [SerializeField] private Canvas[] KeyRows;
 
     private void Awake()
     {
-        _keys = new Dictionary<char, KeyboardSquare>();
+        _keys = new Dictionary<char, KeyboardSquareRenderer>();
         for (var i = 0; i < KeyboardLayout.Length; i++)
         {
             foreach (var c in KeyboardLayout[i].ToUpper())
             {
-                var key = Instantiate(KeyPrefab, KeyRows[i].transform).GetComponent<KeyboardSquare>();
-                key.Letter = c;
+                var key = Instantiate(KeyPrefab, KeyRows[i].transform).GetComponent<KeyboardSquareRenderer>();
+                key.Initialize(c);
                 _keys[c] = key;
             }
         }
@@ -31,29 +31,7 @@ public class KeyboardManager : MonoBehaviour
     {
         for (var i = 0; i < guess.Length; i++)
         {
-            switch (hints.Get(guess[i]))
-            {
-                case CharacterKnowledge.Knowledge.None:
-                    _keys[guess[i]].S = KeyboardSquare.State.None;
-                    break;
-                case CharacterKnowledge.Knowledge.NotInCrossword:
-                    _keys[guess[i]].S = KeyboardSquare.State.Wrong;
-                    break;
-                case CharacterKnowledge.Knowledge.Incomplete:
-                    _keys[guess[i]].S = KeyboardSquare.State.WrongPosition;
-                    break;
-                case CharacterKnowledge.Knowledge.Complete:
-                    _keys[guess[i]].S = KeyboardSquare.State.RightPosition;
-                    break;
-            }
-        }
-    }
-
-    public void NewGame()
-    {
-        foreach (var key in _keys.Values)
-        {
-            key.NewGame();
+            _keys[guess[i]].UpdateColor(hints.Get(guess[i]));
         }
     }
 }
