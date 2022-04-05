@@ -3,13 +3,8 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class CrosswordSquareRenderer : MonoBehaviour
+public class CrosswordSquareRenderer : CrosswordleRenderer
 {
-    [Header("Parameters")]
-    [SerializeField] private Color None;
-    [SerializeField] private Color Wrong;
-    [SerializeField] private Color WrongPosition;
-    [SerializeField] private Color Correct;
     [Header("Components")]
     [SerializeField] private SpriteRenderer Background;
     [SerializeField] private TextMeshProUGUI Letter;
@@ -17,6 +12,10 @@ public class CrosswordSquareRenderer : MonoBehaviour
     [SerializeField] private GameObject HintPrefab;
 
     private List<HintSquareRenderer> _hints;
+    private Color _none;
+     private Color _wrong;
+     private Color _wrongPosition;
+     private Color _correct;
 
     private static float Size(Vector2Int dimensions, Bounds bounds)
     {
@@ -54,13 +53,13 @@ public class CrosswordSquareRenderer : MonoBehaviour
             switch (_state)
             {
                 case GuessState.None:
-                    Background.color = None;
+                    Background.color = _none;
                     break;
                 case GuessState.WrongPosition:
-                    Background.color = WrongPosition;
+                    Background.color = _wrongPosition;
                     break;
                 case GuessState.Correct:
-                    Background.color = Correct;
+                    Background.color = _correct;
                     break;
             }
         }
@@ -97,5 +96,14 @@ public class CrosswordSquareRenderer : MonoBehaviour
         }
         Letter.text = "";
         State = GuessState.None;
+    }
+
+    public override void UpdatePalette(ColorPalette palette)
+    {
+        _none = palette.Empty;
+        _wrong = palette.Wrong.Background;
+        _wrongPosition = palette.BadPosition.Background;
+        _correct = palette.Correct.Background;
+        State = State;
     }
 }

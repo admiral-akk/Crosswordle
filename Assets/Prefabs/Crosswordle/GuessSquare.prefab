@@ -210,10 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c1b90ff8b3f5e46ab3c9947f029db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  None: {r: 0.4, g: 0.4, b: 0.4, a: 1}
-  Wrong: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-  WrongPosition: {r: 0.75294125, g: 0.6901961, b: 0.21568629, a: 1}
-  Correct: {r: 0.054901965, g: 0.50980395, b: 0, a: 1}
+  Border: {fileID: 4612142088824665123}
   Background: {fileID: 4612142088548118193}
   Letter: {fileID: 4612142089247520632}
 --- !u!1 &4612142089247520638

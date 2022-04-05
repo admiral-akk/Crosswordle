@@ -2,15 +2,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class KeyboardSquare : MonoBehaviour
+public class KeyboardSquare : CrosswordleRenderer
 {
     [SerializeField] private TextMeshProUGUI letter;
     [SerializeField] private Image background;
+    [SerializeField] private Image border;
 
-    [SerializeField] private Color Default;
-    [SerializeField] private Color Wrong;
-    [SerializeField] private Color WrongPosition;
-    [SerializeField] private Color RightPosition;
+    private Color _default;
+     private Color _wrong;
+     private Color _wrongPosition;
+    private Color _rightPosition;
 
     public char Letter
     {
@@ -51,24 +52,23 @@ public class KeyboardSquare : MonoBehaviour
         set
         {
 
-            if (_s == State.RightPosition)
-                return;
-                switch (value)
+            if (_s != State.RightPosition)
+                _s = value;
+            switch (_s)
             {
                 case State.None:
-                    background.color = Default;
+                    background.color = _default;
                     break;
                 case State.Wrong:
-                    background.color = Wrong;
+                    background.color = _wrong;
                     break;
                 case State.WrongPosition:
-                    background.color = WrongPosition;
+                    background.color = _wrongPosition;
                     break;
                 case State.RightPosition:
-                    background.color = RightPosition;
+                    background.color = _rightPosition;
                     break;
             }
-            _s = value;
         }
     }
 
@@ -80,5 +80,15 @@ public class KeyboardSquare : MonoBehaviour
     public void NewGame()
     {
         S = State.None;
+    }
+
+    public override void UpdatePalette(ColorPalette palette)
+    {
+        _default = palette.None.Background;
+        _wrong = palette.NothingFound.Background;
+        _wrongPosition = palette.BadPosition.Background;
+        _rightPosition = palette.Correct.Background;
+        border.color = palette.Border;
+        S = S;
     }
 }

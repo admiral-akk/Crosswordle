@@ -292,10 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   letter: {fileID: 1331051260736056403}
   background: {fileID: 6982261678097319528}
-  Default: {r: 0.4, g: 0.4, b: 0.4, a: 1}
-  Wrong: {r: 0.1, g: 0.1, b: 0.1, a: 1}
-  WrongPosition: {r: 0.87843144, g: 0.7490196, b: 0.13725491, a: 1}
-  RightPosition: {r: 0.015686275, g: 0.46274513, b: 0.03529412, a: 1}
+  border: {fileID: 4240869817086968269}
   _s: 0
 --- !u!1 &7556883114634424911
 GameObject:

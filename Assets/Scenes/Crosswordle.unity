@@ -416,6 +416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 428951830}
   - component: {fileID: 428951829}
+  - component: {fileID: 428951831}
   m_Layer: 0
   m_Name: Backdrop
   m_TagString: Untagged
@@ -488,6 +489,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &428951831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428951828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4783f3b0c778cad4f817bda9ff7970ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 428951829}
 --- !u!1 &605628010
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,10 +1010,10 @@ MonoBehaviour:
   None: {r: 0.4, g: 0.4, b: 0.4, a: 1}
   NothingFound: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   Wrong: {r: 1, g: 0, b: 0, a: 1}
-  BadPosition: {r: 1, g: 0.86603415, b: 0, a: 1}
-  Correct: {r: 0.055172443, g: 0.5, b: 0, a: 1}
+  BadPosition: {r: 0.8, g: 0.6934641, b: 0.16078429, a: 1}
+  Correct: {r: 0, g: 0.5019608, b: 0, a: 1}
   Border: {r: 0, g: 0, b: 0, a: 1}
-  Backdrop: {r: 0, g: 0.52086806, b: 1, a: 1}
+  Backdrop: {r: 0, g: 0.33333325, b: 0.5, a: 1}
   Empty: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1148913774
 GameObject:

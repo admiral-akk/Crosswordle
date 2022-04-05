@@ -27,33 +27,36 @@ public class PaletteManager : MonoBehaviour
             return;
         }
         Instance = this;
-        _renderers = new List<CrosswordleRenderer>();
     }
 
     private List<CrosswordleRenderer> _renderers;
-    private ColorPalette _palette;
-
+    private List<CrosswordleRenderer> Renderers
+    {
+        get
+        {
+            if (_renderers == null)
+                _renderers = new List<CrosswordleRenderer>();
+            return _renderers;
+        }
+    }
+    private ColorPalette Palette => new ColorPalette(Text, None, NothingFound, Wrong, BadPosition, Correct, Border, Backdrop, Empty);
 
     public static void RegisterRenderer(CrosswordleRenderer renderer)
     {
-        Instance._renderers.Add(renderer);
+        Instance.Renderers.Add(renderer);
+        renderer.UpdatePalette(Instance.Palette);
     }
 
     public static void DeregisterRenderer(CrosswordleRenderer renderer)
     {
-        Instance._renderers.Remove(renderer);
-    }
-
-    private void InstatiatePalette()
-    {
-        _palette = new ColorPalette(Text, None, NothingFound, Wrong, BadPosition, Correct, Border, Backdrop, Empty);
+        Instance.Renderers.Remove(renderer);
     }
 
     private void OnValidate()
     {
-        foreach (var renderer in _renderers)
+        foreach (var renderer in Renderers)
         {
-            renderer.UpdatePalette(_palette);
+            renderer.UpdatePalette(Palette);
         }
     }
 }
