@@ -8,8 +8,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CrosswordManager Crossword;
     [SerializeField] private WordTrackerManager WordTracker;
     [SerializeField] private KeyboardManager Keyboard;
+    [SerializeField] private GameOverManager GameOver;
     private void Update()
     {
+        if (WordTracker.GameOver)
+        {
+            GameOver.GameOver(Crossword.PlayerWon);
+            return;
+
+        }
         if (!Input.HasInput)
             return;
         var playerInput = Input.GetInput();
@@ -36,8 +43,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ResetGame()
+    {
+        Guess.ResetGame();
+        Crossword.ResetGame();
+        WordTracker.ResetGame();
+        Keyboard.ResetGame();
+        GameOver.ResetGame();
+        Guess.UpdateGuessKnowledge(Crossword.GenerateGuessKnowledge());
+    }
+
     private void Start()
     {
-        Guess.UpdateGuessKnowledge(Crossword.GenerateGuessKnowledge());
+        GameOver.RegisterReset(ResetGame);
+        ResetGame();
     }
 }

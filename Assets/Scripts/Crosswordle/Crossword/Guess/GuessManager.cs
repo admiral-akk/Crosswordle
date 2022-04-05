@@ -27,6 +27,11 @@ public class GuessManager : MonoBehaviour
 
     private void Awake()
     {
+        ResetGame();
+    }
+
+    public void ResetGame()
+    {
         _dictionary = WordDictionary.GenerateDictionary();
         _guess = new Word("");
         _guesses = new List<Word>();

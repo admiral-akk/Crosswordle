@@ -32,4 +32,15 @@ public class KeyboardManager : MonoBehaviour
             _keys[guess[i]].UpdateColor(hints.Get(guess[i]));
         }
     }
+
+    public void ResetGame()
+    {
+        for (var i = 0; i < KeyboardLayout.Length; i++)
+        {
+            foreach (var c in KeyboardLayout[i].ToUpper())
+            {
+                _keys[c].UpdateColor(CharacterKnowledge.Knowledge.None);
+            }
+        }
+    }
 }

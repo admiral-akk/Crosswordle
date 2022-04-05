@@ -26,7 +26,7 @@ public class CrosswordManager : MonoBehaviour
             {
                 words.Add(_dictionary.GetRandomWord());
             }
-            
+
             var crossword = CrosswordData.GenerateCrossword(words.ToArray());
 
             if (crossword == null)
@@ -46,6 +46,29 @@ public class CrosswordManager : MonoBehaviour
             throw new System.Exception("No crossword generated");
         _knowledge = new CrosswordKnowledge(bestCrossword);
         _globalKnowledge = new CharacterKnowledge();
+    }
+
+    public bool PlayerWon { 
+        get
+        {
+            foreach (var problem in _knowledge.Problems)
+            {
+                for (var i = 0; i < problem.Length; i++)
+                {
+                    if (!problem.GetKnowledge(i).IsSolved)
+                        return false;
+                }
+            }
+            return true;
+        }
+        }
+
+    public void ResetGame()
+    {
+        if (_dictionary == null)
+            _dictionary = WordDictionary.GenerateDictionary();
+        GenerateCrossword();
+        Renderer.Render(_knowledge);
     }
 
     public void HandleGuess(Word word)
@@ -95,9 +118,6 @@ public class CrosswordManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_dictionary == null)
-            _dictionary = WordDictionary.GenerateDictionary();
-        GenerateCrossword();
-        Renderer.Render(_knowledge);
+        ResetGame();
     }
 }

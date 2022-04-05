@@ -11,8 +11,7 @@ public class WordTrackerManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        _words = new List<Word>();
-        UpdateText();
+        ResetGame();
     }
 
     private void UpdateText()
@@ -34,6 +33,15 @@ public class WordTrackerManager : MonoBehaviour
     public void AddWord(Word word)
     {
         _words.Add(word);
+        UpdateText();
+    }
+
+    public bool GameOver => _words.Count >= MaxCount;
+
+    public void ResetGame()
+    {
+
+        _words = new List<Word>();
         UpdateText();
     }
 }
