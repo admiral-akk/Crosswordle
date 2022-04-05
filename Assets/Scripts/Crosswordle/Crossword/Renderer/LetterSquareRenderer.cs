@@ -40,6 +40,9 @@ public class LetterSquareRenderer : CrosswordleRenderer
             case State.Correct:
                 UpdateTextColor(Palette.Correct);
                 break;
+            case State.Empty:
+                Background.color = Palette.Empty;
+                break;
         }
     }
 
@@ -55,7 +58,8 @@ public class LetterSquareRenderer : CrosswordleRenderer
         Wrong,
         NotInCrossword,
         BadPosition,
-        Correct
+        Correct, 
+        Empty
     }
 
     private State _s;

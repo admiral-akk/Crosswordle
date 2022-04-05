@@ -59,7 +59,7 @@ public class CrosswordSquareRenderer : MonoBehaviour
             LetterSquare.Render(knowledge.Answer.Value, LetterSquareRenderer.State.Correct);
             return;
         }
-        LetterSquare.Render(' ', LetterSquareRenderer.State.None);
+        LetterSquare.Render(' ', LetterSquareRenderer.State.Empty);
         AddHints(knowledge.Hints);
     }
 }
