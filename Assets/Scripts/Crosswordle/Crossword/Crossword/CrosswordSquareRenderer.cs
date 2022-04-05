@@ -3,19 +3,12 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class CrosswordSquareRenderer : CrosswordleRenderer
+public class CrosswordSquareRenderer : SquareRenderer
 {
-    [Header("Components")]
-    [SerializeField] private SpriteRenderer Background;
-    [SerializeField] private TextMeshProUGUI Letter;
     [Header("Prefabs")]
     [SerializeField] private GameObject HintPrefab;
 
     private List<HintSquareRenderer> _hints;
-    private Color _none;
-     private Color _wrong;
-     private Color _wrongPosition;
-     private Color _correct;
 
     private static float Size(Vector2Int dimensions, Bounds bounds)
     {
@@ -33,41 +26,8 @@ public class CrosswordSquareRenderer : CrosswordleRenderer
         }
     }
 
-    private enum GuessState
-    {
-        None,
-        WrongPosition,
-        Correct
-    }
-    private GuessState _state;
-
-    private GuessState State
-    {
-        get
-        {
-            return _state;
-        }
-        set
-        {
-            _state = value;
-            switch (_state)
-            {
-                case GuessState.None:
-                    Background.color = _none;
-                    break;
-                case GuessState.WrongPosition:
-                    Background.color = _wrongPosition;
-                    break;
-                case GuessState.Correct:
-                    Background.color = _correct;
-                    break;
-            }
-        }
-    }
-
     private void Awake()
     {
-        State = GuessState.None;
         _hints = new List<HintSquareRenderer>();
     }
 
@@ -78,12 +38,9 @@ public class CrosswordSquareRenderer : CrosswordleRenderer
         _hints.Clear();
         if (knowledge.IsSolved)
         {
-            Letter.text = knowledge.Answer.ToString();
-            State = GuessState.Correct;
-        }
-        if (State == GuessState.Correct) { 
+            Render(knowledge.Answer.ToString(), State.Correct);
             return;
-        } 
+        }
         if (knowledge.Hints.Count > 0)
         {
             foreach(var hint in knowledge.Hints)
@@ -94,16 +51,6 @@ public class CrosswordSquareRenderer : CrosswordleRenderer
                 _hints.Add(hintObject);
             }
         }
-        Letter.text = "";
-        State = GuessState.None;
-    }
-
-    public override void UpdatePalette(ColorPalette palette)
-    {
-        _none = palette.Empty;
-        _wrong = palette.Wrong.Background;
-        _wrongPosition = palette.BadPosition.Background;
-        _correct = palette.Correct.Background;
-        State = State;
+        Render("",State.None);
     }
 }

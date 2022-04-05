@@ -57,7 +57,18 @@ public abstract class SquareRenderer : CrosswordleRenderer
     }
 
     private State _s;
-    protected State S
+
+    protected void Render(string text, State s)
+    {
+        Text.text = text;
+        S = s;
+    }
+    
+    protected override void StartRenderer()
+    {
+        S = State.None;
+    }
+    private State S
     {
         get => _s;
         set
