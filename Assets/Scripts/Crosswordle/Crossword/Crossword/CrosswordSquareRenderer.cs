@@ -22,10 +22,6 @@ public class CrosswordSquareRenderer : MonoBehaviour
         var size = Size(dimensions, bounds);
         transform.localScale = size * Vector3.one;
         transform.localPosition = new Vector3(position.x - dimensions.x / 2f, dimensions.y / 2f - position.y) * size;
-        if (dimensions.x / 2f < Mathf.Abs(transform.localPosition.x )|| dimensions.y / 2f < Mathf.Abs(transform.localPosition.y))
-        {
-            Debug.Log("ERROR");
-        }
     }
 
     private void Awake()
@@ -57,6 +53,11 @@ public class CrosswordSquareRenderer : MonoBehaviour
         if (knowledge.IsSolved)
         {
             LetterSquare.Render(knowledge.Answer.Value, LetterSquareRenderer.State.Correct);
+            return;
+        }
+        if (knowledge.IsSpoiled)
+        {
+            LetterSquare.Render(knowledge.Answer.Value, LetterSquareRenderer.State.BadPosition);
             return;
         }
         LetterSquare.Render(' ', LetterSquareRenderer.State.Empty);

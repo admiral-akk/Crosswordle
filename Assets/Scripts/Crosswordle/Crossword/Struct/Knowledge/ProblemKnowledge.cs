@@ -136,4 +136,12 @@ public class ProblemKnowledge
     {
         return _letterKnowledge[index].State;
     }
+
+    public void Spoil()
+    {
+        foreach (var knowledge in _letterKnowledge)
+        {
+            knowledge.Spoil();
+        }
+    }
 }

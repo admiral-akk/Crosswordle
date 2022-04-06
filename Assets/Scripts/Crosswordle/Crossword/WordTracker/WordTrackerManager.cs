@@ -36,7 +36,7 @@ public class WordTrackerManager : MonoBehaviour
         UpdateText();
     }
 
-    public bool GameOver => _words.Count >= MaxCount;
+    public bool PlayerLost => _words.Count >= MaxCount;
 
     public void ResetGame()
     {

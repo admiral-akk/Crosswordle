@@ -16,9 +16,15 @@ public class GameManager : MonoBehaviour
     {
         if (!_isReady)
             return;
-        if (WordTracker.GameOver)
+        if (Crossword.PlayerWon)
         {
-            GameOver.GameOver(Crossword.PlayerWon);
+            GameOver.GameOver(true);
+            return;
+        }
+        if (WordTracker.PlayerLost)
+        {
+            Crossword.SpoilCrossword();
+            GameOver.GameOver(false);
             return;
         }
         if (!Input.HasInput)

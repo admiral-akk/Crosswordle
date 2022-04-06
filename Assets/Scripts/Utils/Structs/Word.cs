@@ -1,9 +1,12 @@
-﻿public readonly struct Word 
+﻿using System.Text.RegularExpressions;
+
+public readonly struct Word 
 {
     private readonly string _word;
 
     public Word(string word)
     {
+        word = Regex.Replace(word, "[^a-zA-Z]", string.Empty);
         _word = word.ToUpper();
     }
 
@@ -28,10 +31,11 @@
     }
 
     public int Length => _word.Length;
-    public static explicit operator string(Word w) => w._word.ToUpper();
-    public static implicit operator Word(string s) => new Word(s.ToUpper());
-    public static Word operator +(Word word, char c) => new Word(word._word + c);
-    public static Word operator +(char c, Word word) => new Word(c + word._word);
+    public static explicit operator string(Word w) => w.ToString();
+    public static implicit operator Word(string s) => new Word(s);
+    public static Word operator +(Word word, char c) => word + new Word(c.ToString());
+    public static Word operator +(char c, Word word) => word + new Word(c.ToString());
+    public static Word operator +(Word word, Word other) => word.ToString() + other.ToString();
 
 
     public bool Contains(char c)

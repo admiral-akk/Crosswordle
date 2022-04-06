@@ -61,7 +61,7 @@ public class CrosswordManager : MonoBehaviour
             }
             return true;
         }
-        }
+    }
 
     public void ResetGame()
     {
@@ -117,5 +117,11 @@ public class CrosswordManager : MonoBehaviour
     public void Initialize(DictionaryManager dictionary)
     {
         _dictionary = dictionary;
+    }
+
+    public void SpoilCrossword()
+    {
+        _knowledge.Spoil();
+        Renderer.Render(_knowledge);
     }
 }

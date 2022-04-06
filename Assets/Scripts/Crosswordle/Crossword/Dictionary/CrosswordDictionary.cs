@@ -35,7 +35,7 @@ public class CrosswordDictionary
         _validAnswers = new List<List<Word>>();
     }
 
-    private static void AddWord(List<List<Word>> collection, string possibleWord)
+    private static void AddWord(List<List<Word>> collection, Word possibleWord)
     {
         var wordLength = possibleWord.Length;
         if (wordLength == 0)
@@ -51,8 +51,9 @@ public class CrosswordDictionary
         yield return www.SendWebRequest();
         foreach (var word in www.downloadHandler.text.Split('\n'))
         {
-            AddWord(collection, word);
-        }
+            var formattedWord = new Word(word);
+            AddWord(collection, formattedWord);
+          }
     }
     private static void FillWordCollectionViaFile(string filePath, List<List<Word>> collection)
     {
@@ -64,7 +65,7 @@ public class CrosswordDictionary
 
     private static IEnumerator FillWordCollection(string path, List<List<Word>> collection)
     {
-        if (path.Contains("http:"))
+        if (path.Contains("http:") || path.Contains("https:"))
         {
             yield return FillWordCollectionViaWeb(path, collection);
         }

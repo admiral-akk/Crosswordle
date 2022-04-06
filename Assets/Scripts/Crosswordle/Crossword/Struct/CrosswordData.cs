@@ -99,10 +99,6 @@ public class CrosswordData
             for (var i = 0; i < word.Word.Length; i++)
             {
                 var pos = word.StartPosition + i * offset;
-                if (pos.x < 0 || pos.x > xDim-1 || pos.y < 0 || pos.y > yDim - 1 || i > word.Word.Length)
-                {
-                    Debug.Log("break;");
-                }
                 chars[pos.x, pos.y] = word.Word[i];
             }
         }

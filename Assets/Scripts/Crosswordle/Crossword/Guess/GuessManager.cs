@@ -31,7 +31,7 @@ public class GuessManager : MonoBehaviour
 
     public void ResetGame()
     {
-        _guess = new Word("");
+        Guess = new Word("");
         _guesses = new List<Word>();
     }
 
@@ -43,12 +43,12 @@ public class GuessManager : MonoBehaviour
 
     public Word? SubmitWord()
     {
-        if (_guess.Length < WordLength)
+        if (Guess.Length < WordLength)
             return null;
-        if (!_dictionary.IsValidWord(_guess))
+        if (!_dictionary.IsValidWord(Guess))
             return null;
-        var ret = _guess;
-        _guesses.Add(_guess);
+        var ret = Guess;
+        _guesses.Add(Guess);
         Guess = new Word("");
         return ret;
     }

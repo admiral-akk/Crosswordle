@@ -6,6 +6,7 @@
 // 3. If we update a letter's knowledge, we need to be able to share that with the intersecting problem
 public class ProblemLetterKnowledge
 {
+    private bool _spoiled;
     private char _answer;
     private HashSet<char> _guesses;
     private HashSet<char> _possible;
@@ -34,7 +35,9 @@ public class ProblemLetterKnowledge
         get
         {
             if (Solved)
-                return new LetterKnowledgeState( Hints, _answer);
+                return new LetterKnowledgeState(Hints, _answer);
+            else if (_spoiled)
+                return new LetterKnowledgeState(Hints, _answer, true);
             return new LetterKnowledgeState(Hints);
         }
     }
@@ -53,16 +56,23 @@ public class ProblemLetterKnowledge
     {
         _guesses.Add(guess);
     }
+
+    public void Spoil()
+    {
+        _spoiled = true;
+    }
 }
 
 public readonly struct LetterKnowledgeState
 {
-    public bool IsSolved => Answer.HasValue;
+    public readonly bool IsSpoiled;
+    public bool IsSolved => Answer.HasValue && !IsSpoiled;
     public readonly char? Answer;
     public readonly HashSet<char> Hints;
-    public LetterKnowledgeState(HashSet<char> hints, char? answer = null)
+    public LetterKnowledgeState(HashSet<char> hints, char? answer = null, bool isSpoiled = false)
     {
         Hints = hints;
         Answer = answer;
+        IsSpoiled = isSpoiled;
     }
 }

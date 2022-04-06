@@ -37,4 +37,12 @@ public class CrosswordKnowledge
             problem.Guess(guess);
         }
     }
+
+    public void Spoil()
+    {
+        foreach (var problem in Problems)
+        {
+            problem.Spoil();
+        }
+    }
 }
