@@ -26,8 +26,6 @@ public class CrosswordDictionary : IManagedObject {
 
     private static IEnumerator FillWordCollection(string filePath, ICollection<Word> collection)
     {
-        Debug.Log(filePath);
-        yield return new WaitForSeconds(0.1f);
         if (filePath.Contains("http:"))
         {
            UnityWebRequest www = UnityWebRequest.Get(filePath);
