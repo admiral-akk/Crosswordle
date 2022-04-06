@@ -4,60 +4,94 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class CrosswordDictionary : IManagedObject { 
+public class CrosswordDictionary 
+{
+    private List<List<Word>> _validAnswers;
+    private List<HashSet<Word>> _validWords;
 
-    private List<Word> _answers;
-    private HashSet<Word> _dictionary;
-
-    private static string _wordPath = Application.streamingAssetsPath+ "/LegalWords.txt";
-    private static string _answerPath = Application.streamingAssetsPath+ "/LegalAnswers.txt";
+    private static string _wordPath = Application.streamingAssetsPath + "/LegalWords.txt";
+    private static string _answerPath = Application.streamingAssetsPath + "/LegalAnswers.txt";
 
     public IEnumerator Initialize()
     {
-       yield return  FillWordCollection(_wordPath, _dictionary);
-        yield return FillWordCollection(_answerPath, _answers);
+        var tempWords = new List<List<Word>>();
+        yield return FillWordCollection(_wordPath, tempWords);
+        InitializeValidWords(tempWords);
+        yield return FillWordCollection(_answerPath, _validAnswers);
     }
 
-            public CrosswordDictionary()
+    private void InitializeValidWords(List<List<Word>> words)
     {
-        _dictionary = new HashSet<Word>();
-        _answers = new List<Word>();
-    }
-
-    private static IEnumerator FillWordCollection(string filePath, ICollection<Word> collection)
-    {
-        if (filePath.Contains("http:"))
+        _validWords = new List<HashSet<Word>>(words.Count);
+        for (var i = 0; i < words.Count; i++)
         {
-           UnityWebRequest www = UnityWebRequest.Get(filePath);
-           yield return www.SendWebRequest();
-                while (!www.isDone) { }
+            _validWords[i] = new HashSet<Word>(words[i]);
+        }
+    }
 
-                foreach (var word in www.downloadHandler.text.Split('\n'))
-                {
-                    if (word.Length != 5)
-                        continue;
-                    collection.Add(new Word(word));
-                }
+    public CrosswordDictionary()
+    {
+        _validWords = new List<HashSet<Word>>();
+        _validAnswers = new List<List<Word>>();
+    }
+
+    private static void AddWord(List<List<Word>> collection, string possibleWord)
+    {
+        var wordLength = possibleWord.Length;
+        if (wordLength == 0)
+            return;
+        while (collection.Count < wordLength)
+            collection.Add(new List<Word>());
+        collection[wordLength - 1].Add(possibleWord);
+    }
+
+    private static IEnumerator FillWordCollectionViaWeb(string url, List<List<Word>> collection)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        yield return www.SendWebRequest();
+        foreach (var word in www.downloadHandler.text.Split('\n'))
+        {
+            AddWord(collection, word);
+        }
+    }
+    private static void FillWordCollectionViaFile(string filePath, List<List<Word>> collection)
+    {
+        foreach (var word in File.ReadLines(filePath))
+        {
+            AddWord(collection, word);
+        }
+    }
+
+    private static IEnumerator FillWordCollection(string path, List<List<Word>> collection)
+    {
+        if (path.Contains("http:"))
+        {
+            yield return FillWordCollectionViaWeb(path, collection);
         }
         else
         {
-            foreach (var word in File.ReadLines(filePath))
-            {
-                if (word.Length != 5)
-                    continue;
-                collection.Add(new Word(word));
-            }
+            FillWordCollectionViaFile(path, collection);
         }
     }
 
     public bool IsValidWord(Word guess)
     {
-        return _dictionary.Contains(guess);
+        var len = guess.Length;
+        if (len == 0)
+            return false;
+        if (len >= _validWords.Count)
+            return false;
+        return _validWords[len-1].Contains(guess);
     }
 
 
-    public Word GetRandomWord()
+    public Word GetRandomWord(int length = 5)
     {
-        return _answers[Random.Range(0, _answers.Count)];
+        if (length < 1 || length >= _validAnswers.Count || _validAnswers[length - 1].Count == 0)
+            throw new System.Exception(string.Format("Length {0} out of array bounds!",length));
+        var words = _validAnswers[length - 1];
+        if (words.Count == 0)
+            throw new System.Exception(string.Format("No words at length {0}!", length));
+        return words[Random.Range(0, words.Count)];
     }
 }
