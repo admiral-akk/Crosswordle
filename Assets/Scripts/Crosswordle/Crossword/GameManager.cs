@@ -19,12 +19,14 @@ public class GameManager : MonoBehaviour
         if (Crossword.PlayerWon)
         {
             GameOver.GameOver(true);
+            Guess.GameOver();
             return;
         }
         if (WordTracker.PlayerLost)
         {
             Crossword.SpoilCrossword();
             GameOver.GameOver(false);
+            Guess.GameOver();
             return;
         }
         if (!Input.HasInput)

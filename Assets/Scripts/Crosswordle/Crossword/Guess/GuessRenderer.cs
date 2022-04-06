@@ -43,5 +43,6 @@ public class GuessRenderer : MonoBehaviour
     {
         _toRender = word;
         _knowledge = knowledge;
+        gameObject.SetActive(true);
     }
 }

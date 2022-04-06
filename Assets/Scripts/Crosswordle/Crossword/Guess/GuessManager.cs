@@ -68,4 +68,9 @@ public class GuessManager : MonoBehaviour
     {
         _dictionary = dictionary;
     }
+
+    public void GameOver()
+    {
+        Renderer.gameObject.SetActive(false);
+    }
 }
