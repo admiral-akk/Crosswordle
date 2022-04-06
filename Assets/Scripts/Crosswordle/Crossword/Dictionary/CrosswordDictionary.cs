@@ -25,7 +25,7 @@ public class CrosswordDictionary
         _validWords = new List<HashSet<Word>>(words.Count);
         for (var i = 0; i < words.Count; i++)
         {
-            _validWords[i] = new HashSet<Word>(words[i]);
+            _validWords.Add(new HashSet<Word>(words[i]));
         }
     }
 
@@ -79,7 +79,7 @@ public class CrosswordDictionary
         var len = guess.Length;
         if (len == 0)
             return false;
-        if (len >= _validWords.Count)
+        if (len > _validWords.Count)
             return false;
         return _validWords[len-1].Contains(guess);
     }
@@ -87,7 +87,7 @@ public class CrosswordDictionary
 
     public Word GetRandomWord(int length = 5)
     {
-        if (length < 1 || length >= _validAnswers.Count || _validAnswers[length - 1].Count == 0)
+        if (length < 1 || length > _validAnswers.Count)
             throw new System.Exception(string.Format("Length {0} out of array bounds!",length));
         var words = _validAnswers[length - 1];
         if (words.Count == 0)

@@ -7,10 +7,9 @@ public class GuessManager : MonoBehaviour
     [SerializeField] private GuessRenderer Renderer;
 
     private Word _guess;
-    private WordDictionary _dictionary;
     private GuessKnowledge _knowledge;
     private List<Word> _guesses;
-
+    private DictionaryManager _dictionary;
 
     private Word Guess
     {
@@ -32,7 +31,6 @@ public class GuessManager : MonoBehaviour
 
     public void ResetGame()
     {
-        _dictionary = WordDictionary.GenerateDictionary();
         _guess = new Word("");
         _guesses = new List<Word>();
     }
@@ -65,5 +63,9 @@ public class GuessManager : MonoBehaviour
     {
         if (Guess.Length > 0)
             Guess = Guess.RemoveEnd();
+    }
+    public void Initialize(DictionaryManager dictionary)
+    {
+        _dictionary = dictionary;
     }
 }

@@ -10,7 +10,7 @@ public class CrosswordManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] private CrosswordRenderer Renderer;
 
-    private WordDictionary _dictionary;
+    private DictionaryManager _dictionary;
     private CrosswordKnowledge _knowledge;
     private CharacterKnowledge _globalKnowledge;
     private void GenerateCrossword()
@@ -65,8 +65,6 @@ public class CrosswordManager : MonoBehaviour
 
     public void ResetGame()
     {
-        if (_dictionary == null)
-            _dictionary = WordDictionary.GenerateDictionary();
         GenerateCrossword();
         Renderer.Render(_knowledge);
     }
@@ -116,8 +114,8 @@ public class CrosswordManager : MonoBehaviour
         return guessKnowledge;
     }
 
-    private void Awake()
+    public void Initialize(DictionaryManager dictionary)
     {
-        ResetGame();
+        _dictionary = dictionary;
     }
 }
