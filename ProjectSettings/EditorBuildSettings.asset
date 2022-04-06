@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Wordle.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/Crosswordle.unity
+    guid: f2afef9237d2d974eb733b2c91bd90f0
   m_configObjects: {}

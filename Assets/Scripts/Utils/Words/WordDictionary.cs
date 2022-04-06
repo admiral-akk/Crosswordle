@@ -1,17 +1,22 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class WordDictionary { 
 
     private List<Word> _answers;
     private HashSet<Word> _dictionary;
 
+    private static string _wordPath = Application.streamingAssetsPath+ "/LegalWords.txt";
+    private static string _answerPath = Application.streamingAssetsPath+ "/LegalAnswers.txt";
+
     public static WordDictionary GenerateDictionary()
     {
         var dict =  new WordDictionary();
-        FillWordCollection("Assets/Data/LegalWords.txt", dict._dictionary);
-        FillWordCollection("Assets/Data/LegalAnswers.txt", dict._answers);
+
+        FillWordCollection(_wordPath, dict._dictionary);
+        FillWordCollection(_answerPath, dict._answers);
         return dict;
     }
 
@@ -24,10 +29,28 @@ public class WordDictionary {
 
     private static void FillWordCollection(string filePath, ICollection<Word> collection)
     {
-        var words = File.ReadLines(filePath);
-        foreach (var word in words)
+        Debug.Log(filePath);
+        if (filePath.Contains("http:"))
         {
-            collection.Add(new Word(word));
+            UnityWebRequest www = UnityWebRequest.Get(filePath);
+             www.SendWebRequest();
+                while (!www.isDone) { }
+
+                foreach (var word in www.downloadHandler.text.Split('\n'))
+                {
+                    if (word.Length != 5)
+                        continue;
+                    collection.Add(new Word(word));
+                }
+        }
+        else
+        {
+            foreach (var word in File.ReadLines(filePath))
+            {
+                if (word.Length != 5)
+                    continue;
+                collection.Add(new Word(word));
+            }
         }
     }
 
