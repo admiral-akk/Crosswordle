@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LetterSquareRenderer : CrosswordleRenderer
+public class LetterSquareRenderer : BaseRenderer
 {
     [Header("Square Renderer")]
     [SerializeField] private Image Border;

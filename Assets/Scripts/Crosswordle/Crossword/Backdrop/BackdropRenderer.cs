@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BackdropRenderer : CrosswordleRenderer
+public class BackdropRenderer : BaseRenderer
 {
     [SerializeField] private SpriteRenderer sprite;
 

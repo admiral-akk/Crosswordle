@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class CrosswordleRenderer : MonoBehaviour
+public abstract class BaseRenderer : MonoBehaviour
 {
     private void Start()
     {
