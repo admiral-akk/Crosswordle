@@ -3,7 +3,6 @@ using static Assets.Scripts.Structs.PlayerInput;
 
 public class GameManager : MonoBehaviour
 {
-    private bool _isReady;
     [SerializeField] private InputManager Input;
     [SerializeField] private GuessManager Guess;
     [SerializeField] private CrosswordManager Crossword;
@@ -16,21 +15,26 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (!_isReady)
-            return;
+        switch (S)
+        {
+            default: 
+                break;
+            case State.None:
+            case State.Loading:
+            case State.Win:
+            case State.Loss:
+                return;
+        }
         if (Explainer.IsOpen)
             return;
         if (Crossword.PlayerWon)
         {
-            EndGame.PlayerWon(NextLevel);
-            Guess.GameOver();
+            S = State.Win;
             return;
         }
         if (WordTracker.PlayerLost)
         {
-            Crossword.SpoilCrossword();
-            EndGame.PlayerLost(() => { });
-            Guess.GameOver();
+            S = State.Loss;
             return;
         }
         if (!Input.HasInput)
@@ -59,6 +63,43 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private enum State
+    {
+        None,
+        Loading,
+        Playing,
+        Win,
+        Loss
+    }
+
+    private State _s;
+    private State S
+    {
+        get => _s;
+        set
+        {
+            _s = value;
+            switch (_s)
+            {
+                case State.None:
+                    break;
+                case State.Loading:
+                    break;
+                case State.Playing:
+                    break;
+                case State.Win:
+                    EndGame.PlayerWon(NextLevel);
+                    Guess.GameOver();
+                    break;
+                case State.Loss:
+                    Crossword.SpoilCrossword();
+                    EndGame.PlayerLost(NewGame);
+                    Guess.GameOver();
+                    break;
+            }
+        }
+    }
+
     public void NextLevel()
     {
         Difficulty.OnWin();
@@ -73,6 +114,7 @@ public class GameManager : MonoBehaviour
 
     public void Initialize()
     {
+        S = State.Loading;
         Explainer.ShowHelp();
         Dictionary.Initialize(DictionaryLoaded);
     }
@@ -85,6 +127,7 @@ public class GameManager : MonoBehaviour
         EndGame.StartGame();
         Guess.SetWordLength(Difficulty.WordLength);
         Guess.UpdateGuessKnowledge(Crossword.GenerateGuessKnowledge());
+        S = State.Playing;
     }
 
     private void DictionaryLoaded()
@@ -92,7 +135,6 @@ public class GameManager : MonoBehaviour
         Crossword.Initialize(Dictionary);
         Guess.Initialize(Dictionary);
         NewGame();
-        _isReady = true;
     }
 
     private void Start()
