@@ -5,7 +5,6 @@ using UnityEngine;
 public class CrosswordManager : MonoBehaviour
 {
     [Header("Parameters")]
-    [SerializeField, Range(1, 20)] private int WordCount;
     [SerializeField, Range(1, 100)] private int SampleLimit;
     [Header("Components")]
     [SerializeField] private CrosswordRenderer Renderer;
@@ -13,7 +12,7 @@ public class CrosswordManager : MonoBehaviour
     private DictionaryManager _dictionary;
     private CrosswordKnowledge _knowledge;
     private CharacterKnowledge _globalKnowledge;
-    private void GenerateCrossword()
+    private void GenerateCrossword(int wordCount)
     {
         CrosswordData bestCrossword = null;
         var words = new HashSet<Word>();
@@ -22,7 +21,7 @@ public class CrosswordManager : MonoBehaviour
         while (limit-- > 0)
         {
             words.Clear();
-            while (words.Count < WordCount)
+            while (words.Count < wordCount)
             {
                 words.Add(_dictionary.GetRandomWord());
             }
@@ -63,9 +62,9 @@ public class CrosswordManager : MonoBehaviour
         }
     }
 
-    public void ResetGame()
+    public void ResetGame(int wordCount, int wordLength)
     {
-        GenerateCrossword();
+        GenerateCrossword(wordCount);
         Renderer.Render(_knowledge);
     }
 

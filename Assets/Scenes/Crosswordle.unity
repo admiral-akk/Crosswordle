@@ -1105,7 +1105,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 51975103}
-  MaxCount: 10
 --- !u!1 &265460293
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,6 +1150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingWordCount: 5
   StartingWordLength: 5
+  StartingGuessCount: 6
 --- !u!1001 &274065036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5069,7 +5069,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f86067d1e143da448ad04431e561370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WordCount: 6
   SampleLimit: 46
   Renderer: {fileID: 1846895356}
 --- !u!4 &1422522445

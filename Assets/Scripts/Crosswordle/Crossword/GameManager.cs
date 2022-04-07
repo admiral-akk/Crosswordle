@@ -62,11 +62,11 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         Difficulty.FreshRun();
-        Guess.ResetGame(Difficulty.WordLength);
-        Crossword.ResetGame();
-        WordTracker.ResetGame();
+        Crossword.ResetGame(Difficulty.WordCount, Difficulty.WordLength);
+        WordTracker.ResetGame(Difficulty.GuessCount);
         Keyboard.ResetGame();
         GameOver.ResetGame();
+        Guess.ResetGame(Difficulty.WordLength);
         Guess.UpdateGuessKnowledge(Crossword.GenerateGuessKnowledge());
     }
 
