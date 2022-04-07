@@ -11,10 +11,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private KeyboardManager Keyboard;
     [SerializeField] private GameOverManager GameOver;
     [SerializeField] private DictionaryManager Dictionary;
+    [SerializeField] private ExplainerManager Explainer;
 
     private void Update()
     {
         if (!_isReady)
+            return;
+        if (Explainer.IsOpen)
             return;
         if (Crossword.PlayerWon)
         {
@@ -77,5 +80,6 @@ public class GameManager : MonoBehaviour
     {
         Dictionary.Initialize(DictionaryLoaded);
         GameOver.RegisterReset(ResetGame);
+        Explainer.ShowHelp();
     }
 }
