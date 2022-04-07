@@ -2267,7 +2267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeyPrefab: {fileID: 7127276805959695394, guid: 4d064f067988aa141b5eaa6a60b3f7ca, type: 3}
-  CommandKeyPrefab: {fileID: 0}
+  CommandKeyPrefab: {fileID: 7127276805959695394, guid: 50cc832c010529c489c62d6d08b9599a, type: 3}
 --- !u!114 &529401788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3284,7 +3284,6 @@ GameObject:
   - component: {fileID: 841312331}
   - component: {fileID: 841312330}
   - component: {fileID: 841312333}
-  - component: {fileID: 841312334}
   m_Layer: 0
   m_Name: KeyboardCanvas
   m_TagString: Untagged
@@ -3401,22 +3400,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &841312334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841312328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad4de52b2672a8849af0a6068d72c028, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Rows:
-  - {fileID: 1880795361}
-  - {fileID: 529401787}
-  - {fileID: 1328851714}
 --- !u!1 &895420149
 GameObject:
   m_ObjectHideFlags: 0
@@ -6753,7 +6736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeyPrefab: {fileID: 7127276805959695394, guid: 4d064f067988aa141b5eaa6a60b3f7ca, type: 3}
-  CommandKeyPrefab: {fileID: 0}
+  CommandKeyPrefab: {fileID: 7127276805959695394, guid: 50cc832c010529c489c62d6d08b9599a, type: 3}
 --- !u!114 &1880795362
 MonoBehaviour:
   m_ObjectHideFlags: 0

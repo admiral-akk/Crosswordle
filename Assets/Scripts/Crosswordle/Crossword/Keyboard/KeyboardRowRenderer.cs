@@ -6,6 +6,9 @@ public class KeyboardRowRenderer : MonoBehaviour
     [SerializeField] private GameObject KeyPrefab;
     [SerializeField] private GameObject CommandKeyPrefab;
 
+    private bool _hasEnter;
+    private bool _hasDelete;
+
     public KeyboardSquareRenderer AddKey(char c, Action onClick)
     {
         var key = Instantiate(KeyPrefab, transform).GetComponent<KeyboardSquareRenderer>();
@@ -15,12 +18,18 @@ public class KeyboardRowRenderer : MonoBehaviour
 
     public void AddEnterKey(Action onEnter)
     {
-        var key = Instantiate(CommandKeyPrefab, transform).GetComponent<KeyboardSquareRenderer>();
-        key.Initialize('1', () => onEnter());
+        if (_hasEnter)
+            return;
+        _hasEnter = true;
+        var key = Instantiate(CommandKeyPrefab, transform).GetComponent<KeyCommandSquareRenderer>();
+        key.Initialize("ENTER", () => onEnter());
     }
     public void AddDeleteKey(Action onDelete)
     {
-        var key = Instantiate(CommandKeyPrefab, transform).GetComponent<KeyboardSquareRenderer>();
-        key.Initialize('2', () => onDelete());
+        if (_hasDelete)
+            return;
+        _hasDelete = true;
+        var key = Instantiate(CommandKeyPrefab, transform).GetComponent<KeyCommandSquareRenderer>();
+        key.Initialize("DEL", () => onDelete());
     }
 }
