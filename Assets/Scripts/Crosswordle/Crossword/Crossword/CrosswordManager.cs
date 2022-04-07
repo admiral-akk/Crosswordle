@@ -62,7 +62,7 @@ public class CrosswordManager : MonoBehaviour
         }
     }
 
-    public void ResetGame(int wordCount, int wordLength)
+    public void GenerateCrossword(int wordCount, int wordLength)
     {
         GenerateCrossword(wordCount);
         Renderer.Render(_knowledge);

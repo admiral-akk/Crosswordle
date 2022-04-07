@@ -24,7 +24,7 @@ public class GuessManager : MonoBehaviour
         }
     }
 
-    public void ResetGame(int wordLength)
+    public void SetWordLength(int wordLength)
     {
         _wordLength = wordLength;
         Guess = new Word("");

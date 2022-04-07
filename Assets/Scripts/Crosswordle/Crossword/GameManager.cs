@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CrosswordManager Crossword;
     [SerializeField] private WordTrackerManager WordTracker;
     [SerializeField] private KeyboardManager Keyboard;
-    [SerializeField] private GameOverManager GameOver;
+    [SerializeField] private EndGameManager EndGame;
     [SerializeField] private DictionaryManager Dictionary;
     [SerializeField] private ExplainerManager Explainer;
     [SerializeField] private DifficultyManager Difficulty;
@@ -22,14 +22,14 @@ public class GameManager : MonoBehaviour
             return;
         if (Crossword.PlayerWon)
         {
-            GameOver.GameOver(true);
+            EndGame.PlayerWon(NextLevel);
             Guess.GameOver();
             return;
         }
         if (WordTracker.PlayerLost)
         {
             Crossword.SpoilCrossword();
-            GameOver.GameOver(false);
+            EndGame.PlayerLost(() => { });
             Guess.GameOver();
             return;
         }
@@ -59,14 +59,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ResetGame()
+    public void NextLevel()
+    {
+        Difficulty.OnWin();
+        NewPuzzle();
+    }
+
+    public void NewGame()
     {
         Difficulty.FreshRun();
-        Crossword.ResetGame(Difficulty.WordCount, Difficulty.WordLength);
-        WordTracker.ResetGame(Difficulty.GuessCount);
-        Keyboard.ResetGame();
-        GameOver.ResetGame();
-        Guess.ResetGame(Difficulty.WordLength);
+        NewPuzzle();
+    }
+
+    public void Initialize()
+    {
+        Explainer.ShowHelp();
+        Dictionary.Initialize(DictionaryLoaded);
+    }
+
+    public void NewPuzzle()
+    {
+        Crossword.GenerateCrossword(Difficulty.WordCount, Difficulty.WordLength);
+        WordTracker.SetGuessCount(Difficulty.GuessCount);
+        Keyboard.ClearKnowledge();
+        EndGame.StartGame();
+        Guess.SetWordLength(Difficulty.WordLength);
         Guess.UpdateGuessKnowledge(Crossword.GenerateGuessKnowledge());
     }
 
@@ -74,14 +91,12 @@ public class GameManager : MonoBehaviour
     {
         Crossword.Initialize(Dictionary);
         Guess.Initialize(Dictionary);
-        ResetGame();
+        NewGame();
         _isReady = true;
     }
 
     private void Start()
     {
-        Dictionary.Initialize(DictionaryLoaded);
-        GameOver.RegisterReset(ResetGame);
-        Explainer.ShowHelp();
+        Initialize();
     }
 }

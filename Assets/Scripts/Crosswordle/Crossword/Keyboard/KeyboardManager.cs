@@ -12,7 +12,7 @@ public class KeyboardManager : MonoBehaviour
         }
     }
 
-    public void ResetGame()
+    public void ClearKnowledge()
     {
         Renderer.ResetGame();
     }

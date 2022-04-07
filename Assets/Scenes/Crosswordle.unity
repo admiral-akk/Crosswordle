@@ -698,7 +698,7 @@ MonoBehaviour:
   Crossword: {fileID: 1422522444}
   WordTracker: {fileID: 208805676}
   Keyboard: {fileID: 644207123}
-  GameOver: {fileID: 672205708}
+  EndGame: {fileID: 672205708}
   Dictionary: {fileID: 320108681}
   Explainer: {fileID: 1270797948}
   Difficulty: {fileID: 265460295}
@@ -1148,9 +1148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 732878993e55a2842a3e44b77c63cbbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartingWordCount: 5
+  StartingWordCount: 3
   StartingWordLength: 5
-  StartingGuessCount: 6
+  StartingGuessCount: 10
 --- !u!1001 &274065036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2845,7 +2845,7 @@ GameObject:
   - component: {fileID: 672205707}
   - component: {fileID: 672205708}
   m_Layer: 0
-  m_Name: GameoverManager
+  m_Name: EndGameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2879,6 +2879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Text: {fileID: 592781855}
   NewGame: {fileID: 1072855396}
+  ButtonText: {fileID: 1586449071}
   Background: {fileID: 837380404}
 --- !u!1 &696443336
 GameObject:

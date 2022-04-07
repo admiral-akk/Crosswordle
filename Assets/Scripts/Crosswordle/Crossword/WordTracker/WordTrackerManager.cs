@@ -34,7 +34,7 @@ public class WordTrackerManager : MonoBehaviour
 
     public bool PlayerLost => _words.Count >= _guessCount;
 
-    public void ResetGame(int guessCount)
+    public void SetGuessCount(int guessCount)
     {
         _guessCount = guessCount;
         _words = new List<Word>();

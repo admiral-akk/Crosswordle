@@ -18,13 +18,8 @@ public class DifficultyManager : MonoBehaviour
         GuessCount = StartingGuessCount;
     }
 
-    private void OnWin()
+    public void OnWin()
     {
         WordCount++;
-    }
-
-    private void OnLoss()
-    {
-        FreshRun();
     }
 }
