@@ -8,6 +8,12 @@ public class LetterSquareRenderer : BaseRenderer
     [SerializeField] private Image Border;
     [SerializeField] private Image Background;
     [SerializeField] private TextMeshProUGUI Text;
+    [SerializeField] private State S;
+
+    private void Awake()
+    {
+        UpdateColor();
+    }
 
     private ColorPalette _palette;
    
@@ -71,22 +77,14 @@ public class LetterSquareRenderer : BaseRenderer
     public void Render(State s)
     {
         S = s;
+        UpdateColor();
     }
 
     public void Render(char c, State s)
     {
         Text.text = c.ToString();
         S = s;
-    }
-
-    private State S
-    {
-        get => _s;
-        set
-        {
-            _s = value;
-            UpdateColor();
-        }
+        UpdateColor();
     }
 
     public override void UpdatePalette(ColorPalette palette)
