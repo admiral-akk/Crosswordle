@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ExplainerManager : MonoBehaviour
 {
     [SerializeField] private Canvas ExplainerCanvas;
+    [SerializeField] private Button ExplainerButton;
     [SerializeField, Range(0,3)] private float RecentlyOpenDuration;
 
     private enum State
@@ -15,6 +17,11 @@ public class ExplainerManager : MonoBehaviour
     }
 
     public bool IsOpen => S == State.RecentlyOpened || S == State.Open;
+
+    private void Awake()
+    {
+        ExplainerButton.onClick.AddListener(ShowHelp);
+    }
 
     private IEnumerator EndRecentlyOpen()
     {
@@ -42,12 +49,14 @@ public class ExplainerManager : MonoBehaviour
                     if (value == State.Open)
                     {
                         _s = value;
-                        ExplainerCanvas.gameObject.SetActive(false);
                     }
                     break;
                 case State.Open:
                     if (value == State.Closed)
+                    {
                         _s = value;
+                        ExplainerCanvas.gameObject.SetActive(false);
+                    }
                     break;
             }
         }
