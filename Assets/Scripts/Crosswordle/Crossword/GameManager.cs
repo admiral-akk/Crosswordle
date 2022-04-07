@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
     {
         Crossword.GenerateCrossword(Difficulty.WordCount, Difficulty.WordLength);
         WordTracker.SetGuessCount(Difficulty.GuessCount);
-        Keyboard.ClearKnowledge();
+        Keyboard.ResetGame(Input.OnKeyClick, Input.OnEnterClick, Input.OnDeleteClick);
         EndGame.StartGame();
         Guess.SetWordLength(Difficulty.WordLength);
         Guess.UpdateGuessKnowledge(Crossword.GenerateGuessKnowledge());

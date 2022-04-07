@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class KeyboardManager : MonoBehaviour
@@ -12,8 +13,8 @@ public class KeyboardManager : MonoBehaviour
         }
     }
 
-    public void ClearKnowledge()
+    public void ResetGame(Action<char> onKeyClick, Action onEnter, Action onDelete)
     {
-        Renderer.ResetGame();
+        Renderer.ResetGame(onKeyClick,  onEnter,  onDelete);
     }
 }

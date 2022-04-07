@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 5532342601099076727}
   - component: {fileID: 3898265187346275565}
   m_Layer: 0
-  m_Name: KeyboardSquare
+  m_Name: KeyboardCommandSquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,7 +157,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.6, y: 0.6}
+  m_SizeDelta: {x: 1, y: 0.6}
   m_Pivot: {x: 0, y: 0}
 --- !u!223 &5103381292538914358
 Canvas:
@@ -240,7 +240,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.45, y: 0.5}
+  m_SizeDelta: {x: 0.9, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6973683173843395216
 Canvas:

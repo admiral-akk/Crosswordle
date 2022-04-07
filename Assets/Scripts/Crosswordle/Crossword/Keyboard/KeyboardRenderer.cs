@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,15 +31,24 @@ public class KeyboardRenderer : MonoBehaviour
         "qwertyuiop", "asdfghjkl", "zxcvbnm"
     };
 
-    public void ResetGame()
+    public void ResetGame(Action<char> onPressKey, Action onEnter, Action onDelete)
     {
         for (var row = 0; row < KeyboardLayout.Length; row++)
         {
-            foreach (var c in KeyboardLayout[row].ToUpper())
+            if (row == 2)
             {
+                Rows[row].AddEnterKey(onEnter);
+            }
+            for (var col = 0; col < KeyboardLayout[row].Length; col++)
+            {
+                var c = KeyboardLayout[row].ToUpper()[col];
                 if (!Keys.ContainsKey(c))
-                    Keys[c] = Rows[row].AddKey(c);
-                Keys[c].Initialize(c);
+                    Keys[c] = Rows[row].AddKey(c, () => onPressKey(c));
+                Keys[c].Initialize(c, () => onPressKey(c));
+            }
+            if (row == 2)
+            {
+                Rows[row].AddDeleteKey(onDelete);
             }
         }
     }

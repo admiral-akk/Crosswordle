@@ -1885,6 +1885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LetterSquare: {fileID: 0}
+  KeyClick: {fileID: 0}
 --- !u!1 &429246816
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,6 +2267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeyPrefab: {fileID: 7127276805959695394, guid: 4d064f067988aa141b5eaa6a60b3f7ca, type: 3}
+  CommandKeyPrefab: {fileID: 0}
 --- !u!114 &529401788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4589,6 +4591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeyPrefab: {fileID: 7127276805959695394, guid: 4d064f067988aa141b5eaa6a60b3f7ca, type: 3}
+  CommandKeyPrefab: {fileID: 7127276805959695394, guid: 50cc832c010529c489c62d6d08b9599a, type: 3}
 --- !u!114 &1328851715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6750,6 +6753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KeyPrefab: {fileID: 7127276805959695394, guid: 4d064f067988aa141b5eaa6a60b3f7ca, type: 3}
+  CommandKeyPrefab: {fileID: 0}
 --- !u!114 &1880795362
 MonoBehaviour:
   m_ObjectHideFlags: 0

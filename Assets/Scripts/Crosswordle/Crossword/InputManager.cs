@@ -19,18 +19,32 @@ public class InputManager : MonoBehaviour
         var c = (char)e.keyCode;
         if (char.IsLetter(c))
         {
-            _input = PlayerInput.AddLetter(c);
+            OnKeyClick(c);
             return;
         }
         if (e.keyCode == KeyCode.Return)
         {
-            _input = PlayerInput.Enter();
+            OnEnterClick();
             return;
         }
         if (e.keyCode == KeyCode.Backspace)
         {
-            _input = PlayerInput.Delete();
+            OnDeleteClick();
             return;
         }
+    }
+
+    public void OnKeyClick(char c)
+    {
+        _input = PlayerInput.AddLetter(c);
+    }
+
+    public void OnEnterClick()
+    {
+        _input = PlayerInput.Enter();
+    }
+    public void OnDeleteClick()
+    {
+        _input = PlayerInput.Delete();
     }
 }
