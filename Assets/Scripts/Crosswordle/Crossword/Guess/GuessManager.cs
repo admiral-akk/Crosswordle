@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class GuessManager : MonoBehaviour
 {
-    [SerializeField, Range(1, 10)] private int WordLength;
     [SerializeField] private GuessRenderer Renderer;
 
     private Word _guess;
     private GuessKnowledge _knowledge;
     private List<Word> _guesses;
     private DictionaryManager _dictionary;
+    private int _wordLength;
 
     private Word Guess
     {
@@ -20,17 +20,13 @@ public class GuessManager : MonoBehaviour
         set
         {
             _guess = value;
-            Renderer.Render(_guess, _knowledge);
+            Renderer.Render(_guess, _knowledge, _wordLength);
         }
     }
 
-    private void Awake()
+    public void ResetGame(int wordLength)
     {
-        ResetGame();
-    }
-
-    public void ResetGame()
-    {
+        _wordLength = wordLength;
         Guess = new Word("");
         _guesses = new List<Word>();
     }
@@ -43,7 +39,7 @@ public class GuessManager : MonoBehaviour
 
     public Word? SubmitWord()
     {
-        if (Guess.Length < WordLength)
+        if (Guess.Length < _wordLength)
             return null;
         if (!_dictionary.IsValidWord(Guess))
             return null;
@@ -55,7 +51,7 @@ public class GuessManager : MonoBehaviour
 
     public void SubmitLetter(char c)
     {
-        if (Guess.Length < WordLength)
+        if (Guess.Length < _wordLength)
             Guess += c;
     }
 

@@ -3,22 +3,36 @@ using UnityEngine;
 
 public class GuessRenderer : MonoBehaviour
 {
-    [SerializeField] private GameObject Square;
+    [SerializeField] private GameObject SquarePrefab;
     [SerializeField] private Bounds Bounds;
 
     private List<GuessSquareRenderer> _squares;
+    private List<GuessSquareRenderer> Squares
+    {
+        get
+        {
+            if (_squares == null)
+                _squares = new List<GuessSquareRenderer>();
+            return _squares;
+        }
+    }
     private Word? _toRender;
     private GuessKnowledge _knowledge;
+    private int _wordLength;
 
-    private void Awake()
+    private void InitializeSquares()
     {
-        _squares = new List<GuessSquareRenderer>();
-        for (var i = 0; i < 5; i++)
+        foreach (var square in Squares)
         {
-            var square = Instantiate(Square, transform).GetComponent<GuessSquareRenderer>();
+            Destroy(square);
+        }
+        Squares.Clear();
+        for (var i = 0; i < _wordLength; i++)
+        {
+            var square = Instantiate(SquarePrefab, transform).GetComponent<GuessSquareRenderer>();
             square.UpdatePosition(new Vector2Int(i, 0), new Vector2Int(5, 1), Bounds);
             square.UpdateLetter(' ');
-            _squares.Add(square);
+            Squares.Add(square);
         }
     }
 
@@ -28,21 +42,26 @@ public class GuessRenderer : MonoBehaviour
             return;
         var word = _toRender.Value;
         _toRender = null;
-        foreach (var square in _squares)
+        if (Squares.Count != _wordLength)
+        {
+            InitializeSquares();
+        }
+        foreach (var square in Squares)
         {
             square.UpdateLetter(' ');
         }
         for (var i = 0; i < word.Length; i++)
         {
-            _squares[i].UpdateLetter(word[i], _knowledge.Get(word[i], i));
+            Squares[i].UpdateLetter(word[i], _knowledge.Get(word[i], i));
         }
         _knowledge = null;
     }
 
-    public void Render(Word word, GuessKnowledge knowledge)
+    public void Render(Word word, GuessKnowledge knowledge, int wordLength)
     {
         _toRender = word;
         _knowledge = knowledge;
+        _wordLength = wordLength;
         gameObject.SetActive(true);
     }
 }

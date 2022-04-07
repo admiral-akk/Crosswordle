@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameOverManager GameOver;
     [SerializeField] private DictionaryManager Dictionary;
     [SerializeField] private ExplainerManager Explainer;
+    [SerializeField] private DifficultyManager Difficulty;
 
     private void Update()
     {
@@ -60,7 +61,8 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        Guess.ResetGame();
+        Difficulty.FreshRun();
+        Guess.ResetGame(Difficulty.WordLength);
         Crossword.ResetGame();
         WordTracker.ResetGame();
         Keyboard.ResetGame();

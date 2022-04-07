@@ -677,6 +677,7 @@ Transform:
   - {fileID: 208805675}
   - {fileID: 672205707}
   - {fileID: 1270797947}
+  - {fileID: 265460294}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -700,6 +701,7 @@ MonoBehaviour:
   GameOver: {fileID: 672205708}
   Dictionary: {fileID: 320108681}
   Explainer: {fileID: 1270797948}
+  Difficulty: {fileID: 265460295}
 --- !u!1001 &118397837
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1104,6 +1106,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 51975103}
   MaxCount: 10
+--- !u!1 &265460293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 265460294}
+  - component: {fileID: 265460295}
+  m_Layer: 0
+  m_Name: DifficultyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &265460294
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265460293}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 113796040}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &265460295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265460293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 732878993e55a2842a3e44b77c63cbbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartingWordCount: 5
+  StartingWordLength: 5
 --- !u!1001 &274065036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4671,7 +4718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c33d120db422c418b9ca37702fcbfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Square: {fileID: 4612142088829400515, guid: b49440f4cfed7a940b23d168a006a317, type: 3}
+  SquarePrefab: {fileID: 4612142088829400515, guid: b49440f4cfed7a940b23d168a006a317, type: 3}
   Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 2, y: 1, z: 0}
@@ -7631,7 +7678,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad0b9604a1d57244a77343f26805bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WordLength: 5
   Renderer: {fileID: 1330489420}
 --- !u!1 &2086308172
 GameObject:
