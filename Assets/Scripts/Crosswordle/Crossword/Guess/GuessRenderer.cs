@@ -30,7 +30,7 @@ public class GuessRenderer : MonoBehaviour
         for (var i = 0; i < _wordLength; i++)
         {
             var square = Instantiate(SquarePrefab, transform).GetComponent<GuessSquareRenderer>();
-            square.UpdatePosition(new Vector2Int(i, 0), new Vector2Int(5, 1), Bounds);
+            square.UpdatePosition(new Vector2Int(i, 0), new Vector2Int(_wordLength, 1), Bounds);
             square.UpdateLetter(' ');
             Squares.Add(square);
         }

@@ -5,14 +5,15 @@ using UnityEngine;
 public class CrosswordManager : MonoBehaviour
 {
     [Header("Parameters")]
-    [SerializeField, Range(1, 100)] private int SampleLimit;
+    [SerializeField, Range(1, 1000)] private int SampleLimit;
     [Header("Components")]
     [SerializeField] private CrosswordRenderer Renderer;
 
     private DictionaryManager _dictionary;
     private CrosswordKnowledge _knowledge;
     private CharacterKnowledge _globalKnowledge;
-    private void GenerateCrossword(int wordCount)
+    private int _wordLength;
+    private void GenerateCrosswordInternal(int wordCount, int wordLength)
     {
         CrosswordData bestCrossword = null;
         var words = new HashSet<Word>();
@@ -23,7 +24,7 @@ public class CrosswordManager : MonoBehaviour
             words.Clear();
             while (words.Count < wordCount)
             {
-                words.Add(_dictionary.GetRandomWord());
+                words.Add(_dictionary.GetRandomWord(wordLength));
             }
 
             var crossword = CrosswordData.GenerateCrossword(words.ToArray());
@@ -64,7 +65,8 @@ public class CrosswordManager : MonoBehaviour
 
     public void GenerateCrossword(int wordCount, int wordLength)
     {
-        GenerateCrossword(wordCount);
+        _wordLength = wordLength;
+        GenerateCrosswordInternal(wordCount, wordLength);
         Renderer.Render(_knowledge);
     }
 
@@ -94,7 +96,7 @@ public class CrosswordManager : MonoBehaviour
 
     public GuessKnowledge GenerateGuessKnowledge()
     {
-        var guessKnowledge = new GuessKnowledge(5);
+        var guessKnowledge = new GuessKnowledge(_wordLength);
         foreach (var problem in _knowledge.Problems)
         {
             for (var i = 0; i < problem.Length; i++)

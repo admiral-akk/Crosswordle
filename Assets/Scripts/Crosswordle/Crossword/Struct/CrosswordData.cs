@@ -1,4 +1,5 @@
 
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -6,6 +7,70 @@ public class CrosswordData
 {
     public readonly WordData[] Words;
     public readonly int xDim, yDim;
+
+    public int MinimumIntersectionCount
+    {
+        get
+        {
+            var intersection = new int[Words.Length];
+            for (var i = 0; i < Words.Length; i++)
+            {
+                for (var j = i+1; j < Words.Length; j++)
+                {
+                    if (Words[i].IsHorizontal == Words[j].IsHorizontal)
+                        continue;
+
+                    if (Words[i].Intersect(Words[j]))
+                    {
+                        intersection[i]++;
+                        intersection[j]++;
+                    }
+                }
+
+            }
+            return intersection.Min();
+        }
+    }
+    public int CountAtMin
+    {
+        get
+        {
+            var intersection = new int[Words.Length];
+            for (var i = 0; i < Words.Length; i++)
+            {
+                for (var j = i + 1; j < Words.Length; j++)
+                {
+                    if (Words[i].IsHorizontal == Words[j].IsHorizontal)
+                        continue;
+
+                    if (Words[i].Intersect(Words[j]))
+                    {
+                        intersection[i]++;
+                        intersection[j]++;
+                    }
+                }
+
+            }
+            var min = intersection.Min();
+            return intersection.Where(x => x == min).Count();
+        }
+    }
+    public int MinimumHorizontalVerticalCount
+    {
+        get
+        {
+            var horizontal = 0;
+            var vertical = 0;
+            foreach (var word in Words)
+            {
+                if (word.IsHorizontal)
+                    horizontal++;
+                else
+                    vertical++;
+            }
+            return Mathf.Min(horizontal,vertical);
+        }
+    }
 
     private static bool GenerateCrossword(WordData[] output, Word[] words, int currentIndex)
     {

@@ -86,7 +86,7 @@ public class CrosswordDictionary
     }
 
 
-    public Word GetRandomWord(int length = 5)
+    public Word GetRandomWord(int length)
     {
         if (length < 1 || length > _validAnswers.Count)
             throw new System.Exception(string.Format("Length {0} out of array bounds!",length));

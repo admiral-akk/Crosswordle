@@ -15,11 +15,12 @@ public class DifficultyManager : MonoBehaviour
     {
         WordCount = StartingWordCount;
         WordLength = StartingWordLength;
-        GuessCount = StartingGuessCount;
+        GuessCount = Mathf.Max(StartingGuessCount, 4 + WordCount);
     }
 
     public void OnWin()
     {
-        WordCount++;
+        WordCount += 2;
+        GuessCount = Mathf.Max(StartingGuessCount, 4 + WordCount);
     }
 }

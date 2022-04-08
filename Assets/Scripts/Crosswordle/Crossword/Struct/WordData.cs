@@ -38,7 +38,7 @@ public readonly struct WordData
             {
                 return startPos + new Vector2Int( -match.y, match.x);
             }
-        }).ToList();
+        }).OrderBy(x => Random.Range(0,10000000)).ToList();
     }
 
     public List<Vector2Int> MatchingLetters(Word word)
@@ -115,7 +115,7 @@ public readonly struct WordData
     }
 
     // We assume that the two words are orthogonal.
-    private bool Intersect(WordData other)
+    public bool Intersect(WordData other)
     {
         if (!IsHorizontal)
             return other.Intersect(this);

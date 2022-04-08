@@ -26,9 +26,9 @@ public class DictionaryManager : MonoBehaviour, IManager
         return _data.IsValidWord(guess);
     }
 
-    public Word GetRandomWord()
+    public Word GetRandomWord(int wordLength)
     {
-        return _data.GetRandomWord();
+        return _data.GetRandomWord(wordLength);
     }
 
     public void Initialize(Action callback)
