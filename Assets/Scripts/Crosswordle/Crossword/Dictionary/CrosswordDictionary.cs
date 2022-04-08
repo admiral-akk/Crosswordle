@@ -9,8 +9,8 @@ public class CrosswordDictionary
     private List<List<Word>> _validAnswers;
     private List<HashSet<Word>> _validWords;
 
-    private static string _wordPath = Application.streamingAssetsPath + "/LegalWords.txt";
-    private static string _answerPath = Application.streamingAssetsPath + "/LegalAnswers.txt";
+    private static string _wordPath = Application.streamingAssetsPath + "/GeneratedWords.txt";
+    private static string _answerPath = Application.streamingAssetsPath + "/GeneratedAnswers.txt";
 
     public IEnumerator Initialize()
     {
