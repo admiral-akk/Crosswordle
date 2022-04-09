@@ -19,7 +19,7 @@ public class CrosswordManager : MonoBehaviour
         var words = new HashSet<Word>();
         var limit = SampleLimit;
         var compare = new CrosswordComparer();
-        while (limit-- > 0)
+        while (limit-- > 0 && bestCrossword == null)
         {
             words.Clear();
             while (words.Count < wordCount)
@@ -42,8 +42,6 @@ public class CrosswordManager : MonoBehaviour
                 continue;
             }
         }
-        if (bestCrossword == null)
-            throw new System.Exception("No crossword generated");
         _knowledge = new CrosswordKnowledge(bestCrossword);
         _globalKnowledge = new CharacterKnowledge();
     }

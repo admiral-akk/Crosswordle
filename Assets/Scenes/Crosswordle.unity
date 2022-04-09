@@ -5182,7 +5182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f86067d1e143da448ad04431e561370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SampleLimit: 100
+  SampleLimit: 40
   Renderer: {fileID: 1846895356}
 --- !u!4 &1422522445
 Transform:
